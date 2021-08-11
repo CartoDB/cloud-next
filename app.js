@@ -8,6 +8,10 @@ const DATA_URL = {
   TRIPS: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/trips-v7.json' // eslint-disable-line
 };
 
+//fetch(DATA_URL.TRIPS)
+//  .then(response => response.json())
+//  .then(data => (window.trips = data));
+
 const LOOP_LENGTH = 1800;
 const THEME = {
   trailColor0: [255, 0, 0],
@@ -66,6 +70,24 @@ loadScript(GOOGLE_MAPS_API_URL).then(() => {
       layers: [tripsLayer]
     });
     updateTween();
+    if (window.trips) {
+      const trip = window.trips[9];
+      let center = null;
+      for (let i = 0; i < trip.timestamps.length; i++) {
+        const t1 = trip.timestamps[i];
+        const t2 = trip.timestamps[i + 1];
+        if (t1 > currentTime) {
+          const f = (currentTime - t1) / (t2 - t1);
+          const p1 = trip.path[i];
+          const p2 = trip.path[i + 1];
+          const lng = p1[0] * (1 - f) + p2[0] * f;
+          const lat = p1[1] * (1 - f) + p2[1] * f;
+          center = {lat, lng};
+          break;
+        }
+      }
+      map.moveCamera({center});
+    }
 
     window.requestAnimationFrame(animate);
   };
