@@ -74,6 +74,6 @@ loadScript(GOOGLE_MAPS_API_URL).then(() => {
   // overlay.setMap(map);
 
   document.getElementById('focus-btn').addEventListener('click', () => {
-    flyTo(map, {lat: 40.72, lng: -74, tilt: 45, heading: 20, zoom: 13});
+    flyTo(map, {lat: 40.72, lng: -74, tilt: 45, heading: 0, zoom: 13});
   });
 });

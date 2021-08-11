@@ -10,14 +10,21 @@ export default function flyTo(map, position) {
       heading -= 360;
     }
   }
+
+  const zoom = map.getZoom();
+  let duration = 1000;
+  if (position.zoom !== undefined) {
+    duration += 300 * Math.abs(position.zoom - zoom);
+  }
   const tween = new Tween({
     lat: center.lat(),
     lng: center.lng(),
     heading,
     tilt: map.getTilt(),
-    zoom: map.getZoom()
-  }).easing(Easing.Quadratic.InOut);
-  tween
+    zoom
+  })
+    .easing(Easing.Quadratic.InOut)
+    .duration(duration)
     .to(position)
     .onUpdate(({lat, lng, heading, tilt, zoom}) => {
       map.moveCamera({center: {lat, lng}, heading, tilt, zoom});
