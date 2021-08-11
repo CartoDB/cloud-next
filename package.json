@@ -12,7 +12,8 @@
     "@deck.gl/geo-layers": "^8.6.0-alpha.1",
     "@deck.gl/google-maps": "^8.6.0-alpha.1",
     "@deck.gl/layers": "^8.6.0-alpha.1",
-    "@deck.gl/mesh-layers": "^8.6.0-alpha.1"
+    "@deck.gl/mesh-layers": "^8.6.0-alpha.1",
+    "@tweenjs/tween.js": "^18"
   },
   "devDependencies": {
     "webpack": "^4.20.2",

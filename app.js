@@ -1,6 +1,7 @@
 /* global document, google, window */
 import {GoogleMapsOverlay as DeckOverlay} from '@deck.gl/google-maps';
 import {TripsLayer} from '@deck.gl/geo-layers';
+import {Easing, Tween, update as updateTween} from '@tweenjs/tween.js';
 
 const DATA_URL = {
   TRIPS: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/trips-v7.json' // eslint-disable-line
@@ -63,6 +64,7 @@ loadScript(GOOGLE_MAPS_API_URL).then(() => {
     overlay.setProps({
       layers: [tripsLayer]
     });
+    updateTween();
 
     window.requestAnimationFrame(animate);
   };
@@ -71,11 +73,14 @@ loadScript(GOOGLE_MAPS_API_URL).then(() => {
   // overlay.setMap(map);
 
   document.getElementById('focus-btn').addEventListener('click', () => {
-    map.moveCamera({
-      center: new google.maps.LatLng(37.7893719, -122.3942),
-      zoom: 16,
-      heading: 320,
-      tilt: 47.5
-    });
+    const tween = new Tween({
+      zoom: map.getZoom()
+    }).easing(Easing.Quadratic.InOut);
+    tween
+      .to({zoom: 10})
+      .onUpdate(state => {
+        map.moveCamera(state);
+      })
+      .start();
   });
 });
