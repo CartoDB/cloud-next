@@ -68,5 +68,14 @@ loadScript(GOOGLE_MAPS_API_URL).then(() => {
   };
   window.requestAnimationFrame(animate);
 
-  overlay.setMap(map);
+  // overlay.setMap(map);
+
+  document.getElementById('focus-btn').addEventListener('click', () => {
+    map.moveCamera({
+      center: new google.maps.LatLng(37.7893719, -122.3942),
+      zoom: 16,
+      heading: 320,
+      tilt: 47.5
+    });
+  });
 });

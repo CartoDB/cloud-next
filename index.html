@@ -3,18 +3,14 @@
   <head>
     <meta charset='UTF-8' />
     <title>CARTO BigQuery Google Maps example</title>
-    <style>
-      #map {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-    </style>
+    <link href="./style.css" rel="stylesheet">
   </head>
   <body>
     <div id="map"></div>
+    <div id="info-bar">
+        <h2>Info</h2>
+        <button id="focus-btn">focus</button>
+    </div>
     <script src='app.js'></script>
   </body>
 </html>
