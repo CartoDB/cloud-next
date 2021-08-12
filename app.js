@@ -24,9 +24,20 @@ async function init() {
   const overlay = createOverlay(map, data);
 
   let truckToFollow = 9;
-  document.getElementById('focus-btn').addEventListener('click', () => {
+
+  function focusOnLocation(e) {
     overlay.truckToFollow = null;
-    flyTo(map, {lat: 40.72, lng: -74, tilt: 45, heading: 0, zoom: 13});
+    const {dataset} = e.srcElement;
+    const lat = parseFloat(dataset.lat) || 40.72;
+    const lng = parseFloat(dataset.lng) || -74;
+    const tilt = parseFloat(dataset.tilt) || 0;
+    const heading = parseFloat(dataset.heading) || 0;
+    const zoom = parseFloat(dataset.zoom) || 15;
+    flyTo(map, {lat, lng, tilt, heading, zoom});
+  }
+
+  ['city', 'depo', 'charging-station'].forEach(l => {
+    document.getElementById(`focus-${l}-btn`).addEventListener('click', focusOnLocation);
   });
 
   function updateTruckToFollow() {
