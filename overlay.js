@@ -65,7 +65,7 @@ export function createOverlay(map, data) {
     if (overlay.truckToFollow !== null) {
       const trip = data[overlay.truckToFollow];
       const [lng, lat] = getVehiclePosition(trip, currentTime);
-      map.moveCamera({center: {lng, lat}, zoom: 18, heading: currentTime});
+      map.moveCamera({center: {lng, lat}, zoom: 18, heading: currentTime, tilt: 45});
     }
 
     window.requestAnimationFrame(animate);
