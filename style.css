@@ -20,3 +20,8 @@
 #info-bar h2 {
   font-size: 16pt;
 }
+
+#print-location-btn {
+  display: none;
+  color: red;
+}

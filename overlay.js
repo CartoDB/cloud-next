@@ -44,6 +44,7 @@ export function createOverlay(map, data) {
   };
 
   const overlay = new DeckOverlay({});
+  overlay.truckToFollow = null;
   const animate = () => {
     currentTime = (currentTime + 0.1) % LOOP_LENGTH;
     const tripsLayer = new TripsLayer({
@@ -61,10 +62,10 @@ export function createOverlay(map, data) {
       layers: [tripsLayer, scenegraphLayer]
     });
     updateTween();
-    if (window.trips) {
-      const trip = window.trips[9];
-      let center = null;
-      //map.moveCamera({center});
+    if (overlay.truckToFollow !== null) {
+      const trip = data[overlay.truckToFollow];
+      const [lng, lat] = getVehiclePosition(trip, currentTime);
+      map.moveCamera({center: {lng, lat}, zoom: 18, heading: currentTime, tilt: 45});
     }
 
     window.requestAnimationFrame(animate);
@@ -72,6 +73,8 @@ export function createOverlay(map, data) {
   window.requestAnimationFrame(animate);
 
   overlay.setMap(map);
+
+  return overlay;
 }
 
 function getVehiclePosition(trip, time) {

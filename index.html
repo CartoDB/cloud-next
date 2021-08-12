@@ -8,8 +8,17 @@
   <body>
     <div id="map"></div>
     <div id="info-bar">
-        <h2>Info</h2>
-        <button id="focus-btn">focus</button>
+        <h2>Key Locations</h2>
+        <button id="focus-city-btn" data-lat="40.72" data-lng="-74" data-zoom="13">City</button>
+        <button id="focus-depo-btn" data-lat="40.712" data-lng="-73.984" data-heading="290" data-tilt="45" data-zoom="17">Depo</button>
+        <button id="focus-charging-station-btn" data-lat="40.70384" data-lng="-74.013096" data-heading="56" data-tilt="50" data-zoom="17">Charging Station</button>
+        <hr>
+        <h2>Truck Selector</h2>
+        <p>Choose a truck to follow<p>
+        <button id="next-btn">Next</button>
+        <button id="previous-btn">Previous</button>
+        <p>Following truck number <span id="truck-to-follow"><span></p>
+        <button id="print-location-btn">Print Location</button>
     </div>
     <script src='app.js'></script>
   </body>
