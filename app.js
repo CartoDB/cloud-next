@@ -8,6 +8,7 @@ import flyTo from './flyTo';
 // Set your Google Maps API key here or via environment variable
 const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
 const GOOGLE_MAP_ID = '97fe3c86201cc1aa';
+//const GOOGLE_MAP_ID = 'e0cde073740a00d5';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 
 async function init() {
@@ -19,6 +20,7 @@ async function init() {
     zoom: 15,
     mapId: GOOGLE_MAP_ID
   });
+  window.map = map;
 
   const data = allData.slice(0, 100);
   const overlay = createOverlay(map, data);
@@ -51,6 +53,20 @@ async function init() {
   document.getElementById('previous-btn').addEventListener('click', () => {
     truckToFollow = (truckToFollow + data.length - 1) % data.length;
     updateTruckToFollow();
+  });
+  document.getElementById('print-location-btn').addEventListener('click', () => {
+    const center = map.getCenter();
+    const lat = center.lat();
+    const lng = center.lng();
+    const heading = map.getHeading();
+    const tilt = map.getTilt();
+    const zoom = map.getZoom();
+    const config = {lat, lng, heading, tilt, zoom};
+    console.log(
+      Object.keys(config)
+        .map(k => `data-${k}="${config[k]}"`)
+        .join(' ')
+    );
   });
 }
 
