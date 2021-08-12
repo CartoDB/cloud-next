@@ -31,12 +31,12 @@ export function createOverlay(map, data) {
 
   const scenegraphProps = {
     id: 'scenegraph-layer',
-    data: [0],
+    data: [data[9]],
     pickable: true,
     opacity: 1,
-    sizeScale: 5,
+    sizeScale: 10,
     scenegraph: 'low_poly_truck/scene.gltf',
-    getPosition: [-74, 40.72],
+    getPosition: d => getVehiclePosition(d, currentTime),
     getOrientation: d => [0, Math.random() * 360, 90],
     _lighting: 'pbr'
   };
@@ -48,26 +48,19 @@ export function createOverlay(map, data) {
       ...props,
       currentTime
     });
+    const scenegraphLayer = new ScenegraphLayer({
+      updateTriggers: {
+        getPosition: [currentTime]
+      },
+      ...scenegraphProps
+    });
     overlay.setProps({
-      layers: [tripsLayer, new ScenegraphLayer(scenegraphProps)]
+      layers: [tripsLayer, scenegraphLayer]
     });
     updateTween();
     if (window.trips) {
       const trip = window.trips[9];
       let center = null;
-      for (let i = 0; i < trip.timestamps.length; i++) {
-        const t1 = trip.timestamps[i];
-        const t2 = trip.timestamps[i + 1];
-        if (t1 > currentTime) {
-          const f = (currentTime - t1) / (t2 - t1);
-          const p1 = trip.path[i];
-          const p2 = trip.path[i + 1];
-          const lng = p1[0] * (1 - f) + p2[0] * f;
-          const lat = p1[1] * (1 - f) + p2[1] * f;
-          center = {lat, lng};
-          break;
-        }
-      }
       //map.moveCamera({center});
     }
 
@@ -76,4 +69,19 @@ export function createOverlay(map, data) {
   window.requestAnimationFrame(animate);
 
   overlay.setMap(map);
+}
+
+function getVehiclePosition(trip, time) {
+  for (let i = 0; i < trip.timestamps.length; i++) {
+    const t1 = trip.timestamps[i];
+    const t2 = trip.timestamps[i + 1];
+    if (t1 > time) {
+      const f = (time - t1) / (t2 - t1);
+      const p1 = trip.path[i];
+      const p2 = trip.path[i + 1];
+      const lng = p1[0] * (1 - f) + p2[0] * f;
+      const lat = p1[1] * (1 - f) + p2[1] * f;
+      return [lng, lat];
+    }
+  }
 }
