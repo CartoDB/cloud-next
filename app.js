@@ -1,4 +1,5 @@
 /* global document, google, window */
+import {getTripData} from './datasource';
 import {createOverlay} from './overlay';
 import {loadScript} from './utils';
 
@@ -19,7 +20,8 @@ async function init() {
     mapId: GOOGLE_MAP_ID
   });
 
-  createOverlay(map);
+  const data = await getTripData();
+  createOverlay(map, data);
 
   document.getElementById('focus-btn').addEventListener('click', () => {
     flyTo(map, {lat: 40.72, lng: -74, tilt: 45, heading: 0, zoom: 13});

@@ -7,21 +7,17 @@ import {update as updateTween} from '@tweenjs/tween.js';
 
 registerLoaders([GLTFLoader]);
 
-const DATA_URL = {
-  TRIPS: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/trips-v7.json' // eslint-disable-line
-};
-
 const LOOP_LENGTH = 1800;
 const THEME = {
   trailColor0: [255, 0, 0],
   trailColor1: [0, 0, 255]
 };
 
-export function createOverlay(map) {
+export function createOverlay(map, data) {
   let currentTime = 0;
   const props = {
     id: 'trips',
-    data: DATA_URL.TRIPS,
+    data,
     getPath: d => d.path,
     getTimestamps: d => d.timestamps,
     getColor: d => (d.vendor === 0 ? THEME.trailColor0 : THEME.trailColor1),
