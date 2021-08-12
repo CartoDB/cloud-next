@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@deck.gl/core": "^8.6.0-alpha.1",
+    "@deck.gl/carto": "^8.6.0-alpha.1",
     "@deck.gl/extensions": "^8.6.0-alpha.1",
     "@deck.gl/geo-layers": "^8.6.0-alpha.1",
     "@deck.gl/google-maps": "^8.6.0-alpha.1",

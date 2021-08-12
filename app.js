@@ -1,5 +1,4 @@
 /* global document, google, window */
-import {getData, setDefaultCredentials, MAP_TYPES, API_VERSIONS} from '@deck.gl/carto';
 import {createOverlay} from './overlay.js';
 
 import flyTo from './flyTo';
@@ -9,7 +8,7 @@ const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
 const GOOGLE_MAP_ID = process.env.GoogleMapsMapId; // eslint-disable-line
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 
-function loadScript(url) {
+async function loadScript(url) {
   const script = document.createElement('script');
   script.type = 'text/javascript';
   script.src = url;
@@ -20,7 +19,8 @@ function loadScript(url) {
   });
 }
 
-loadScript(GOOGLE_MAPS_API_URL).then(() => {
+async function init() {
+  await loadScript(GOOGLE_MAPS_API_URL);
   const map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 40.72, lng: -74},
     tilt: 45,
@@ -34,4 +34,6 @@ loadScript(GOOGLE_MAPS_API_URL).then(() => {
   document.getElementById('focus-btn').addEventListener('click', () => {
     flyTo(map, {lat: 40.72, lng: -74, tilt: 45, heading: 0, zoom: 13});
   });
-});
+}
+
+init();
