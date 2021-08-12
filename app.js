@@ -1,5 +1,6 @@
 /* global document, google, window */
-import {createOverlay} from './overlay.js';
+import {createOverlay} from './overlay';
+import {loadScript} from './utils';
 
 import flyTo from './flyTo';
 
@@ -7,17 +8,6 @@ import flyTo from './flyTo';
 const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
 const GOOGLE_MAP_ID = process.env.GoogleMapsMapId; // eslint-disable-line
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
-
-async function loadScript(url) {
-  const script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = url;
-  const head = document.querySelector('head');
-  head.appendChild(script);
-  return new Promise(resolve => {
-    script.onload = resolve;
-  });
-}
 
 async function init() {
   await loadScript(GOOGLE_MAPS_API_URL);
