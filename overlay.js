@@ -78,6 +78,11 @@ export function createOverlay(map, data) {
 }
 
 function getVehiclePosition(trip, time) {
+  const start = trip.timestamps[0];
+  const end = trip.timestamps[trip.timestamps - 1];
+  if (time < start || time > end) {
+    return trip.path[0];
+  }
   for (let i = 0; i < trip.timestamps.length; i++) {
     const t1 = trip.timestamps[i];
     const t2 = trip.timestamps[i + 1];
@@ -95,6 +100,11 @@ function getVehiclePosition(trip, time) {
 }
 
 function getVehicleHeading(trip, time) {
+  const start = trip.timestamps[0];
+  const end = trip.timestamps[trip.timestamps - 1];
+  if (time < start || time > end) {
+    return headingBetweenPoints(trip.path[0], trip.path[1]);
+  }
   for (let i = 0; i < trip.timestamps.length; i++) {
     const t1 = trip.timestamps[i];
     const t2 = trip.timestamps[i + 1];
