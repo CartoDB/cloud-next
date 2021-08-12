@@ -5,6 +5,8 @@ import {registerLoaders} from '@loaders.gl/core';
 import {GLTFLoader} from '@loaders.gl/gltf';
 import {update as updateTween} from '@tweenjs/tween.js';
 
+import {headingBetweenPoints} from './utils';
+
 registerLoaders([GLTFLoader]);
 
 const LOOP_LENGTH = 1800;
@@ -31,19 +33,19 @@ export function createOverlay(map, data) {
 
   const scenegraphProps = {
     id: 'scenegraph-layer',
-    data: [data[9]],
+    data,
     pickable: true,
     opacity: 1,
     sizeScale: 10,
     scenegraph: 'low_poly_truck/scene.gltf',
     getPosition: d => getVehiclePosition(d, currentTime),
-    getOrientation: d => [0, getVehicleHeading(d, currentTime) - 90, 90],
+    getOrientation: d => [0, 180 - getVehicleHeading(d, currentTime), 90],
     _lighting: 'pbr'
   };
 
   const overlay = new DeckOverlay({});
   const animate = () => {
-    currentTime = (currentTime + 1) % LOOP_LENGTH;
+    currentTime = (currentTime + 0.1) % LOOP_LENGTH;
     const tripsLayer = new TripsLayer({
       ...props,
       currentTime
@@ -96,8 +98,7 @@ function getVehicleHeading(trip, time) {
     if (time > t1 && time < t2) {
       const p1 = trip.path[i];
       const p2 = trip.path[i + 1];
-      const angle = Math.atan2(p2[0] - p1[0], p2[1] - p1[1]);
-      return -90 - (angle * 180) / Math.PI;
+      return headingBetweenPoints(p1, p2);
     }
   }
 
