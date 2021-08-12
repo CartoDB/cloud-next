@@ -7,7 +7,7 @@ import flyTo from './flyTo';
 
 // Set your Google Maps API key here or via environment variable
 const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
-const GOOGLE_MAP_ID = process.env.GoogleMapsMapId; // eslint-disable-line
+const GOOGLE_MAP_ID = '97fe3c86201cc1aa';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 
 async function init() {
