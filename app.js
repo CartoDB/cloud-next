@@ -11,7 +11,7 @@ const GOOGLE_MAP_ID = process.env.GoogleMapsMapId; // eslint-disable-line
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 
 async function init() {
-  await loadScript(GOOGLE_MAPS_API_URL);
+  const [_, data] = await Promise.all([loadScript(GOOGLE_MAPS_API_URL), getTripData()]);
   const map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 40.72, lng: -74},
     tilt: 45,
@@ -20,7 +20,6 @@ async function init() {
     mapId: GOOGLE_MAP_ID
   });
 
-  const data = await getTripData();
   createOverlay(map, data);
 
   document.getElementById('focus-btn').addEventListener('click', () => {
