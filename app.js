@@ -1,8 +1,14 @@
 /* global document, google, window */
 import {GoogleMapsOverlay as DeckOverlay} from '@deck.gl/google-maps';
 import {TripsLayer} from '@deck.gl/geo-layers';
+import {ScenegraphLayer} from '@deck.gl/mesh-layers';
+import {registerLoaders} from '@loaders.gl/core';
+import {GLTFLoader} from '@loaders.gl/gltf';
+
 import {update as updateTween} from '@tweenjs/tween.js';
 import flyTo from './flyTo';
+
+registerLoaders([GLTFLoader]);
 
 const DATA_URL = {
   TRIPS: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/trips/trips-v7.json' // eslint-disable-line
@@ -59,6 +65,17 @@ loadScript(GOOGLE_MAPS_API_URL).then(() => {
     shadowEnabled: false
   };
 
+  const scenegraphProps = {
+    id: 'scenegraph-layer',
+    data: [0],
+    pickable: true,
+    sizeScale: 5,
+    scenegraph: 'scene.gltf',
+    getPosition: [-74, 40.72],
+    getOrientation: d => [0, Math.random() * 360, 90],
+    _lighting: 'pbr'
+  };
+
   const overlay = new DeckOverlay({});
   const animate = () => {
     currentTime = (currentTime + 1) % LOOP_LENGTH;
@@ -67,7 +84,7 @@ loadScript(GOOGLE_MAPS_API_URL).then(() => {
       currentTime
     });
     overlay.setProps({
-      layers: [tripsLayer]
+      layers: [tripsLayer, new ScenegraphLayer(scenegraphProps)]
     });
     updateTween();
     if (window.trips) {
@@ -86,7 +103,7 @@ loadScript(GOOGLE_MAPS_API_URL).then(() => {
           break;
         }
       }
-      map.moveCamera({center});
+      //map.moveCamera({center});
     }
 
     window.requestAnimationFrame(animate);
