@@ -11,7 +11,7 @@ const GOOGLE_MAP_ID = '97fe3c86201cc1aa';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 
 async function init() {
-  const [_, data] = await Promise.all([loadScript(GOOGLE_MAPS_API_URL), getTripData()]);
+  const [_, allData] = await Promise.all([loadScript(GOOGLE_MAPS_API_URL), getTripData()]);
   const map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 40.72, lng: -74},
     tilt: 45,
@@ -20,10 +20,26 @@ async function init() {
     mapId: GOOGLE_MAP_ID
   });
 
-  createOverlay(map, data.slice(0, 100));
+  const data = allData.slice(0, 100);
+  const overlay = createOverlay(map, data);
 
+  let truckToFollow = 9;
   document.getElementById('focus-btn').addEventListener('click', () => {
+    overlay.truckToFollow = null;
     flyTo(map, {lat: 40.72, lng: -74, tilt: 45, heading: 0, zoom: 13});
+  });
+
+  function updateTruckToFollow() {
+    overlay.truckToFollow = truckToFollow;
+    document.getElementById('truck-to-follow').innerHTML = truckToFollow;
+  }
+  document.getElementById('next-btn').addEventListener('click', () => {
+    truckToFollow = (truckToFollow + 1) % data.length;
+    updateTruckToFollow();
+  });
+  document.getElementById('previous-btn').addEventListener('click', () => {
+    truckToFollow = (truckToFollow + data.length - 1) % data.length;
+    updateTruckToFollow();
   });
 }
 
