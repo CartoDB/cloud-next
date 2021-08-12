@@ -37,7 +37,7 @@ export function createOverlay(map, data) {
     sizeScale: 10,
     scenegraph: 'low_poly_truck/scene.gltf',
     getPosition: d => getVehiclePosition(d, currentTime),
-    getOrientation: d => [0, Math.random() * 360, 90],
+    getOrientation: d => [0, getVehicleHeading(d, currentTime) - 90, 90],
     _lighting: 'pbr'
   };
 
@@ -50,7 +50,8 @@ export function createOverlay(map, data) {
     });
     const scenegraphLayer = new ScenegraphLayer({
       updateTriggers: {
-        getPosition: [currentTime]
+        getPosition: [currentTime],
+        getOrientation: [currentTime]
       },
       ...scenegraphProps
     });
@@ -75,7 +76,7 @@ function getVehiclePosition(trip, time) {
   for (let i = 0; i < trip.timestamps.length; i++) {
     const t1 = trip.timestamps[i];
     const t2 = trip.timestamps[i + 1];
-    if (t1 > time) {
+    if (time > t1 && time < t2) {
       const f = (time - t1) / (t2 - t1);
       const p1 = trip.path[i];
       const p2 = trip.path[i + 1];
@@ -84,4 +85,21 @@ function getVehiclePosition(trip, time) {
       return [lng, lat];
     }
   }
+
+  return trip.path[0];
+}
+
+function getVehicleHeading(trip, time) {
+  for (let i = 0; i < trip.timestamps.length; i++) {
+    const t1 = trip.timestamps[i];
+    const t2 = trip.timestamps[i + 1];
+    if (time > t1 && time < t2) {
+      const p1 = trip.path[i];
+      const p2 = trip.path[i + 1];
+      const angle = Math.atan2(p2[0] - p1[0], p2[1] - p1[1]);
+      return -90 - (angle * 180) / Math.PI;
+    }
+  }
+
+  return 0;
 }
