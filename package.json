@@ -7,14 +7,20 @@
     "build": "webpack -p"
   },
   "dependencies": {
-    "@deck.gl/core": "^8.6.0-alpha.1",
     "@deck.gl/carto": "^8.6.0-alpha.1",
+    "@deck.gl/core": "^8.6.0-alpha.1",
     "@deck.gl/extensions": "^8.6.0-alpha.1",
     "@deck.gl/geo-layers": "^8.6.0-alpha.1",
     "@deck.gl/google-maps": "^8.6.0-alpha.1",
     "@deck.gl/layers": "^8.6.0-alpha.1",
     "@deck.gl/mesh-layers": "^8.6.0-alpha.1",
-    "@tweenjs/tween.js": "^18"
+    "@tweenjs/tween.js": "^18",
+    "d3-array": "^2.7.1",
+    "d3-collection": "^1.0.7",
+    "d3-color": "^2.0.0",
+    "d3-interpolate": "^2.0.1",
+    "d3-scale": "^3.2.2",
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
     "webpack": "^4.20.2",

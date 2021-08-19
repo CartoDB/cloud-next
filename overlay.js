@@ -1,5 +1,5 @@
 import {GoogleMapsOverlay as DeckOverlay} from '@deck.gl/google-maps';
-import {ScatterplotLayer} from '@deck.gl/layers';
+import FlowmapLayer from './flowmap';
 import {TripsLayer} from '@deck.gl/geo-layers';
 import {ScenegraphLayer} from '@deck.gl/mesh-layers';
 import {registerLoaders} from '@loaders.gl/core';
@@ -7,7 +7,7 @@ import {GLTFLoader} from '@loaders.gl/gltf';
 import {update as updateTween} from '@tweenjs/tween.js';
 
 import {headingBetweenPoints} from './utils';
-import {locations} from './data/od_texas';
+import {flows, locations} from './data/od_texas';
 
 registerLoaders([GLTFLoader]);
 
@@ -54,6 +54,17 @@ export function createOverlay(map, data) {
     lineWidthMinPixels: 2
   };
 
+  const flowmapProps = {
+    id: 'flowmap-layer',
+    locations,
+    flows,
+    getFlowMagnitude: flow => flow.count || 0,
+    getFlowOriginId: flow => flow.origin,
+    getFlowDestId: flow => flow.dest,
+    getLocationId: loc => loc.id,
+    getLocationCentroid: loc => [loc.lon, loc.lat]
+  };
+
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
   const animate = () => {
@@ -69,9 +80,9 @@ export function createOverlay(map, data) {
       },
       ...scenegraphProps
     });
-    const scatterplotLayer = new ScatterplotLayer(scatterProps);
+    const flowmapLayer = new FlowmapLayer(flowmapProps);
     overlay.setProps({
-      layers: [tripsLayer, scenegraphLayer, scatterplotLayer]
+      layers: [tripsLayer, scenegraphLayer, flowmapLayer]
     });
     updateTween();
     if (overlay.truckToFollow !== null) {
