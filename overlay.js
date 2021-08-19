@@ -49,9 +49,9 @@ export function createOverlay(map, data) {
     data: locations,
     getPosition: d => [d.lon, d.lat],
     getFillColor: [33, 45, 211],
-    getLineColor: [189, 200, 255],
-    getRadius: 25,
-    radiusMinPixels: 4
+    getLineColor: [33, 33, 33],
+    radiusMinPixels: 6,
+    lineWidthMinPixels: 2
   };
 
   const overlay = new DeckOverlay({});
