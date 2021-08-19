@@ -1,4 +1,5 @@
 import {GoogleMapsOverlay as DeckOverlay} from '@deck.gl/google-maps';
+import {ScatterplotLayer} from '@deck.gl/layers';
 import {TripsLayer} from '@deck.gl/geo-layers';
 import {ScenegraphLayer} from '@deck.gl/mesh-layers';
 import {registerLoaders} from '@loaders.gl/core';
@@ -6,6 +7,7 @@ import {GLTFLoader} from '@loaders.gl/gltf';
 import {update as updateTween} from '@tweenjs/tween.js';
 
 import {headingBetweenPoints} from './utils';
+import {locations} from './data/od_texas';
 
 registerLoaders([GLTFLoader]);
 
@@ -43,6 +45,15 @@ export function createOverlay(map, data) {
     _lighting: 'pbr'
   };
 
+  const scatterProps = {
+    data: locations,
+    getPosition: d => [d.lon, d.lat],
+    getFillColor: [33, 45, 211],
+    getLineColor: [189, 200, 255],
+    getRadius: 25,
+    radiusMinPixels: 4
+  };
+
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
   const animate = () => {
@@ -58,8 +69,9 @@ export function createOverlay(map, data) {
       },
       ...scenegraphProps
     });
+    const scatterplotLayer = new ScatterplotLayer(scatterProps);
     overlay.setProps({
-      layers: [tripsLayer, scenegraphLayer]
+      layers: [tripsLayer, scenegraphLayer, scatterplotLayer]
     });
     updateTween();
     if (overlay.truckToFollow !== null) {
