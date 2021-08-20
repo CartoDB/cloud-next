@@ -38,7 +38,7 @@ async function init() {
     flyTo(map, {lat, lng, tilt, heading, zoom});
   }
 
-  ['city', 'depo', 'charging-station', 'texas'].forEach(l => {
+  ['nyc', 'depo', 'charging-station', 'texas', 'uk'].forEach(l => {
     document.getElementById(`focus-${l}-btn`).addEventListener('click', focusOnLocation);
   });
 
