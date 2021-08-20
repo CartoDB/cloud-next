@@ -14,10 +14,10 @@ const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGL
 async function init() {
   const [_, allData] = await Promise.all([loadScript(GOOGLE_MAPS_API_URL), getTripData()]);
   const map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 40.72, lng: -74},
-    tilt: 45,
+    center: {lat: 32, lng: -98},
+    tilt: 0,
     heading: 0,
-    zoom: 15,
+    zoom: 6,
     mapId: GOOGLE_MAP_ID
   });
   window.map = map;
@@ -38,7 +38,7 @@ async function init() {
     flyTo(map, {lat, lng, tilt, heading, zoom});
   }
 
-  ['city', 'depo', 'charging-station'].forEach(l => {
+  ['city', 'depo', 'charging-station', 'texas'].forEach(l => {
     document.getElementById(`focus-${l}-btn`).addEventListener('click', focusOnLocation);
   });
 
