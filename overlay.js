@@ -10,7 +10,7 @@ import {update as updateTween} from '@tweenjs/tween.js';
 
 import {headingBetweenPoints} from './utils';
 import {flows, locations} from './data/od_texas';
-import flowmapColors from './flowmapColors';
+import flowmapStyle from './flowmapStyle';
 
 registerLoaders([CSVLoader, GLTFLoader]);
 
@@ -61,7 +61,7 @@ export function createOverlay(map, data) {
     id: 'flowmap-layer',
     locations,
     flows,
-    colors: flowmapColors,
+    ...flowmapStyle,
     getFlowMagnitude: flow => flow.count || 0,
     getFlowOriginId: flow => flow.origin,
     getFlowDestId: flow => flow.dest,
@@ -106,7 +106,10 @@ export function createOverlay(map, data) {
       },
       ...scenegraphProps
     });
-    const flowmapLayer = new FlowmapLayer(flowmapProps);
+    const flowmapLayer = new FlowmapLayer({
+      ...flowmapProps,
+      animationCurrentTime: 10 * currentTime
+    });
     const hexagonLayer = new HexagonLayer(hexagonProps);
     overlay.setProps({
       layers: [tripsLayer, scenegraphLayer, flowmapLayer, hexagonLayer]
