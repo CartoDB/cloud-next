@@ -2,7 +2,9 @@ import {GoogleMapsOverlay as DeckOverlay} from '@deck.gl/google-maps';
 import FlowmapLayer from './flowmap';
 import {TripsLayer} from '@deck.gl/geo-layers';
 import {ScenegraphLayer} from '@deck.gl/mesh-layers';
+import {HexagonLayer} from '@deck.gl/aggregation-layers';
 import {registerLoaders} from '@loaders.gl/core';
+import {CSVLoader} from '@loaders.gl/csv';
 import {GLTFLoader} from '@loaders.gl/gltf';
 import {update as updateTween} from '@tweenjs/tween.js';
 
@@ -10,7 +12,7 @@ import {headingBetweenPoints} from './utils';
 import {flows, locations} from './data/od_texas';
 import flowmapColors from './flowmapColors';
 
-registerLoaders([GLTFLoader]);
+registerLoaders([CSVLoader, GLTFLoader]);
 
 const LOOP_LENGTH = 1800;
 const THEME = {
@@ -67,6 +69,28 @@ export function createOverlay(map, data) {
     getLocationCentroid: loc => [loc.lon, loc.lat]
   };
 
+  const COLOR_RANGE = [
+    [1, 152, 189],
+    [73, 227, 206],
+    [216, 254, 181],
+    [254, 237, 177],
+    [254, 173, 84],
+    [209, 55, 78]
+  ];
+  const hexagonProps = {
+    id: 'hexagon-heatmap',
+    colorRange: COLOR_RANGE,
+    data:
+      'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv',
+    elevationRange: [0, 1000],
+    elevationScale: 250,
+    extruded: true,
+    getPosition: d => [Number(d.lng), Number(d.lat)],
+    coverage: 0.7,
+    radius: 2000,
+    upperPercentile: 100
+  };
+
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
   const animate = () => {
@@ -83,8 +107,9 @@ export function createOverlay(map, data) {
       ...scenegraphProps
     });
     const flowmapLayer = new FlowmapLayer(flowmapProps);
+    const hexagonLayer = new HexagonLayer(hexagonProps);
     overlay.setProps({
-      layers: [tripsLayer, scenegraphLayer, flowmapLayer]
+      layers: [tripsLayer, scenegraphLayer, flowmapLayer, hexagonLayer]
     });
     updateTween();
     if (overlay.truckToFollow !== null) {
