@@ -7,8 +7,7 @@ import flyTo from './flyTo';
 
 // Set your Google Maps API key here or via environment variable
 const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
-const GOOGLE_MAP_ID = '97fe3c86201cc1aa';
-//const GOOGLE_MAP_ID = 'e0cde073740a00d5';
+const GOOGLE_MAP_ID = '95c4a86206596d98';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 
 async function init() {
@@ -38,7 +37,7 @@ async function init() {
     flyTo(map, {lat, lng, tilt, heading, zoom});
   }
 
-  ['city', 'depo', 'charging-station', 'texas'].forEach(l => {
+  ['nyc', 'depo', 'charging-station', 'texas', 'uk'].forEach(l => {
     document.getElementById(`focus-${l}-btn`).addEventListener('click', focusOnLocation);
   });
 
