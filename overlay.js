@@ -8,6 +8,7 @@ import {update as updateTween} from '@tweenjs/tween.js';
 
 import {headingBetweenPoints} from './utils';
 import {flows, locations} from './data/od_texas';
+import flowmapColors from './flowmapColors';
 
 registerLoaders([GLTFLoader]);
 
@@ -58,6 +59,7 @@ export function createOverlay(map, data) {
     id: 'flowmap-layer',
     locations,
     flows,
+    colors: flowmapColors,
     getFlowMagnitude: flow => flow.count || 0,
     getFlowOriginId: flow => flow.origin,
     getFlowDestId: flow => flow.dest,
