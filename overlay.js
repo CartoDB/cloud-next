@@ -21,7 +21,7 @@ const THEME = {
   trailColor1: [0, 0, 255]
 };
 
-export function createOverlay(map, {countyData, populationData}) {
+export function createOverlay(map, {boundaryData, countyData, populationData}) {
   let currentTime = 0;
   const props = {
     id: 'trips',
@@ -88,12 +88,20 @@ export function createOverlay(map, {countyData, populationData}) {
     getFillColor: d => [255, (1 - d.pop / 30000) * 255, 0]
   };
 
+  const boundaryProps = {
+    data: boundaryData,
+    stroked: true,
+    filled: false,
+    lineWidthMinPixels: 20,
+    getLineColor: [233, 244, 0, 80]
+  };
+
   const countiesProps = {
     data: countyData,
     stroked: true,
     filled: false,
     lineWidthMinPixels: 2,
-    getLineColor: [233, 244, 0]
+    getLineColor: [233, 244, 0, 80]
   };
 
   const overlay = new DeckOverlay({});
@@ -115,11 +123,12 @@ export function createOverlay(map, {countyData, populationData}) {
       ...flowmapProps,
       animationCurrentTime: 10 * currentTime
     });
-    const hexagonLayer = new H3HexagonLayer(hexagonProps);
+    const boundaryLayer = new GeoJsonLayer(boundaryProps);
     const countiesLayer = new GeoJsonLayer(countiesProps);
+    const hexagonLayer = new H3HexagonLayer(hexagonProps);
 
     overlay.setProps({
-      layers: [countiesLayer, hexagonLayer]
+      layers: [boundaryLayer, countiesLayer, hexagonLayer]
     });
     updateTween();
     if (overlay.truckToFollow !== null) {

@@ -56,10 +56,10 @@ export async function getPopulationData() {
   return data;
 }
 
-export async function getCountyData() {
+export async function getWKTData(source) {
   const data = await getData({
     type: MAP_TYPES.TABLE,
-    source: 'cartobq.nexus_demo.texas_counties',
+    source,
     connection: 'bigquery',
     format: 'json'
   });
