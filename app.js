@@ -1,5 +1,10 @@
 /* global document, google, window */
-import {getTexasBoundaryData, getWKTData, getPopulationData} from './datasource';
+import {
+  getTexasBoundarySimplifiedData,
+  getWKTData,
+  getPopulationData,
+  getTexasTripData
+} from './datasource';
 import {createOverlay} from './overlay';
 import {loadScript} from './utils';
 
@@ -13,9 +18,10 @@ const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGL
 async function init() {
   const [_, boundaryData, countyData, populationData, tripData] = await Promise.all([
     loadScript(GOOGLE_MAPS_API_URL),
-    getTexasBoundaryData(),
+    getTexasBoundarySimplifiedData(),
     getWKTData('cartobq.nexus_demo.texas_counties'),
     getPopulationData()
+    //getTexasTripData()
   ]);
   const map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 32, lng: -98},

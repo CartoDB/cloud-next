@@ -74,10 +74,37 @@ export async function getWKTData(source) {
   return data.map(parseWKT);
 }
 
+export async function getTexasTripData() {
+  const data = await getData({
+    type: MAP_TYPES.QUERY,
+    source:
+      'SELECT geogpoint as geom, timestamp, vehicle_id FROM `cartobq.nexus_demo.trip_data_test3` TABLESAMPLE SYSTEM (1 PERCENT) limit 150000',
+    connection: 'bigquery',
+    format: 'json'
+  });
+
+  return data.map(parseWKT);
+}
+
 export async function getTexasBoundaryData() {
   const data = await getData({
     type: MAP_TYPES.QUERY,
     source: 'SELECT ST_SIMPLIFY(geometry,100) as geom FROM `cartobq.nexus_demo.texas_boundary`',
+    connection: 'bigquery',
+    format: 'json',
+    credentials: {
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzYWZhODUyOSJ9.bCrMmLKkMAgA21Y14js5up8CR4IJ45xhENzXo-CuHMs'
+    }
+  });
+
+  return data.map(parseWKT);
+}
+
+export async function getTexasBoundarySimplifiedData() {
+  const data = await getData({
+    type: MAP_TYPES.TABLE,
+    source: 'cartobq.nexus_demo.texas_boundary_simplified',
     connection: 'bigquery',
     format: 'json',
     credentials: {
