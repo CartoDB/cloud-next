@@ -47,7 +47,7 @@ async function init() {
     flyTo(map, {lat, lng, tilt, heading, zoom});
   }
 
-  ['texas', 'austin', 'houston'].forEach(l => {
+  ['texas', 'austin', 'houston', 'san-antonio'].forEach(l => {
     document.getElementById(`focus-${l}-btn`).addEventListener('click', focusOnLocation);
   });
 
