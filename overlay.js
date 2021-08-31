@@ -1,5 +1,6 @@
 import {GoogleMapsOverlay as DeckOverlay} from '@deck.gl/google-maps';
 import FlowmapLayer from './flowmap';
+import {CartoLayer, MAP_TYPES} from '@deck.gl/carto';
 import {H3HexagonLayer, TripsLayer} from '@deck.gl/geo-layers';
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {ScenegraphLayer} from '@deck.gl/mesh-layers';
@@ -104,6 +105,19 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
     getLineColor: [233, 244, 0, 80]
   };
 
+  const parkingProps = {
+    id: 'truck-parking-locations',
+    connection: 'bigquery',
+    type: MAP_TYPES.TABLE,
+    data: 'cartobq.nexus_demo.truck_parking_locations2',
+    getFillColor: [145, 0, 100],
+    pointRadiusMinPixels: 3,
+    credentials: {
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzYWZhODUyOSJ9.bCrMmLKkMAgA21Y14js5up8CR4IJ45xhENzXo-CuHMs'
+    }
+  };
+
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
   const animate = () => {
@@ -126,12 +140,14 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
     const boundaryLayer = new GeoJsonLayer(boundaryProps);
     const countiesLayer = new GeoJsonLayer(countiesProps);
     const hexagonLayer = new H3HexagonLayer(hexagonProps);
+    const parkingLayer = new CartoLayer(parkingProps);
 
     overlay.setProps({
       layers: [
         boundaryLayer,
         //countiesLayer,
         hexagonLayer
+        //parkingLayer
       ]
     });
     updateTween();
