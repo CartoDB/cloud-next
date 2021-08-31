@@ -4,7 +4,7 @@ setDefaultCredentials({
   apiVersion: API_VERSIONS.V3,
   apiBaseUrl: 'https://gcp-us-east1.api.carto.com',
   accessToken:
-    'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJkODY4YmNhOCJ9.pw0Fx0RlzjjCkdK4uFfW8oQlO9WyZ9U-8oTbCt9UU1Y'
+    'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjZTY5M2NmMCJ9.9HD7U1c-Wh81SPaSvWWSNShF7MIMH-9-S8YmWFo0_x0'
 });
 
 const TIME0 = new Date('2021-08-10T00:00:00.000Z');
@@ -32,4 +32,15 @@ export async function getTripData() {
   });
 
   return data.map(parseRide);
+}
+
+export async function getPopulationData() {
+  const data = await getData({
+    type: MAP_TYPES.TABLE,
+    source: `cartobq.nexus_demo.texas_pop_h3`,
+    connection: 'bigquery',
+    format: 'json'
+  });
+
+  return data;
 }

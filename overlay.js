@@ -1,6 +1,6 @@
 import {GoogleMapsOverlay as DeckOverlay} from '@deck.gl/google-maps';
 import FlowmapLayer from './flowmap';
-import {TripsLayer} from '@deck.gl/geo-layers';
+import {H3HexagonLayer, TripsLayer} from '@deck.gl/geo-layers';
 import {ScenegraphLayer} from '@deck.gl/mesh-layers';
 import {HexagonLayer} from '@deck.gl/aggregation-layers';
 import {registerLoaders} from '@loaders.gl/core';
@@ -20,11 +20,11 @@ const THEME = {
   trailColor1: [0, 0, 255]
 };
 
-export function createOverlay(map, data) {
+export function createOverlay(map, {populationData}) {
   let currentTime = 0;
   const props = {
     id: 'trips',
-    data,
+    data: [],
     getPath: d => d.path,
     getTimestamps: d => d.timestamps,
     getColor: d => (d.vendor === 0 ? THEME.trailColor0 : THEME.trailColor1),
@@ -38,7 +38,7 @@ export function createOverlay(map, data) {
 
   const scenegraphProps = {
     id: 'scenegraph-layer',
-    data,
+    data: [],
     pickable: true,
     opacity: 1,
     sizeScale: 10,
@@ -78,17 +78,13 @@ export function createOverlay(map, data) {
     [209, 55, 78]
   ];
   const hexagonProps = {
-    id: 'hexagon-heatmap',
-    colorRange: COLOR_RANGE,
-    data:
-      'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv',
-    elevationRange: [0, 1000],
-    elevationScale: 250,
+    id: 'population-heatmap',
+    data: populationData,
     extruded: true,
-    getPosition: d => [Number(d.lng), Number(d.lat)],
-    coverage: 0.7,
-    radius: 2000,
-    upperPercentile: 100
+    elevationScale: 2,
+    getHexagon: d => d.h3,
+    getElevation: d => d.pop,
+    getFillColor: d => [255, (1 - d.pop / 30000) * 255, 0]
   };
 
   const overlay = new DeckOverlay({});
@@ -110,9 +106,9 @@ export function createOverlay(map, data) {
       ...flowmapProps,
       animationCurrentTime: 10 * currentTime
     });
-    const hexagonLayer = new HexagonLayer(hexagonProps);
+    const hexagonLayer = new H3HexagonLayer(hexagonProps);
     overlay.setProps({
-      layers: [tripsLayer, scenegraphLayer, flowmapLayer, hexagonLayer]
+      layers: [hexagonLayer]
     });
     updateTween();
     if (overlay.truckToFollow !== null) {

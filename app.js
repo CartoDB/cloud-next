@@ -1,5 +1,5 @@
 /* global document, google, window */
-import {getTripData} from './datasource';
+import {getTripData, getPopulationData} from './datasource';
 import {createOverlay} from './overlay';
 import {loadScript} from './utils';
 
@@ -11,7 +11,10 @@ const GOOGLE_MAP_ID = '95c4a86206596d98';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 
 async function init() {
-  const [_, allData] = await Promise.all([loadScript(GOOGLE_MAPS_API_URL), getTripData()]);
+  const [_, populationData] = await Promise.all([
+    loadScript(GOOGLE_MAPS_API_URL),
+    getPopulationData()
+  ]);
   const map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 32, lng: -98},
     tilt: 0,
@@ -21,8 +24,7 @@ async function init() {
   });
   window.map = map;
 
-  const data = allData.slice(0, 100);
-  const overlay = createOverlay(map, data);
+  const overlay = createOverlay(map, {populationData});
 
   let truckToFollow = 9;
 
