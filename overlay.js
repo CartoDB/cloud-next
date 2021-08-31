@@ -90,6 +90,7 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
   };
 
   const boundaryProps = {
+    id: 'texas-boundary',
     data: boundaryData,
     stroked: true,
     filled: false,
@@ -99,6 +100,7 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
 
   const countiesProps = {
     data: countyData,
+    id: 'texas-counties',
     stroked: true,
     filled: false,
     lineWidthMinPixels: 2,
@@ -120,6 +122,7 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
 
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
+  overlay.visibleLayers = ['flowmap-layer'];
   const animate = () => {
     currentTime = (currentTime + 0.1) % LOOP_LENGTH;
     const tripsLayer = new TripsLayer({
@@ -148,7 +151,7 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
         //countiesLayer,
         hexagonLayer
         //parkingLayer
-      ]
+      ].filter(l => overlay.visibleLayers.indexOf(l.id) !== -1)
     });
     updateTween();
     if (overlay.truckToFollow !== null) {

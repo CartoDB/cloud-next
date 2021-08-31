@@ -51,11 +51,26 @@ async function init() {
     document.getElementById(`focus-${l}-btn`).addEventListener('click', focusOnLocation);
   });
 
+  // Visualizations
+  let currentSlide = 0;
+  const slides = [['flowmap-layer'], ['population-heatmap', 'texas-boundary']];
+
   function updateTruckToFollow() {
     overlay.truckToFollow = truckToFollow;
   }
-  document.getElementById('next-btn').addEventListener('click', () => {});
-  document.getElementById('previous-btn').addEventListener('click', () => {});
+
+  function updateVisibleLayers() {
+    overlay.visibleLayers = slides[currentSlide];
+  }
+
+  document.getElementById('next-btn').addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateVisibleLayers();
+  });
+  document.getElementById('previous-btn').addEventListener('click', () => {
+    currentSlide = (currentSlide + slides.length - 1) % slides.length;
+    updateVisibleLayers();
+  });
   document.getElementById('print-location-btn').addEventListener('click', () => {
     const center = map.getCenter();
     const lat = center.lat();
