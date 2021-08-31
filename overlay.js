@@ -133,10 +133,7 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
       },
       ...scenegraphProps
     });
-    const flowmapLayer = new FlowmapLayer({
-      ...flowmapProps,
-      animationCurrentTime: 10 * currentTime
-    });
+    const flowmapLayer = new FlowmapLayer(flowmapProps);
     const boundaryLayer = new GeoJsonLayer(boundaryProps);
     const countiesLayer = new GeoJsonLayer(countiesProps);
     const hexagonLayer = new H3HexagonLayer(hexagonProps);
@@ -144,6 +141,9 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
 
     overlay.setProps({
       layers: [
+        flowmapLayer.clone({
+          animationCurrentTime: 10 * currentTime
+        }),
         boundaryLayer,
         //countiesLayer,
         hexagonLayer
