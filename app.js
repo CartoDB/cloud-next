@@ -47,22 +47,15 @@ async function init() {
     flyTo(map, {lat, lng, tilt, heading, zoom});
   }
 
-  ['nyc', 'depo', 'charging-station', 'texas', 'uk'].forEach(l => {
+  ['texas', 'austin', 'houston'].forEach(l => {
     document.getElementById(`focus-${l}-btn`).addEventListener('click', focusOnLocation);
   });
 
   function updateTruckToFollow() {
     overlay.truckToFollow = truckToFollow;
-    document.getElementById('truck-to-follow').innerHTML = truckToFollow;
   }
-  document.getElementById('next-btn').addEventListener('click', () => {
-    truckToFollow = (truckToFollow + 1) % data.length;
-    updateTruckToFollow();
-  });
-  document.getElementById('previous-btn').addEventListener('click', () => {
-    truckToFollow = (truckToFollow + data.length - 1) % data.length;
-    updateTruckToFollow();
-  });
+  document.getElementById('next-btn').addEventListener('click', () => {});
+  document.getElementById('previous-btn').addEventListener('click', () => {});
   document.getElementById('print-location-btn').addEventListener('click', () => {
     const center = map.getCenter();
     const lat = center.lat();
