@@ -16,6 +16,7 @@
     "@deck.gl/layers": "^8.6.0-alpha.1",
     "@deck.gl/mesh-layers": "^8.6.0-alpha.1",
     "@loaders.gl/csv": "^3.0.8",
+    "@loaders.gl/wkt": "^3.0.8",
     "@tweenjs/tween.js": "^18",
     "d3-array": "^2.7.1",
     "d3-collection": "^1.0.7",

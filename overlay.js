@@ -1,6 +1,7 @@
 import {GoogleMapsOverlay as DeckOverlay} from '@deck.gl/google-maps';
 import FlowmapLayer from './flowmap';
 import {H3HexagonLayer, TripsLayer} from '@deck.gl/geo-layers';
+import {GeoJsonLayer} from '@deck.gl/layers';
 import {ScenegraphLayer} from '@deck.gl/mesh-layers';
 import {HexagonLayer} from '@deck.gl/aggregation-layers';
 import {registerLoaders} from '@loaders.gl/core';
@@ -20,7 +21,7 @@ const THEME = {
   trailColor1: [0, 0, 255]
 };
 
-export function createOverlay(map, {populationData}) {
+export function createOverlay(map, {countyData, populationData}) {
   let currentTime = 0;
   const props = {
     id: 'trips',
@@ -87,6 +88,14 @@ export function createOverlay(map, {populationData}) {
     getFillColor: d => [255, (1 - d.pop / 30000) * 255, 0]
   };
 
+  const countiesProps = {
+    data: countyData,
+    stroked: true,
+    filled: false,
+    lineWidthMinPixels: 2,
+    getLineColor: [233, 244, 0]
+  };
+
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
   const animate = () => {
@@ -107,8 +116,10 @@ export function createOverlay(map, {populationData}) {
       animationCurrentTime: 10 * currentTime
     });
     const hexagonLayer = new H3HexagonLayer(hexagonProps);
+    const countiesLayer = new GeoJsonLayer(countiesProps);
+
     overlay.setProps({
-      layers: [hexagonLayer]
+      layers: [countiesLayer, hexagonLayer]
     });
     updateTween();
     if (overlay.truckToFollow !== null) {

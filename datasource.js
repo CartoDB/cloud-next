@@ -1,4 +1,6 @@
 import {getData, setDefaultCredentials, MAP_TYPES, API_VERSIONS} from '@deck.gl/carto';
+import {WKTLoader} from '@loaders.gl/wkt';
+import {parseSync} from '@loaders.gl/core';
 
 setDefaultCredentials({
   apiVersion: API_VERSIONS.V3,
@@ -23,6 +25,15 @@ function parseRide(ride) {
   };
 }
 
+function parseWKT(f) {
+  const {geometry, ...properties} = f;
+  return {
+    type: 'Feature',
+    geometry: parseSync(f.geometry, WKTLoader),
+    properties
+  };
+}
+
 export async function getTripData() {
   const data = await getData({
     type: MAP_TYPES.TABLE,
@@ -43,4 +54,15 @@ export async function getPopulationData() {
   });
 
   return data;
+}
+
+export async function getCountyData() {
+  const data = await getData({
+    type: MAP_TYPES.TABLE,
+    source: 'cartobq.nexus_demo.texas_counties',
+    connection: 'bigquery',
+    format: 'json'
+  });
+
+  return data.map(parseWKT);
 }
