@@ -128,7 +128,11 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
     const hexagonLayer = new H3HexagonLayer(hexagonProps);
 
     overlay.setProps({
-      layers: [boundaryLayer, countiesLayer, hexagonLayer]
+      layers: [
+        boundaryLayer,
+        //countiesLayer,
+        hexagonLayer
+      ]
     });
     updateTween();
     if (overlay.truckToFollow !== null) {

@@ -26,6 +26,13 @@ function parseRide(ride) {
 }
 
 function parseWKT(f) {
+  if (Array.isArray(f)) {
+    f = f[0];
+  }
+  if (f.geom) {
+    f.geometry = f.geom;
+    delete f.geom;
+  }
   const {geometry, ...properties} = f;
   return {
     type: 'Feature',
@@ -62,6 +69,21 @@ export async function getWKTData(source) {
     source,
     connection: 'bigquery',
     format: 'json'
+  });
+
+  return data.map(parseWKT);
+}
+
+export async function getTexasBoundaryData() {
+  const data = await getData({
+    type: MAP_TYPES.QUERY,
+    source: 'SELECT ST_SIMPLIFY(geometry,100) as geom FROM `cartobq.nexus_demo.texas_boundary`',
+    connection: 'bigquery',
+    format: 'json',
+    credentials: {
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzYWZhODUyOSJ9.bCrMmLKkMAgA21Y14js5up8CR4IJ45xhENzXo-CuHMs'
+    }
   });
 
   return data.map(parseWKT);
