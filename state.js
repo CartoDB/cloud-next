@@ -15,7 +15,7 @@ const GOOGLE_MAP_ID = '95c4a86206596d98';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 const slides = [['flowmap-layer'], ['population-heatmap', 'texas-boundary']];
 const slides = [
-  ['truck-parking-locations'],
+  ['texas-boundary-layer'],
   ['flowmap-layer'],
   ['population-heatmap', 'texas-boundary']
 ];
