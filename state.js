@@ -16,8 +16,8 @@ const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGL
 const slides = [
   ['population-heatmap', 'texas-boundary' /*'texas-counties'*/],
   ['power-lines', 'texas-boundary'],
-  ['flowmap-layer'],
-  ['texas-boundary']
+  ['energy-sources', 'texas-boundary'],
+  ['flowmap-layer']
 ];
 
 const initAppState = {};
