@@ -1,10 +1,12 @@
 import {getData, setDefaultCredentials, MAP_TYPES, API_VERSIONS} from '@deck.gl/carto';
+import {WKTLoader} from '@loaders.gl/wkt';
+import {parseSync} from '@loaders.gl/core';
 
 setDefaultCredentials({
   apiVersion: API_VERSIONS.V3,
   apiBaseUrl: 'https://gcp-us-east1.api.carto.com',
   accessToken:
-    'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJkODY4YmNhOCJ9.pw0Fx0RlzjjCkdK4uFfW8oQlO9WyZ9U-8oTbCt9UU1Y'
+    'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjZTY5M2NmMCJ9.9HD7U1c-Wh81SPaSvWWSNShF7MIMH-9-S8YmWFo0_x0'
 });
 
 const TIME0 = new Date('2021-08-10T00:00:00.000Z');
@@ -23,6 +25,22 @@ function parseRide(ride) {
   };
 }
 
+function parseWKT(f) {
+  if (Array.isArray(f)) {
+    f = f[0];
+  }
+  if (f.geom) {
+    f.geometry = f.geom;
+    delete f.geom;
+  }
+  const {geometry, ...properties} = f;
+  return {
+    type: 'Feature',
+    geometry: parseSync(f.geometry, WKTLoader),
+    properties
+  };
+}
+
 export async function getTripData() {
   const data = await getData({
     type: MAP_TYPES.TABLE,
@@ -32,4 +50,68 @@ export async function getTripData() {
   });
 
   return data.map(parseRide);
+}
+
+export async function getPopulationData() {
+  const data = await getData({
+    type: MAP_TYPES.TABLE,
+    source: `cartobq.nexus_demo.texas_pop_h3`,
+    connection: 'bigquery',
+    format: 'json'
+  });
+
+  return data;
+}
+
+export async function getWKTData(source) {
+  const data = await getData({
+    type: MAP_TYPES.TABLE,
+    source,
+    connection: 'bigquery',
+    format: 'json'
+  });
+
+  return data.map(parseWKT);
+}
+
+export async function getTexasTripData() {
+  const data = await getData({
+    type: MAP_TYPES.QUERY,
+    source:
+      'SELECT geogpoint as geom, timestamp, vehicle_id FROM `cartobq.nexus_demo.trip_data_test3` TABLESAMPLE SYSTEM (1 PERCENT) limit 150000',
+    connection: 'bigquery',
+    format: 'json'
+  });
+
+  return data.map(parseWKT);
+}
+
+export async function getTexasBoundaryData() {
+  const data = await getData({
+    type: MAP_TYPES.QUERY,
+    source: 'SELECT ST_SIMPLIFY(geometry,100) as geom FROM `cartobq.nexus_demo.texas_boundary`',
+    connection: 'bigquery',
+    format: 'json',
+    credentials: {
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzYWZhODUyOSJ9.bCrMmLKkMAgA21Y14js5up8CR4IJ45xhENzXo-CuHMs'
+    }
+  });
+
+  return data.map(parseWKT);
+}
+
+export async function getTexasBoundarySimplifiedData() {
+  const data = await getData({
+    type: MAP_TYPES.TABLE,
+    source: 'cartobq.nexus_demo.texas_boundary_simplified',
+    connection: 'bigquery',
+    format: 'json',
+    credentials: {
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzYWZhODUyOSJ9.bCrMmLKkMAgA21Y14js5up8CR4IJ45xhENzXo-CuHMs'
+    }
+  });
+
+  return data.map(parseWKT);
 }

@@ -1,6 +1,8 @@
 import {GoogleMapsOverlay as DeckOverlay} from '@deck.gl/google-maps';
 import FlowmapLayer from './flowmap';
-import {TripsLayer} from '@deck.gl/geo-layers';
+import {CartoLayer, MAP_TYPES} from '@deck.gl/carto';
+import {H3HexagonLayer, TripsLayer} from '@deck.gl/geo-layers';
+import {GeoJsonLayer} from '@deck.gl/layers';
 import {ScenegraphLayer} from '@deck.gl/mesh-layers';
 import {HexagonLayer} from '@deck.gl/aggregation-layers';
 import {registerLoaders} from '@loaders.gl/core';
@@ -20,11 +22,11 @@ const THEME = {
   trailColor1: [0, 0, 255]
 };
 
-export function createOverlay(map, data) {
+export function createOverlay(map, {boundaryData, countyData, populationData}) {
   let currentTime = 0;
   const props = {
     id: 'trips',
-    data,
+    data: [],
     getPath: d => d.path,
     getTimestamps: d => d.timestamps,
     getColor: d => (d.vendor === 0 ? THEME.trailColor0 : THEME.trailColor1),
@@ -38,7 +40,7 @@ export function createOverlay(map, data) {
 
   const scenegraphProps = {
     id: 'scenegraph-layer',
-    data,
+    data: [],
     pickable: true,
     opacity: 1,
     sizeScale: 10,
@@ -78,21 +80,49 @@ export function createOverlay(map, data) {
     [209, 55, 78]
   ];
   const hexagonProps = {
-    id: 'hexagon-heatmap',
-    colorRange: COLOR_RANGE,
-    data:
-      'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv',
-    elevationRange: [0, 1000],
-    elevationScale: 250,
+    id: 'population-heatmap',
+    data: populationData,
     extruded: true,
-    getPosition: d => [Number(d.lng), Number(d.lat)],
-    coverage: 0.7,
-    radius: 2000,
-    upperPercentile: 100
+    elevationScale: 2,
+    getHexagon: d => d.h3,
+    getElevation: d => d.pop,
+    getFillColor: d => [255, (1 - d.pop / 30000) * 255, 0]
+  };
+
+  const boundaryProps = {
+    id: 'texas-boundary',
+    data: boundaryData,
+    stroked: true,
+    filled: false,
+    lineWidthMinPixels: 20,
+    getLineColor: [233, 244, 0, 80]
+  };
+
+  const countiesProps = {
+    data: countyData,
+    id: 'texas-counties',
+    stroked: true,
+    filled: false,
+    lineWidthMinPixels: 2,
+    getLineColor: [233, 244, 0, 80]
+  };
+
+  const parkingProps = {
+    id: 'truck-parking-locations',
+    connection: 'bigquery',
+    type: MAP_TYPES.TABLE,
+    data: 'cartobq.nexus_demo.truck_parking_locations2',
+    getFillColor: [145, 0, 100],
+    pointRadiusMinPixels: 3,
+    credentials: {
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzYWZhODUyOSJ9.bCrMmLKkMAgA21Y14js5up8CR4IJ45xhENzXo-CuHMs'
+    }
   };
 
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
+  overlay.visibleLayers = ['flowmap-layer'];
   const animate = () => {
     currentTime = (currentTime + 0.1) % LOOP_LENGTH;
     const tripsLayer = new TripsLayer({
@@ -106,13 +136,22 @@ export function createOverlay(map, data) {
       },
       ...scenegraphProps
     });
-    const flowmapLayer = new FlowmapLayer({
-      ...flowmapProps,
-      animationCurrentTime: 10 * currentTime
-    });
-    const hexagonLayer = new HexagonLayer(hexagonProps);
+    const flowmapLayer = new FlowmapLayer(flowmapProps);
+    const boundaryLayer = new GeoJsonLayer(boundaryProps);
+    const countiesLayer = new GeoJsonLayer(countiesProps);
+    const hexagonLayer = new H3HexagonLayer(hexagonProps);
+    const parkingLayer = new CartoLayer(parkingProps);
+
     overlay.setProps({
-      layers: [tripsLayer, scenegraphLayer, flowmapLayer, hexagonLayer]
+      layers: [
+        flowmapLayer.clone({
+          animationCurrentTime: 10 * currentTime
+        }),
+        boundaryLayer,
+        //countiesLayer,
+        hexagonLayer
+        //parkingLayer
+      ].filter(l => overlay.visibleLayers.indexOf(l.id) !== -1)
     });
     updateTween();
     if (overlay.truckToFollow !== null) {

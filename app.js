@@ -1,5 +1,10 @@
 /* global document, google, window */
-import {getTripData} from './datasource';
+import {
+  getTexasBoundarySimplifiedData,
+  getWKTData,
+  getPopulationData,
+  getTexasTripData
+} from './datasource';
 import {createOverlay} from './overlay';
 import {loadScript} from './utils';
 
@@ -11,7 +16,13 @@ const GOOGLE_MAP_ID = '95c4a86206596d98';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 
 async function init() {
-  const [_, allData] = await Promise.all([loadScript(GOOGLE_MAPS_API_URL), getTripData()]);
+  const [_, boundaryData, countyData, populationData, tripData] = await Promise.all([
+    loadScript(GOOGLE_MAPS_API_URL),
+    getTexasBoundarySimplifiedData(),
+    getWKTData('cartobq.nexus_demo.texas_counties'),
+    getPopulationData()
+    //getTexasTripData()
+  ]);
   const map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 32, lng: -98},
     tilt: 0,
@@ -21,8 +32,7 @@ async function init() {
   });
   window.map = map;
 
-  const data = allData.slice(0, 100);
-  const overlay = createOverlay(map, data);
+  const overlay = createOverlay(map, {boundaryData, countyData, populationData});
 
   let truckToFollow = 9;
 
@@ -37,21 +47,29 @@ async function init() {
     flyTo(map, {lat, lng, tilt, heading, zoom});
   }
 
-  ['nyc', 'depo', 'charging-station', 'texas', 'uk'].forEach(l => {
+  ['texas', 'austin', 'houston', 'san-antonio'].forEach(l => {
     document.getElementById(`focus-${l}-btn`).addEventListener('click', focusOnLocation);
   });
 
+  // Visualizations
+  let currentSlide = 0;
+  const slides = [['flowmap-layer'], ['population-heatmap', 'texas-boundary']];
+
   function updateTruckToFollow() {
     overlay.truckToFollow = truckToFollow;
-    document.getElementById('truck-to-follow').innerHTML = truckToFollow;
   }
+
+  function updateVisibleLayers() {
+    overlay.visibleLayers = slides[currentSlide];
+  }
+
   document.getElementById('next-btn').addEventListener('click', () => {
-    truckToFollow = (truckToFollow + 1) % data.length;
-    updateTruckToFollow();
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateVisibleLayers();
   });
   document.getElementById('previous-btn').addEventListener('click', () => {
-    truckToFollow = (truckToFollow + data.length - 1) % data.length;
-    updateTruckToFollow();
+    currentSlide = (currentSlide + slides.length - 1) % slides.length;
+    updateVisibleLayers();
   });
   document.getElementById('print-location-btn').addEventListener('click', () => {
     const center = map.getCenter();

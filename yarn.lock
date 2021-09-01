@@ -163,6 +163,15 @@
   dependencies:
     "@loaders.gl/loader-utils" "3.0.8"
 
+"@loaders.gl/loader-utils@3.0.11":
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/@loaders.gl/loader-utils/-/loader-utils-3.0.11.tgz#99a3ad8dae57747a85f36825388da958cc508dc9"
+  integrity sha512-AdaEIfkOsUQZFPp6EbdZLxzXadiBESXvP8sMWwCZuPqQuBeq8YvwBHk58YtiKII8LRpbq75zT9CGdsB1ruCN5g==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    "@loaders.gl/worker-utils" "3.0.11"
+    "@probe.gl/stats" "^3.4.0"
+
 "@loaders.gl/loader-utils@3.0.8", "@loaders.gl/loader-utils@^3.0.6":
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/@loaders.gl/loader-utils/-/loader-utils-3.0.8.tgz#4bb57ccaa2f44689a06dde67d3adba3ceee07c4d"
@@ -199,6 +208,15 @@
     "@loaders.gl/loader-utils" "3.0.8"
     "@math.gl/polygon" "^3.5.1"
     pbf "^3.2.1"
+
+"@loaders.gl/schema@3.0.11":
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/@loaders.gl/schema/-/schema-3.0.11.tgz#196a0540ff9669400356da951c96142d6c5c5b75"
+  integrity sha512-3UIi25honY9HXkcUqeIGPFNFWs79giE+TyuzgVnRJnc80ZRTmBtlNnRKlFXg5mNq6YCjVcr1ql1Zdx1tfxokww==
+  dependencies:
+    "@types/geojson" "^7946.0.7"
+    apache-arrow "^4.0.0"
+    d3-dsv "^1.2.0"
 
 "@loaders.gl/schema@3.0.8":
   version "3.0.8"
@@ -241,6 +259,21 @@
     "@math.gl/geospatial" "^3.5.1"
     "@math.gl/web-mercator" "^3.5.1"
     "@probe.gl/stats" "^3.4.0"
+
+"@loaders.gl/wkt@^3.0.8":
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/@loaders.gl/wkt/-/wkt-3.0.11.tgz#681b4c5a4c670c0948d36f82e01eb2a5365fcfca"
+  integrity sha512-4QIGCHczddS+16udPel1+avtb1jWHEOGMSf6tbVSQ51bWqX07zxybuwKVNi3Say7f3saJnuDAjz7ivesep4soA==
+  dependencies:
+    "@loaders.gl/loader-utils" "3.0.11"
+    "@loaders.gl/schema" "3.0.11"
+
+"@loaders.gl/worker-utils@3.0.11":
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/@loaders.gl/worker-utils/-/worker-utils-3.0.11.tgz#6418032e0a0a89d6988ab8a822eaa2e6f8ea56c5"
+  integrity sha512-zJZtc+EQUKDRL+Xz7uMWfFLARn9gAgG38GZXdPJAGOKD+H7QQ9f72csPqb6/cxrjDyF7ryv02tMF3Ry/40a8fw==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
 
 "@loaders.gl/worker-utils@3.0.8":
   version "3.0.8"
