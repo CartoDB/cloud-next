@@ -47,10 +47,10 @@ const InfoBar = () => {
       </Button>
       <h2>Slides</h2>
       <p>Choose between visualizations</p>
-      <Button variant="contained" color="primary" onClick={next}>
+      <Button variant="contained" color="primary" onClick={prev}>
         Previous
       </Button>
-      <Button variant="contained" color="primary" onClick={prev}>
+      <Button variant="contained" color="primary" onClick={next}>
         Next
       </Button>
       <Button variant="outlined" color="primary" onClick={print}>

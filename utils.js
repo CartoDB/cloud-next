@@ -1,3 +1,5 @@
+import {rgb} from 'd3-color';
+
 export async function loadScript(url) {
   const script = document.createElement('script');
   script.type = 'text/javascript';
@@ -26,4 +28,15 @@ export function headingBetweenPoints(p1, p2) {
   }
 
   return (Math.atan2(deltaLng, deltaPhi) * 180) / Math.PI;
+}
+
+export function colorToRGBArray(color) {
+  if (!color) {
+    return [255, 255, 255, 0];
+  }
+  if (Array.isArray(color)) {
+    return color.slice(0, 4);
+  }
+  const c = rgb(color);
+  return [c.r, c.g, c.b, 255];
 }
