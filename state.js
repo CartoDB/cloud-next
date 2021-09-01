@@ -13,7 +13,6 @@ import flyTo from './flyTo';
 const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
 const GOOGLE_MAP_ID = '95c4a86206596d98';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
-const slides = [['flowmap-layer'], ['population-heatmap', 'texas-boundary']];
 const slides = [
   ['texas-boundary' /*'texas-counties'*/],
   ['flowmap-layer'],
@@ -45,6 +44,7 @@ export const AppStateStore = ({children}) => {
     });
 
     overlay = createOverlay(map, {populationData});
+    updateVisibleLayers();
   }, []);
 
   function updateTruckToFollow() {
@@ -54,7 +54,6 @@ export const AppStateStore = ({children}) => {
   function updateVisibleLayers() {
     overlay.visibleLayers = slides[currentSlide];
   }
-  updateVisibleLayers();
 
   return (
     <AppStateContext.Provider
