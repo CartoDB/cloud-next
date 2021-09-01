@@ -117,7 +117,10 @@ export function createOverlay(map, {populationData}) {
         hexagonLayer,
         TexasCountiesLayer,
         TexasBoundaryLayer
-      ].filter(l => overlay.visibleLayers.indexOf(l.id) !== -1)
+      ].map(l => {
+        const visible = overlay.visibleLayers.indexOf(l.id) !== -1;
+        return l.clone({visible});
+      })
     });
     updateTween();
     if (overlay.truckToFollow !== null) {
