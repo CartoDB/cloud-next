@@ -15,6 +15,7 @@ import flowmapStyle from './flowmapStyle';
 
 import {TexasBoundaryLayer, TexasCountiesLayer} from './slides/common';
 import {PopulationLayer} from './slides/population';
+import {PowerLinesLayer} from './slides/powerLines';
 
 registerLoaders([CSVLoader, GLTFLoader]);
 
@@ -107,7 +108,8 @@ export function createOverlay(map) {
         }),
         PopulationLayer,
         TexasCountiesLayer,
-        TexasBoundaryLayer
+        TexasBoundaryLayer,
+        PowerLinesLayer
       ].map(l => {
         const visible = overlay.visibleLayers.indexOf(l.id) !== -1;
         return l.clone({visible});
