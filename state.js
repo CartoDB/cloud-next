@@ -14,6 +14,11 @@ const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
 const GOOGLE_MAP_ID = '95c4a86206596d98';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 const slides = [['flowmap-layer'], ['population-heatmap', 'texas-boundary']];
+const slides = [
+  ['truck-parking-locations'],
+  ['flowmap-layer'],
+  ['population-heatmap', 'texas-boundary']
+];
 
 const initAppState = {};
 
@@ -51,6 +56,7 @@ export const AppStateStore = ({children}) => {
   function updateVisibleLayers() {
     overlay.visibleLayers = slides[currentSlide];
   }
+  updateVisibleLayers();
 
   return (
     <AppStateContext.Provider
@@ -84,7 +90,7 @@ export const AppStateStore = ({children}) => {
           const config = {lat, lng, heading, tilt, zoom};
           console.log(
             Object.keys(config)
-              .map((k) => `data-${k}="${config[k]}"`)
+              .map(k => `data-${k}="${config[k]}"`)
               .join(' ')
           );
         }

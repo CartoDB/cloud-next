@@ -122,7 +122,7 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
 
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
-  overlay.visibleLayers = ['flowmap-layer'];
+  overlay.visibleLayers = [];
   const animate = () => {
     currentTime = (currentTime + 0.1) % LOOP_LENGTH;
     const tripsLayer = new TripsLayer({
@@ -149,8 +149,8 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
         }),
         boundaryLayer,
         //countiesLayer,
-        hexagonLayer
-        //parkingLayer
+        hexagonLayer,
+        parkingLayer
       ].filter(l => overlay.visibleLayers.indexOf(l.id) !== -1)
     });
     updateTween();
