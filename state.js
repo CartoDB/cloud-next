@@ -14,9 +14,9 @@ const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
 const GOOGLE_MAP_ID = '95c4a86206596d98';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 const slides = [
-  ['texas-boundary' /*'texas-counties'*/],
+  ['population-heatmap', 'texas-boundary' /*'texas-counties'*/],
   ['flowmap-layer'],
-  ['population-heatmap', 'texas-boundary']
+  ['texas-boundary']
 ];
 
 const initAppState = {};
@@ -29,11 +29,7 @@ let currentSlide = 0;
 
 export const AppStateStore = ({children}) => {
   useEffect(async () => {
-    const [_, populationData, tripData] = await Promise.all([
-      loadScript(GOOGLE_MAPS_API_URL),
-      getPopulationData()
-      //getTexasTripData()
-    ]);
+    const [_] = await Promise.all([loadScript(GOOGLE_MAPS_API_URL)]);
 
     map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 32, lng: -98},
@@ -43,7 +39,7 @@ export const AppStateStore = ({children}) => {
       mapId: GOOGLE_MAP_ID
     });
 
-    overlay = createOverlay(map, {populationData});
+    overlay = createOverlay(map);
     updateVisibleLayers();
   }, []);
 

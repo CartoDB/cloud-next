@@ -1,6 +1,6 @@
-import {getWKTData} from '../datasource';
 import {CartoLayer, MAP_TYPES} from '@deck.gl/carto';
 import {GeoJsonLayer} from '@deck.gl/layers';
+import {getWKTData} from '../datasource';
 
 export const TexasBoundaryLayer = new CartoLayer({
   id: 'texas-boundary',

@@ -14,6 +14,7 @@ import {flows, locations} from './data/od_texas';
 import flowmapStyle from './flowmapStyle';
 
 import {TexasBoundaryLayer, TexasCountiesLayer} from './slides/common';
+import {PopulationLayer} from './slides/population';
 
 registerLoaders([CSVLoader, GLTFLoader]);
 
@@ -23,7 +24,7 @@ const THEME = {
   trailColor1: [0, 0, 255]
 };
 
-export function createOverlay(map, {populationData}) {
+export function createOverlay(map) {
   let currentTime = 0;
   const props = {
     id: 'trips',
@@ -80,15 +81,6 @@ export function createOverlay(map, {populationData}) {
     [254, 173, 84],
     [209, 55, 78]
   ];
-  const hexagonProps = {
-    id: 'population-heatmap',
-    data: populationData,
-    extruded: true,
-    elevationScale: 2,
-    getHexagon: d => d.h3,
-    getElevation: d => d.pop,
-    getFillColor: d => [255, (1 - d.pop / 30000) * 255, 0]
-  };
 
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
@@ -107,14 +99,13 @@ export function createOverlay(map, {populationData}) {
       ...scenegraphProps
     });
     const flowmapLayer = new FlowmapLayer(flowmapProps);
-    const hexagonLayer = new H3HexagonLayer(hexagonProps);
 
     overlay.setProps({
       layers: [
         flowmapLayer.clone({
           animationCurrentTime: 10 * currentTime
         }),
-        hexagonLayer,
+        PopulationLayer,
         TexasCountiesLayer,
         TexasBoundaryLayer
       ].map(l => {
