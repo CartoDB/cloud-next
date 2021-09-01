@@ -15,7 +15,7 @@ const GOOGLE_MAP_ID = '95c4a86206596d98';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 const slides = [['flowmap-layer'], ['population-heatmap', 'texas-boundary']];
 const slides = [
-  ['texas-boundary-layer'],
+  ['texas-boundary' /*'texas-counties'*/],
   ['flowmap-layer'],
   ['population-heatmap', 'texas-boundary']
 ];
@@ -30,10 +30,8 @@ let currentSlide = 0;
 
 export const AppStateStore = ({children}) => {
   useEffect(async () => {
-    const [_, boundaryData, countyData, populationData, tripData] = await Promise.all([
+    const [_, populationData, tripData] = await Promise.all([
       loadScript(GOOGLE_MAPS_API_URL),
-      getTexasBoundarySimplifiedData(),
-      getWKTData('cartobq.nexus_demo.texas_counties'),
       getPopulationData()
       //getTexasTripData()
     ]);
@@ -46,7 +44,7 @@ export const AppStateStore = ({children}) => {
       mapId: GOOGLE_MAP_ID
     });
 
-    overlay = createOverlay(map, {boundaryData, countyData, populationData});
+    overlay = createOverlay(map, {populationData});
   }, []);
 
   function updateTruckToFollow() {

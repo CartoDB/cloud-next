@@ -13,7 +13,7 @@ import {headingBetweenPoints} from './utils';
 import {flows, locations} from './data/od_texas';
 import flowmapStyle from './flowmapStyle';
 
-import {TexasBoundaryLayer} from './slides/common';
+import {TexasBoundaryLayer, TexasCountiesLayer} from './slides/common';
 
 registerLoaders([CSVLoader, GLTFLoader]);
 
@@ -23,7 +23,7 @@ const THEME = {
   trailColor1: [0, 0, 255]
 };
 
-export function createOverlay(map, {boundaryData, countyData, populationData}) {
+export function createOverlay(map, {populationData}) {
   let currentTime = 0;
   const props = {
     id: 'trips',
@@ -90,24 +90,6 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
     getFillColor: d => [255, (1 - d.pop / 30000) * 255, 0]
   };
 
-  const boundaryProps = {
-    id: 'texas-boundary',
-    data: boundaryData,
-    stroked: true,
-    filled: false,
-    lineWidthMinPixels: 20,
-    getLineColor: [233, 244, 0, 80]
-  };
-
-  const countiesProps = {
-    data: countyData,
-    id: 'texas-counties',
-    stroked: true,
-    filled: false,
-    lineWidthMinPixels: 2,
-    getLineColor: [233, 244, 0, 80]
-  };
-
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
   overlay.visibleLayers = [];
@@ -125,8 +107,6 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
       ...scenegraphProps
     });
     const flowmapLayer = new FlowmapLayer(flowmapProps);
-    const boundaryLayer = new GeoJsonLayer(boundaryProps);
-    const countiesLayer = new GeoJsonLayer(countiesProps);
     const hexagonLayer = new H3HexagonLayer(hexagonProps);
 
     overlay.setProps({
@@ -134,9 +114,8 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
         flowmapLayer.clone({
           animationCurrentTime: 10 * currentTime
         }),
-        boundaryLayer,
-        //countiesLayer,
         hexagonLayer,
+        TexasCountiesLayer,
         TexasBoundaryLayer
       ].filter(l => overlay.visibleLayers.indexOf(l.id) !== -1)
     });
