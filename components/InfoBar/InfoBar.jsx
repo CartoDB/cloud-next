@@ -1,13 +1,32 @@
 import React from 'react';
-import {Button} from '@material-ui/core';
+import {Button, Drawer, makeStyles} from '@material-ui/core';
 
 import {useAppState} from '../../state';
 
+const useStyles = makeStyles((theme) => ({
+  drawer: {
+    width: theme.spacing(57.5),
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: theme.spacing(57.5)
+  }
+}));
+
 const InfoBar = () => {
-  const {focusOnLocation, next, prev, print} = useAppState();
+  const classes = useStyles();
+  const {focusOnLocation, next, prev, reset, print, currentSlide} = useAppState();
 
   return (
-    <div id="info-bar" style={{position: 'absolute', left: '50%', top: 0, width: '50%'}}>
+    <Drawer
+      className={classes.drawer}
+      variant="persistent"
+      anchor="right"
+      open={currentSlide > 0}
+      classes={{
+        paper: classes.drawerPaper
+      }}
+    >
       <h2>Key Locations</h2>
       <Button
         variant="contained"
@@ -47,16 +66,19 @@ const InfoBar = () => {
       </Button>
       <h2>Slides</h2>
       <p>Choose between visualizations</p>
-      <Button variant="contained" color="primary" onClick={next}>
+      <Button variant="contained" color="primary" onClick={prev}>
         Previous
       </Button>
-      <Button variant="contained" color="primary" onClick={prev}>
+      <Button variant="contained" color="primary" onClick={next}>
         Next
+      </Button>
+      <Button variant="contained" color="primary" onClick={reset}>
+        Close
       </Button>
       <Button variant="outlined" color="primary" onClick={print}>
         Print Location
       </Button>
-    </div>
+    </Drawer>
   );
 };
 
