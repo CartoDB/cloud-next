@@ -111,7 +111,9 @@ export function createOverlay(map) {
         TexasCountiesLayer,
         TexasBoundaryLayer,
         PowerLinesLayer,
-        EnergySourcesLayer
+        EnergySourcesLayer.clone({
+          pointRadiusScale: 0.6 + 0.4 * Math.sin(0.4 * currentTime)
+        })
       ].map(l => {
         const visible = overlay.visibleLayers.indexOf(l.id) !== -1;
         return l.clone({visible});
