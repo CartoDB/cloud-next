@@ -13,7 +13,11 @@ import flyTo from './flyTo';
 const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
 const GOOGLE_MAP_ID = '95c4a86206596d98';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
-const slides = [['flowmap-layer'], ['population-heatmap', 'texas-boundary']];
+const slides = [
+  ['population-heatmap', 'texas-boundary' /*'texas-counties'*/],
+  ['flowmap-layer'],
+  ['texas-boundary']
+];
 
 const initAppState = {};
 
@@ -25,13 +29,7 @@ let currentSlide = 0;
 
 export const AppStateStore = ({children}) => {
   useEffect(async () => {
-    const [_, boundaryData, countyData, populationData, tripData] = await Promise.all([
-      loadScript(GOOGLE_MAPS_API_URL),
-      getTexasBoundarySimplifiedData(),
-      getWKTData('cartobq.nexus_demo.texas_counties'),
-      getPopulationData()
-      //getTexasTripData()
-    ]);
+    const [_] = await Promise.all([loadScript(GOOGLE_MAPS_API_URL)]);
 
     map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 32, lng: -98},
@@ -41,7 +39,8 @@ export const AppStateStore = ({children}) => {
       mapId: GOOGLE_MAP_ID
     });
 
-    overlay = createOverlay(map, {boundaryData, countyData, populationData});
+    overlay = createOverlay(map);
+    updateVisibleLayers();
   }, []);
 
   function updateTruckToFollow() {
@@ -84,7 +83,7 @@ export const AppStateStore = ({children}) => {
           const config = {lat, lng, heading, tilt, zoom};
           console.log(
             Object.keys(config)
-              .map((k) => `data-${k}="${config[k]}"`)
+              .map(k => `data-${k}="${config[k]}"`)
               .join(' ')
           );
         }

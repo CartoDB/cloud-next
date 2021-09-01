@@ -1,6 +1,5 @@
 import {GoogleMapsOverlay as DeckOverlay} from '@deck.gl/google-maps';
 import FlowmapLayer from './flowmap';
-import {CartoLayer, MAP_TYPES} from '@deck.gl/carto';
 import {H3HexagonLayer, TripsLayer} from '@deck.gl/geo-layers';
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {ScenegraphLayer} from '@deck.gl/mesh-layers';
@@ -14,6 +13,9 @@ import {headingBetweenPoints} from './utils';
 import {flows, locations} from './data/od_texas';
 import flowmapStyle from './flowmapStyle';
 
+import {TexasBoundaryLayer, TexasCountiesLayer} from './slides/common';
+import {PopulationLayer} from './slides/population';
+
 registerLoaders([CSVLoader, GLTFLoader]);
 
 const LOOP_LENGTH = 1800;
@@ -22,7 +24,7 @@ const THEME = {
   trailColor1: [0, 0, 255]
 };
 
-export function createOverlay(map, {boundaryData, countyData, populationData}) {
+export function createOverlay(map) {
   let currentTime = 0;
   const props = {
     id: 'trips',
@@ -79,50 +81,10 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
     [254, 173, 84],
     [209, 55, 78]
   ];
-  const hexagonProps = {
-    id: 'population-heatmap',
-    data: populationData,
-    extruded: true,
-    elevationScale: 2,
-    getHexagon: d => d.h3,
-    getElevation: d => d.pop,
-    getFillColor: d => [255, (1 - d.pop / 30000) * 255, 0]
-  };
-
-  const boundaryProps = {
-    id: 'texas-boundary',
-    data: boundaryData,
-    stroked: true,
-    filled: false,
-    lineWidthMinPixels: 20,
-    getLineColor: [233, 244, 0, 80]
-  };
-
-  const countiesProps = {
-    data: countyData,
-    id: 'texas-counties',
-    stroked: true,
-    filled: false,
-    lineWidthMinPixels: 2,
-    getLineColor: [233, 244, 0, 80]
-  };
-
-  const parkingProps = {
-    id: 'truck-parking-locations',
-    connection: 'bigquery',
-    type: MAP_TYPES.TABLE,
-    data: 'cartobq.nexus_demo.truck_parking_locations2',
-    getFillColor: [145, 0, 100],
-    pointRadiusMinPixels: 3,
-    credentials: {
-      accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzYWZhODUyOSJ9.bCrMmLKkMAgA21Y14js5up8CR4IJ45xhENzXo-CuHMs'
-    }
-  };
 
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
-  overlay.visibleLayers = ['flowmap-layer'];
+  overlay.visibleLayers = [];
   const animate = () => {
     currentTime = (currentTime + 0.1) % LOOP_LENGTH;
     const tripsLayer = new TripsLayer({
@@ -137,21 +99,19 @@ export function createOverlay(map, {boundaryData, countyData, populationData}) {
       ...scenegraphProps
     });
     const flowmapLayer = new FlowmapLayer(flowmapProps);
-    const boundaryLayer = new GeoJsonLayer(boundaryProps);
-    const countiesLayer = new GeoJsonLayer(countiesProps);
-    const hexagonLayer = new H3HexagonLayer(hexagonProps);
-    const parkingLayer = new CartoLayer(parkingProps);
 
     overlay.setProps({
       layers: [
         flowmapLayer.clone({
           animationCurrentTime: 10 * currentTime
         }),
-        boundaryLayer,
-        //countiesLayer,
-        hexagonLayer
-        //parkingLayer
-      ].filter(l => overlay.visibleLayers.indexOf(l.id) !== -1)
+        PopulationLayer,
+        TexasCountiesLayer,
+        TexasBoundaryLayer
+      ].map(l => {
+        const visible = overlay.visibleLayers.indexOf(l.id) !== -1;
+        return l.clone({visible});
+      })
     });
     updateTween();
     if (overlay.truckToFollow !== null) {
