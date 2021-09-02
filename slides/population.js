@@ -1,23 +1,8 @@
-import {CompositeLayer} from '@deck.gl/core';
+import DeferredLoadLayer from './deferredLoadLayer';
 import {H3HexagonLayer} from '@deck.gl/geo-layers';
 import {getPopulationData} from '../datasource';
 
-function DeferredLoadMixin(createLayer) {
-  return class DeferredLoadLayer extends CompositeLayer {
-    renderLayers() {
-      if (!this.props.visible) {
-        return [];
-      }
-
-      const subLayer = createLayer().clone({
-        id: `deffered-${this.id}`
-      });
-      return [subLayer];
-    }
-  };
-}
-
-const Layer = DeferredLoadMixin(() => {
+const Layer = DeferredLoadLayer(() => {
   return new H3HexagonLayer({
     data: getPopulationData(),
     extruded: true,
