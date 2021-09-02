@@ -1,20 +1,32 @@
 import {CartoLayer, MAP_TYPES} from '@deck.gl/carto';
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {getWKTData} from '../datasource';
+import {colorToRGBArray} from '../utils';
 
-export const TexasBoundaryLayer = new CartoLayer({
-  id: 'texas-boundary',
+const boundaryProps = {
   connection: 'bigquery',
   type: MAP_TYPES.TABLE,
   data: 'cartobq.nexus_demo.texas_boundary_simplified',
-  getLineColor: [235, 252, 12],
   filled: false,
   stroked: true,
-  lineWidthMinPixels: 10,
   credentials: {
     accessToken:
       'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzYWZhODUyOSJ9.bCrMmLKkMAgA21Y14js5up8CR4IJ45xhENzXo-CuHMs'
   }
+};
+
+export const TexasThinBoundaryLayer = new CartoLayer({
+  id: 'texas-thin-boundary',
+  getLineColor: colorToRGBArray('#5380b5'),
+  lineWidthMinPixels: 1,
+  ...boundaryProps
+});
+
+export const TexasBoundaryLayer = new CartoLayer({
+  id: 'texas-boundary',
+  getLineColor: colorToRGBArray('#e8fc0c'),
+  lineWidthMinPixels: 10,
+  ...boundaryProps
 });
 
 export const TexasCountiesLayer = new GeoJsonLayer({

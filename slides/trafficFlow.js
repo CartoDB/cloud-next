@@ -1,3 +1,6 @@
+import FlowmapLayer from './flowmap';
+import {flows, locations} from '../data/od_texas';
+
 const flowmapStyle = {
   animate: true,
   colors: {
@@ -37,4 +40,14 @@ const flowmapStyle = {
   diffMode: false
 };
 
-export default flowmapStyle;
+export const TrafficFlowLayer = new FlowmapLayer({
+  id: 'flowmap-layer',
+  locations,
+  flows,
+  ...flowmapStyle,
+  getFlowMagnitude: flow => flow.count || 0,
+  getFlowOriginId: flow => flow.origin,
+  getFlowDestId: flow => flow.dest,
+  getLocationId: loc => loc.id,
+  getLocationCentroid: loc => [loc.lon, loc.lat]
+});

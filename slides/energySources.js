@@ -19,6 +19,9 @@ const props = {
   pointType: 'circle',
   pointRadiusUnits: 'pixels',
   getPointRadius: 10,
+  parameters: {
+    depthTest: false
+  },
   credentials: {
     accessToken:
       'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI2ZGIwYWMzMiJ9.7wkEpcWcazDD1F6Yf72OFcaLvrRJcKpSr1BFB03Suc8'
