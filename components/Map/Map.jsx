@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen
     }),
     marginRight: 0
+  },
+  rootBlocked: {
+    pointerEvents: 'none',
+    cursor: 'default'
   }
 }));
 
@@ -27,7 +31,9 @@ const Map = () => {
 
   return (
     <div
-      className={[classes.root, currentSlide > 0 ? classes.rootShift : ''].join(' ')}
+      className={[classes.root, currentSlide > 0 ? classes.rootShift : classes.rootBlocked].join(
+        ' '
+      )}
       id="map"
     ></div>
   );

@@ -5,6 +5,8 @@ import Sidebar from '../Sidebar/Sidebar';
 import CoverHero from '../Cover/CoverHero';
 import CoverFooter from '../Cover/CoverFooter';
 import CoverHeader from '../Cover/CoverHeader';
+import Header from '../Header/Header';
+import {useAppState} from '../../state';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Main = () => {
   const classes = useStyles();
+  const {currentSlide} = useAppState();
 
   return (
     <div className={classes.root}>
@@ -28,6 +31,7 @@ const Main = () => {
       <CoverHero />
       <CoverFooter />
       <Sidebar />
+      <Header hidden={currentSlide > 0} hideDelay={500} showDelay={0} />
     </div>
   );
 };
