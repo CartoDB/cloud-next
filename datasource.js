@@ -9,7 +9,24 @@ setDefaultCredentials({
     'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjZTY5M2NmMCJ9.9HD7U1c-Wh81SPaSvWWSNShF7MIMH-9-S8YmWFo0_x0'
 });
 
-const TIME0 = new Date('2021-08-10T00:00:00.000Z');
+const TIME0 = new Date('2021-01-01T10:04:00.000Z');
+function groupIntoRides(data) {
+  const rides = [];
+  let lastId = null;
+  for (const d of data) {
+    const id = d['vehicle_id'];
+    if (lastId !== id) {
+      rides.push({vehicle_id: 0, positions: [], timestamps: []});
+      lastId = id;
+    }
+
+    const ride = rides[rides.length - 1];
+    ride.positions.push(d.geom);
+    ride.timestamps.push(d.timestamp);
+  }
+
+  return rides;
+}
 function parseRide(ride) {
   return {
     vendor: parseInt(ride.vehicle_id),
@@ -44,12 +61,17 @@ function parseWKT(f) {
 export async function getTripData() {
   const data = await getData({
     type: MAP_TYPES.TABLE,
-    source: `cartodb-gcp-backend-data-team.cloud_next.trips_v7`,
+    source: 'cartobq.nexus_demo.trip_data',
     connection: 'bigquery',
-    format: 'json'
+    format: 'json',
+    credentials: {
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzNzk5MTIyNyJ9.HMotdRO3VY7xgmt-h5f9wELA_WnvtkBRejzDREChwVs'
+    }
   });
 
-  return data.map(parseRide);
+  const rides = groupIntoRides(data);
+  return rides.map(parseRide);
 }
 
 export async function getPopulationData() {

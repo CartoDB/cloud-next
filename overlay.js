@@ -13,14 +13,15 @@ import {headingBetweenPoints} from './utils';
 import {flows, locations} from './data/od_texas';
 import flowmapStyle from './flowmapStyle';
 
-import {TexasBoundaryLayer, TexasCountiesLayer} from './slides/common';
+import {getTripData} from './datasource';
+import {TexasThinBoundaryLayer, TexasBoundaryLayer, TexasCountiesLayer} from './slides/common';
 import {PopulationLayer} from './slides/population';
 import {PowerLinesLayer} from './slides/powerLines';
 import {EnergySourcesLayer, EnergySourcesBackgroundLayer} from './slides/energySources';
 
 registerLoaders([CSVLoader, GLTFLoader]);
 
-const LOOP_LENGTH = 1800;
+const LOOP_LENGTH = 18000;
 const THEME = {
   trailColor0: [255, 0, 0],
   trailColor1: [0, 0, 255]
@@ -29,8 +30,8 @@ const THEME = {
 export function createOverlay(map) {
   let currentTime = 0;
   const props = {
-    id: 'trips',
-    data: [],
+    id: 'truck-trips',
+    data: getTripData(),
     getPath: d => d.path,
     getTimestamps: d => d.timestamps,
     getColor: d => (d.vendor === 0 ? THEME.trailColor0 : THEME.trailColor1),
@@ -88,7 +89,7 @@ export function createOverlay(map) {
   overlay.truckToFollow = null;
   overlay.visibleLayers = [];
   const animate = () => {
-    currentTime = (currentTime + 0.1) % LOOP_LENGTH;
+    currentTime = (currentTime + 10) % LOOP_LENGTH;
     const tripsLayer = new TripsLayer({
       ...props,
       currentTime
@@ -104,6 +105,8 @@ export function createOverlay(map) {
 
     overlay.setProps({
       layers: [
+        tripsLayer,
+        TexasThinBoundaryLayer,
         flowmapLayer.clone({
           animationCurrentTime: 10 * currentTime
         }),

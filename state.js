@@ -14,10 +14,12 @@ const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
 const GOOGLE_MAP_ID = '84591267f7b3a201';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 const slides = [
+  ['texas-thin-boundary'],
   ['population-heatmap', 'texas-boundary' /*'texas-counties'*/],
   ['power-lines', 'texas-boundary'],
   ['energy-sources', 'energy-sources-background', 'texas-boundary'],
-  ['flowmap-layer']
+  ['flowmap-layer'],
+  ['truck-trips']
 ];
 
 const initAppState = {
