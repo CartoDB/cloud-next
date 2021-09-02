@@ -13,7 +13,10 @@ const slides = [
   ['power-lines', 'texas-boundary'],
   ['energy-sources', 'energy-sources-background', 'texas-boundary'],
   ['traffic-flow'],
-  ['truck-trips', 'texas-boundary']
+  ['truck-trips', 'texas-boundary'],
+  [],
+  [],
+  []
 ];
 
 const initAppState = {

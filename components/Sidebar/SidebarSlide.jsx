@@ -1,10 +1,6 @@
-import React, {useRef, useEffect, useState} from 'react';
-import {makeStyles, Card, CardMedia, CardContent, Typography, Slide} from '@material-ui/core';
-import Header from '../Header/Header';
-import SidebarClose from '../Sidebar/SidebarClose';
+import React, {useRef, useEffect, useState, forwardRef} from 'react';
+import {makeStyles, Card, CardMedia, CardContent, Typography} from '@material-ui/core';
 import {useAppState} from '../../state';
-
-const HEADER_HEIGHT = 72;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,44 +48,6 @@ const useStyles = makeStyles((theme) => ({
       position: 'absolute'
     }
   },
-  header: {
-    position: 'sticky',
-    top: 0,
-    left: 0,
-    width: '100%',
-    minHeight: `${HEADER_HEIGHT}px`,
-    marginBottom: `-${HEADER_HEIGHT}px`,
-    zIndex: 2,
-    display: 'none'
-  },
-  headerShown: {
-    display: 'block'
-  },
-  innerHeader: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: '100%',
-    height: '12px',
-    backgroundColor: theme.palette.grey[50],
-    overflow: 'hidden'
-  },
-  headerContent: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: '100%'
-  },
-  headerClose: {
-    position: 'absolute',
-    margin: theme.spacing(3),
-    bottom: 0,
-    left: 0
-  },
-  headerItem: {
-    top: 'auto',
-    bottom: 0
-  },
   content: {
     padding: theme.spacing(4, 6),
     flex: 1,
@@ -111,41 +69,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SidebarSlide = ({pretitle, title, subtitle, text, image, slide}) => {
-  const cardRef = useRef();
-  const cardContentRef = useRef();
+const SidebarSlide = ({pretitle, title, subtitle, text, image, slide}, cardRef) => {
+  // const cardRef = useRef();
   const classes = useStyles();
   const [isOnScroll, setIsOnScroll] = useState(false);
-  const [headerHeight, setHeaderHeight] = useState(0);
-  const [show, setShow] = useState(slide === 1);
   const {currentSlide} = useAppState();
 
-  const prevCurrentSlideRef = useRef();
   useEffect(() => {
-    prevCurrentSlideRef.current = currentSlide;
-  });
-  const prevCurrentSlide = prevCurrentSlideRef.current;
-
-  useEffect(() => {
-    setShow(slide === currentSlide);
-  }, [slide, currentSlide, prevCurrentSlide, setShow]);
-
-  useEffect(() => {
-    if (cardRef?.current && cardContentRef?.current) {
+    if (cardRef?.current) {
       const item = cardRef.current;
-      const itemContent = cardContentRef.current;
 
       const scrollListener = () => {
         const hasScroll = item.scrollHeight > item.clientHeight;
         setIsOnScroll(hasScroll ? item.clientHeight + item.scrollTop < item.scrollHeight : false);
-        const contentTop = itemContent.getBoundingClientRect().top;
-        setHeaderHeight(
-          contentTop > HEADER_HEIGHT
-            ? 0
-            : contentTop > 0
-            ? HEADER_HEIGHT - contentTop
-            : HEADER_HEIGHT
-        );
       };
       item.addEventListener('scroll', scrollListener);
       scrollListener();
@@ -153,7 +89,7 @@ const SidebarSlide = ({pretitle, title, subtitle, text, image, slide}) => {
         item?.removeEventListener('scroll', scrollListener);
       };
     }
-  }, [cardRef, cardContentRef, setIsOnScroll, setHeaderHeight]);
+  }, [cardRef, setIsOnScroll]);
 
   return (
     <Card
@@ -167,16 +103,8 @@ const SidebarSlide = ({pretitle, title, subtitle, text, image, slide}) => {
         (slide === 1 && currentSlide === 0) || slide === currentSlide ? classes.rootShown : ''
       ].join(' ')}
     >
-      <div className={[classes.header, headerHeight > 0 ? classes.headerShown : ''].join(' ')}>
-        <div className={classes.innerHeader} style={{height: headerHeight}}>
-          <div className={classes.headerContent}>
-            <SidebarClose className={classes.headerClose} primary={true} />
-            <Header primary={true} className={classes.headerItem} />
-          </div>
-        </div>
-      </div>
       <CardMedia className={classes.media} image={image} title={title} />
-      <CardContent ref={cardContentRef} classes={{root: classes.content}}>
+      <CardContent data-content="true" classes={{root: classes.content}}>
         <Typography
           className={classes.pretitle}
           variant="overline"
@@ -199,4 +127,4 @@ const SidebarSlide = ({pretitle, title, subtitle, text, image, slide}) => {
   );
 };
 
-export default SidebarSlide;
+export default forwardRef(SidebarSlide);

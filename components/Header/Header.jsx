@@ -1,7 +1,9 @@
 import React from 'react';
-import {Button, IconButton, Drawer, makeStyles, Fade} from '@material-ui/core';
+import {Button, makeStyles} from '@material-ui/core';
 import {ReactComponent as IconActionHelp} from '../../assets/icons/icon-action-help-outline.svg';
 import {ReactComponent as IconSocialShare} from '../../assets/icons/icon-social-share.svg';
+
+export const HEADER_HEIGHT = 72;
 
 const useStyles = makeStyles((theme) => ({
   root: {

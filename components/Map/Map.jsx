@@ -1,6 +1,7 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core';
 import {useAppState} from '../../state';
+import {SIDEBAR_WIDTH} from '../Sidebar/Sidebar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,7 +11,10 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    marginRight: theme.spacing(-57.5)
+    marginRight: `-${SIDEBAR_WIDTH.xs}`,
+    [theme.breakpoints.up('lg')]: {
+      marginRight: `-${SIDEBAR_WIDTH.lg}`
+    }
   },
   rootShift: {
     transition: theme.transitions.create('margin', {
