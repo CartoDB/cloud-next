@@ -1,6 +1,5 @@
 import {GoogleMapsOverlay as DeckOverlay} from '@deck.gl/google-maps';
 import FlowmapLayer from './flowmap';
-import {H3HexagonLayer, TripsLayer} from '@deck.gl/geo-layers';
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {ScenegraphLayer} from '@deck.gl/mesh-layers';
 import {HexagonLayer} from '@deck.gl/aggregation-layers';
@@ -13,36 +12,19 @@ import {headingBetweenPoints} from './utils';
 import {flows, locations} from './data/od_texas';
 import flowmapStyle from './flowmapStyle';
 
-import {getTripData} from './datasource';
 import {TexasThinBoundaryLayer, TexasBoundaryLayer, TexasCountiesLayer} from './slides/common';
 import {PopulationLayer} from './slides/population';
 import {PowerLinesLayer} from './slides/powerLines';
 import {EnergySourcesLayer, EnergySourcesBackgroundLayer} from './slides/energySources';
+import {TruckTripsLayer} from './slides/truckTrips';
 
 registerLoaders([CSVLoader, GLTFLoader]);
 
 const LOOP_LENGTH = 8 * 3600;
-const THEME = {
-  trailColor0: [255, 0, 0],
-  trailColor1: [0, 0, 255]
-};
 
 export function createOverlay(map) {
   let currentTime = 0;
   let animationCurrentTime = 0;
-  const props = {
-    id: 'truck-trips',
-    data: getTripData(),
-    getPath: d => d.path,
-    getTimestamps: d => d.timestamps,
-    getColor: [255, 255, 222],
-    opacity: 0.8,
-    widthMinPixels: 2,
-    rounded: true,
-    trailLength: 3600,
-    currentTime,
-    shadowEnabled: false
-  };
 
   const scenegraphProps = {
     id: 'scenegraph-layer',
@@ -54,15 +36,6 @@ export function createOverlay(map) {
     getPosition: d => getVehiclePosition(d, currentTime),
     getOrientation: d => [0, 180 - getVehicleHeading(d, currentTime), 90],
     _lighting: 'pbr'
-  };
-
-  const scatterProps = {
-    data: locations,
-    getPosition: d => [d.lon, d.lat],
-    getFillColor: [33, 45, 211],
-    getLineColor: [33, 33, 33],
-    radiusMinPixels: 6,
-    lineWidthMinPixels: 2
   };
 
   const flowmapProps = {
@@ -77,25 +50,12 @@ export function createOverlay(map) {
     getLocationCentroid: loc => [loc.lon, loc.lat]
   };
 
-  const COLOR_RANGE = [
-    [1, 152, 189],
-    [73, 227, 206],
-    [216, 254, 181],
-    [254, 237, 177],
-    [254, 173, 84],
-    [209, 55, 78]
-  ];
-
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
   overlay.visibleLayers = [];
   const animate = () => {
     currentTime = (currentTime + 100) % LOOP_LENGTH;
     animationCurrentTime = animationCurrentTime + 1;
-    const tripsLayer = new TripsLayer({
-      ...props,
-      currentTime
-    });
     const scenegraphLayer = new ScenegraphLayer({
       updateTriggers: {
         getPosition: [currentTime],
@@ -107,7 +67,7 @@ export function createOverlay(map) {
 
     overlay.setProps({
       layers: [
-        tripsLayer,
+        TruckTripsLayer.clone({currentTime}),
         TexasThinBoundaryLayer,
         flowmapLayer.clone({
           animationCurrentTime
