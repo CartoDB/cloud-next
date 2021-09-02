@@ -1,8 +1,8 @@
-import DeferredLoadLayer from './deferredLoadLayer';
 import {H3HexagonLayer} from '@deck.gl/geo-layers';
+import DeferredLoadLayer from './deferredLoadLayer';
 import {getPopulationData} from '../datasource';
 
-const Layer = DeferredLoadLayer(() => {
+const _PopulationLayer = DeferredLoadLayer(() => {
   return new H3HexagonLayer({
     data: getPopulationData(),
     extruded: true,
@@ -13,6 +13,6 @@ const Layer = DeferredLoadLayer(() => {
   });
 });
 
-export const PopulationLayer = new Layer({
+export const PopulationLayer = new _PopulationLayer({
   id: 'population-heatmap'
 });
