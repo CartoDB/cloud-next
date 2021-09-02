@@ -1,8 +1,10 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core';
 import Map from '../Map/Map';
-import InfoBar from '../InfoBar/InfoBar';
-import Cover from '../Cover/Cover';
+import Sidebar from '../Sidebar/Sidebar';
+import CoverHero from '../Cover/CoverHero';
+import CoverFooter from '../Cover/CoverFooter';
+import CoverHeader from '../Cover/CoverHeader';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,8 +24,10 @@ const Main = () => {
   return (
     <div className={classes.root}>
       <Map />
-      <Cover />
-      <InfoBar />
+      <CoverHeader />
+      <CoverHero />
+      <CoverFooter />
+      <Sidebar />
     </div>
   );
 };
