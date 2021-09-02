@@ -1,3 +1,4 @@
+import DeferredLoadLayer from './deferredLoadLayer';
 import FlowmapLayer from './flowmap';
 import {flows, locations} from '../data/od_texas';
 
@@ -40,14 +41,19 @@ const flowmapStyle = {
   diffMode: false
 };
 
-export const TrafficFlowLayer = new FlowmapLayer({
-  id: 'flowmap-layer',
-  locations,
-  flows,
-  ...flowmapStyle,
-  getFlowMagnitude: flow => flow.count || 0,
-  getFlowOriginId: flow => flow.origin,
-  getFlowDestId: flow => flow.dest,
-  getLocationId: loc => loc.id,
-  getLocationCentroid: loc => [loc.lon, loc.lat]
+const _TrafficFlowLayer = DeferredLoadLayer(() => {
+  return new FlowmapLayer({
+    locations,
+    flows,
+    ...flowmapStyle,
+    getFlowMagnitude: flow => flow.count || 0,
+    getFlowOriginId: flow => flow.origin,
+    getFlowDestId: flow => flow.dest,
+    getLocationId: loc => loc.id,
+    getLocationCentroid: loc => [loc.lon, loc.lat]
+  });
+});
+
+export const TrafficFlowLayer = new _TrafficFlowLayer({
+  id: 'traffic-flow'
 });
