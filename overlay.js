@@ -1,5 +1,4 @@
 import {GoogleMapsOverlay as DeckOverlay} from '@deck.gl/google-maps';
-import FlowmapLayer from './flowmap';
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {ScenegraphLayer} from '@deck.gl/mesh-layers';
 import {HexagonLayer} from '@deck.gl/aggregation-layers';
@@ -9,13 +8,12 @@ import {GLTFLoader} from '@loaders.gl/gltf';
 import {update as updateTween} from '@tweenjs/tween.js';
 
 import {headingBetweenPoints} from './utils';
-import {flows, locations} from './data/od_texas';
-import flowmapStyle from './flowmapStyle';
 
 import {TexasThinBoundaryLayer, TexasBoundaryLayer, TexasCountiesLayer} from './slides/common';
 import {PopulationLayer} from './slides/population';
 import {PowerLinesLayer} from './slides/powerLines';
 import {EnergySourcesLayer, EnergySourcesBackgroundLayer} from './slides/energySources';
+import {TrafficFlowLayer} from './slides/trafficFlow';
 import {TruckTripsLayer} from './slides/truckTrips';
 
 registerLoaders([CSVLoader, GLTFLoader]);
@@ -38,18 +36,6 @@ export function createOverlay(map) {
     _lighting: 'pbr'
   };
 
-  const flowmapProps = {
-    id: 'flowmap-layer',
-    locations,
-    flows,
-    ...flowmapStyle,
-    getFlowMagnitude: flow => flow.count || 0,
-    getFlowOriginId: flow => flow.origin,
-    getFlowDestId: flow => flow.dest,
-    getLocationId: loc => loc.id,
-    getLocationCentroid: loc => [loc.lon, loc.lat]
-  };
-
   const overlay = new DeckOverlay({});
   overlay.truckToFollow = null;
   overlay.visibleLayers = [];
@@ -63,15 +49,12 @@ export function createOverlay(map) {
       },
       ...scenegraphProps
     });
-    const flowmapLayer = new FlowmapLayer(flowmapProps);
 
     overlay.setProps({
       layers: [
         TruckTripsLayer.clone({currentTime}),
         TexasThinBoundaryLayer,
-        flowmapLayer.clone({
-          animationCurrentTime
-        }),
+        TrafficFlowLayer.clone({animationCurrentTime}),
         PopulationLayer,
         TexasCountiesLayer,
         TexasBoundaryLayer,
