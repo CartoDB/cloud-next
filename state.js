@@ -1,10 +1,4 @@
 import React, {useState, createContext, useContext, useEffect} from 'react';
-import {
-  getTexasBoundarySimplifiedData,
-  getWKTData,
-  getPopulationData,
-  getTexasTripData
-} from './datasource';
 import {createOverlay} from './overlay';
 import {loadScript} from './utils';
 
