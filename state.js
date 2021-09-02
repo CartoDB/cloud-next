@@ -20,15 +20,18 @@ const slides = [
   ['flowmap-layer']
 ];
 
-const initAppState = {};
+const initAppState = {
+  currentSlide: null
+};
 
 export const AppStateContext = createContext(initAppState);
 
 let map, overlay;
 let truckToFollow = 9;
-let currentSlide = 0;
 
 export const AppStateStore = ({children}) => {
+  const [currentSlide, setCurrentSlide] = useState(initAppState.currentSlide);
+
   useEffect(async () => {
     const [_] = await Promise.all([loadScript(GOOGLE_MAPS_API_URL)]);
 
@@ -41,15 +44,17 @@ export const AppStateStore = ({children}) => {
     });
 
     overlay = createOverlay(map);
-    updateVisibleLayers();
-  }, []);
+    setCurrentSlide(0);
+  }, [setCurrentSlide]);
+
+  useEffect(() => {
+    if (currentSlide !== null && overlay?.visibleLayers) {
+      overlay.visibleLayers = slides[currentSlide];
+    }
+  }, [currentSlide]);
 
   function updateTruckToFollow() {
     overlay.truckToFollow = truckToFollow;
-  }
-
-  function updateVisibleLayers() {
-    overlay.visibleLayers = slides[currentSlide];
   }
 
   return (
@@ -67,12 +72,17 @@ export const AppStateStore = ({children}) => {
           flyTo(map, {lat, lng, tilt, heading, zoom});
         },
         next: () => {
-          currentSlide = (currentSlide + 1) % slides.length;
-          updateVisibleLayers();
+          if (currentSlide < slides.length - 1) {
+            setCurrentSlide(currentSlide + 1);
+          }
         },
         prev: () => {
-          currentSlide = (currentSlide + slides.length - 1) % slides.length;
-          updateVisibleLayers();
+          if (currentSlide > 0) {
+            setCurrentSlide(currentSlide - 1);
+          }
+        },
+        reset: () => {
+          setCurrentSlide(0);
         },
         print: () => {
           const center = map.getCenter();
@@ -84,10 +94,11 @@ export const AppStateStore = ({children}) => {
           const config = {lat, lng, heading, tilt, zoom};
           console.log(
             Object.keys(config)
-              .map(k => `data-${k}="${config[k]}"`)
+              .map((k) => `data-${k}="${config[k]}"`)
               .join(' ')
           );
-        }
+        },
+        currentSlide
       }}
     >
       {children}
