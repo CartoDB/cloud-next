@@ -16,7 +16,7 @@ const slides = [
   ['truck-trips', 'texas-boundary'],
   [],
   [],
-  []
+  ['temperature', 'texas-boundary']
 ];
 
 const initAppState = {

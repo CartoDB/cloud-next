@@ -15,6 +15,7 @@ import {PowerLinesLayer} from './slides/powerLines';
 import {EnergySourcesLayer, EnergySourcesBackgroundLayer} from './slides/energySources';
 import {TrafficFlowLayer} from './slides/trafficFlow';
 import {TruckTripsLayer} from './slides/truckTrips';
+import {TemperatureLayer} from './slides/temperature';
 
 registerLoaders([CSVLoader, GLTFLoader]);
 
@@ -52,7 +53,7 @@ export function createOverlay(map) {
 
     overlay.setProps({
       layers: [
-        TruckTripsLayer.clone({currentTime}),
+        TemperatureLayer,
         TexasThinBoundaryLayer,
         TrafficFlowLayer.clone({animationCurrentTime}),
         PopulationLayer,
@@ -62,7 +63,8 @@ export function createOverlay(map) {
         EnergySourcesBackgroundLayer,
         EnergySourcesLayer.clone({
           pointRadiusScale: 0.4 + 0.4 * Math.sin(0.04 * animationCurrentTime)
-        })
+        }),
+        TruckTripsLayer.clone({currentTime})
       ].map(l => {
         const visible = overlay.visibleLayers.indexOf(l.id) !== -1;
         return l.clone({visible});
