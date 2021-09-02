@@ -20,7 +20,6 @@ export default function DeferredLoadLayer(createLayer) {
         return [];
       }
       if (!subLayer) {
-        console.log('creating', this.id);
         subLayer = createLayer().clone({
           id: `deferred-${this.id}`
         });
