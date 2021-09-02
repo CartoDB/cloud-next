@@ -12,7 +12,7 @@ const slides = [
   ['population-heatmap', 'texas-boundary' /*'texas-counties'*/],
   ['power-lines', 'texas-boundary'],
   ['energy-sources', 'energy-sources-background', 'texas-boundary'],
-  ['flowmap-layer'],
+  ['traffic-flow'],
   ['truck-trips', 'texas-boundary']
 ];
 
