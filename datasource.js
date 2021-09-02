@@ -9,20 +9,36 @@ setDefaultCredentials({
     'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjZTY5M2NmMCJ9.9HD7U1c-Wh81SPaSvWWSNShF7MIMH-9-S8YmWFo0_x0'
 });
 
-const TIME0 = new Date('2021-01-01T10:04:00.000Z');
+const TIME0 = new Date('2021-01-01T07:00:00.000Z');
 function groupIntoRides(data) {
   const rides = [];
   let lastId = null;
   for (const d of data) {
     const id = d['vehicle_id'];
     if (lastId !== id) {
-      rides.push({vehicle_id: 0, positions: [], timestamps: []});
+      rides.push({
+        vehicle_id: 0,
+        positions: [d.geom],
+        timestamps: [d.timestamp]
+      });
       lastId = id;
     }
 
+    // Points are not ordered by time, so need to insert in
+    // correct order
     const ride = rides[rides.length - 1];
-    ride.positions.push(d.geom);
-    ride.timestamps.push(d.timestamp);
+    for (let i = 0; i < ride.timestamps.length; i++) {
+      if (i === ride.timestamps.length) {
+        // Append to end if we failed to insert
+        ride.positions.splice(i, 0, d.geom);
+        ride.timestamps.splice(i, 0, d.timestamp);
+      } else if (new Date(d.timestamp) < new Date(ride.timestamps[i])) {
+        // Insert before current item if earlier in time
+        ride.positions.splice(i, 0, d.geom);
+        ride.timestamps.splice(i, 0, d.timestamp);
+        break;
+      }
+    }
   }
 
   return rides;
@@ -70,7 +86,8 @@ export async function getTripData() {
     }
   });
 
-  const rides = groupIntoRides(data);
+  let rides = groupIntoRides(data);
+  // rides = rides.filter(r => r.timestamps.length > 300);
   return rides.map(parseRide);
 }
 

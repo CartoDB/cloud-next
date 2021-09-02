@@ -21,7 +21,7 @@ import {EnergySourcesLayer, EnergySourcesBackgroundLayer} from './slides/energyS
 
 registerLoaders([CSVLoader, GLTFLoader]);
 
-const LOOP_LENGTH = 18000;
+const LOOP_LENGTH = 8 * 3600;
 const THEME = {
   trailColor0: [255, 0, 0],
   trailColor1: [0, 0, 255]
@@ -29,16 +29,17 @@ const THEME = {
 
 export function createOverlay(map) {
   let currentTime = 0;
+  let animationCurrentTime = 0;
   const props = {
     id: 'truck-trips',
     data: getTripData(),
     getPath: d => d.path,
     getTimestamps: d => d.timestamps,
-    getColor: d => (d.vendor === 0 ? THEME.trailColor0 : THEME.trailColor1),
-    opacity: 1,
+    getColor: [255, 255, 222],
+    opacity: 0.8,
     widthMinPixels: 2,
     rounded: true,
-    trailLength: 180,
+    trailLength: 3600,
     currentTime,
     shadowEnabled: false
   };
@@ -89,7 +90,8 @@ export function createOverlay(map) {
   overlay.truckToFollow = null;
   overlay.visibleLayers = [];
   const animate = () => {
-    currentTime = (currentTime + 10) % LOOP_LENGTH;
+    currentTime = (currentTime + 100) % LOOP_LENGTH;
+    animationCurrentTime = animationCurrentTime + 1;
     const tripsLayer = new TripsLayer({
       ...props,
       currentTime
@@ -108,7 +110,7 @@ export function createOverlay(map) {
         tripsLayer,
         TexasThinBoundaryLayer,
         flowmapLayer.clone({
-          animationCurrentTime: 10 * currentTime
+          animationCurrentTime
         }),
         PopulationLayer,
         TexasCountiesLayer,
@@ -116,7 +118,7 @@ export function createOverlay(map) {
         PowerLinesLayer,
         EnergySourcesBackgroundLayer,
         EnergySourcesLayer.clone({
-          pointRadiusScale: 0.4 + 0.4 * Math.sin(0.4 * currentTime)
+          pointRadiusScale: 0.4 + 0.4 * Math.sin(0.04 * animationCurrentTime)
         })
       ].map(l => {
         const visible = overlay.visibleLayers.indexOf(l.id) !== -1;
