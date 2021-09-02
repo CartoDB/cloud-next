@@ -1,3 +1,4 @@
+import GL from '@luma.gl/constants';
 import {TripsLayer} from '@deck.gl/geo-layers';
 import {getTripData} from '../datasource';
 
@@ -11,5 +12,8 @@ export const TruckTripsLayer = new TripsLayer({
   widthMinPixels: 2,
   rounded: true,
   trailLength: 3600,
-  shadowEnabled: false
+  shadowEnabled: false,
+  parameters: {
+    depthTest: false
+  }
 });
