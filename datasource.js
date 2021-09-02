@@ -9,7 +9,41 @@ setDefaultCredentials({
     'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjZTY5M2NmMCJ9.9HD7U1c-Wh81SPaSvWWSNShF7MIMH-9-S8YmWFo0_x0'
 });
 
-const TIME0 = new Date('2021-08-10T00:00:00.000Z');
+const TIME0 = new Date('2021-01-01T07:00:00.000Z');
+function groupIntoRides(data) {
+  const rides = [];
+  let lastId = null;
+  for (const d of data) {
+    const id = d['vehicle_id'];
+    if (lastId !== id) {
+      rides.push({
+        vehicle_id: 0,
+        positions: [d.geom],
+        timestamps: [d.timestamp]
+      });
+      lastId = id;
+    }
+
+    // Points are not ordered by time, so need to insert in
+    // correct order
+    const ride = rides[rides.length - 1];
+    for (let i = 0; i < ride.timestamps.length; i++) {
+      if (i === ride.timestamps.length) {
+        // Append to end if we failed to insert
+        ride.positions.splice(i, 0, d.geom);
+        ride.timestamps.splice(i, 0, d.timestamp);
+      } else if (new Date(d.timestamp) < new Date(ride.timestamps[i])) {
+        // Insert before current item if earlier in time
+        ride.positions.splice(i, 0, d.geom);
+        ride.timestamps.splice(i, 0, d.timestamp);
+        break;
+      }
+    }
+  }
+
+  return rides;
+}
+
 function parseRide(ride) {
   return {
     vendor: parseInt(ride.vehicle_id),
@@ -44,12 +78,18 @@ function parseWKT(f) {
 export async function getTripData() {
   const data = await getData({
     type: MAP_TYPES.TABLE,
-    source: `cartodb-gcp-backend-data-team.cloud_next.trips_v7`,
+    source: 'cartobq.nexus_demo.trip_data',
     connection: 'bigquery',
-    format: 'json'
+    format: 'json',
+    credentials: {
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzNzk5MTIyNyJ9.HMotdRO3VY7xgmt-h5f9wELA_WnvtkBRejzDREChwVs'
+    }
   });
 
-  return data.map(parseRide);
+  let rides = groupIntoRides(data);
+  // rides = rides.filter(r => r.timestamps.length > 300);
+  return rides.map(parseRide);
 }
 
 export async function getPopulationData() {
@@ -69,48 +109,6 @@ export async function getWKTData(source) {
     source,
     connection: 'bigquery',
     format: 'json'
-  });
-
-  return data.map(parseWKT);
-}
-
-export async function getTexasTripData() {
-  const data = await getData({
-    type: MAP_TYPES.QUERY,
-    source:
-      'SELECT geogpoint as geom, timestamp, vehicle_id FROM `cartobq.nexus_demo.trip_data_test3` TABLESAMPLE SYSTEM (1 PERCENT) limit 150000',
-    connection: 'bigquery',
-    format: 'json'
-  });
-
-  return data.map(parseWKT);
-}
-
-export async function getTexasBoundaryData() {
-  const data = await getData({
-    type: MAP_TYPES.QUERY,
-    source: 'SELECT ST_SIMPLIFY(geometry,100) as geom FROM `cartobq.nexus_demo.texas_boundary`',
-    connection: 'bigquery',
-    format: 'json',
-    credentials: {
-      accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzYWZhODUyOSJ9.bCrMmLKkMAgA21Y14js5up8CR4IJ45xhENzXo-CuHMs'
-    }
-  });
-
-  return data.map(parseWKT);
-}
-
-export async function getTexasBoundarySimplifiedData() {
-  const data = await getData({
-    type: MAP_TYPES.TABLE,
-    source: 'cartobq.nexus_demo.texas_boundary_simplified',
-    connection: 'bigquery',
-    format: 'json',
-    credentials: {
-      accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzYWZhODUyOSJ9.bCrMmLKkMAgA21Y14js5up8CR4IJ45xhENzXo-CuHMs'
-    }
   });
 
   return data.map(parseWKT);

@@ -1,4 +1,5 @@
 import {CartoLayer, MAP_TYPES} from '@deck.gl/carto';
+import DeferredLoadLayer from './deferredLoadLayer';
 import {colorToRGBArray} from '../utils';
 
 const COLOR_ALPHA = 127;
@@ -19,27 +20,42 @@ const props = {
   pointType: 'circle',
   pointRadiusUnits: 'pixels',
   getPointRadius: 10,
+  parameters: {
+    depthTest: false
+  },
   credentials: {
     accessToken:
       'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI2ZGIwYWMzMiJ9.7wkEpcWcazDD1F6Yf72OFcaLvrRJcKpSr1BFB03Suc8'
   }
 };
 
-export const EnergySourcesLayer = new CartoLayer({
-  id: 'energy-sources',
-  getFillColor: d => {
-    const color = COLOR_SCALE[d.properties.type] || COLOR_SCALE.Other;
-    return color;
-  },
-  ...props
+const _EnergySourcesLayer = DeferredLoadLayer(() => {
+  return new CartoLayer({
+    id: 'energy-sources',
+    getFillColor: d => {
+      const color = COLOR_SCALE[d.properties.type] || COLOR_SCALE.Other;
+      return color;
+    },
+    ...props
+  });
 });
 
-export const EnergySourcesBackgroundLayer = new CartoLayer({
-  id: 'energy-sources-background',
-  opacity: 0.2,
-  getFillColor: d => {
-    const color = COLOR_SCALE[d.properties.type] || COLOR_SCALE.Other;
-    return [...color, 1];
-  },
-  ...props
+export const EnergySourcesLayer = new _EnergySourcesLayer({
+  id: 'energy-sources'
+});
+
+const _EnergySourcesBackgroundLayer = DeferredLoadLayer(() => {
+  return new CartoLayer({
+    id: 'energy-sources-background',
+    opacity: 0.2,
+    getFillColor: d => {
+      const color = COLOR_SCALE[d.properties.type] || COLOR_SCALE.Other;
+      return [...color, 1];
+    },
+    ...props
+  });
+});
+
+export const EnergySourcesBackgroundLayer = new _EnergySourcesBackgroundLayer({
+  id: 'energy-sources-background'
 });
