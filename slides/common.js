@@ -31,7 +31,7 @@ export const TexasThinBoundaryLayer = new _TexasThinBoundaryLayer({
 const _TexasBoundaryLayer = DeferredLoadLayer(() => {
   return new CartoLayer({
     getLineColor: colorToRGBArray('#e8fc0c'),
-    lineWidthMinPixels: 10,
+    lineWidthMinPixels: 5,
     ...boundaryProps
   });
 });

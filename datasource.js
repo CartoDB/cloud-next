@@ -87,8 +87,9 @@ export async function getTripData() {
     }
   });
 
-  let rides = groupIntoRides(data);
-  // rides = rides.filter(r => r.timestamps.length > 300);
+  // TODO grouping is really slow. Should do on server
+  let rides = groupIntoRides(data.slice(0, 20000));
+  rides = rides.filter(r => r.timestamps.length > 30);
   return rides.map(parseRide);
 }
 
@@ -97,7 +98,11 @@ export async function getPopulationData() {
     type: MAP_TYPES.TABLE,
     source: `cartobq.nexus_demo.texas_pop_h3`,
     connection: 'bigquery',
-    format: 'json'
+    format: 'json',
+    credentials: {
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjZTY5M2NmMCJ9.9HD7U1c-Wh81SPaSvWWSNShF7MIMH-9-S8YmWFo0_x0'
+    }
   });
 
   return data;

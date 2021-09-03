@@ -10,6 +10,7 @@ import {update as updateTween} from '@tweenjs/tween.js';
 import {headingBetweenPoints} from './utils';
 
 import {TexasThinBoundaryLayer, TexasBoundaryLayer, TexasCountiesLayer} from './slides/common';
+import {RoadsLayer} from './slides/roads';
 import {PopulationLayer} from './slides/population';
 import {PowerLinesLayer} from './slides/powerLines';
 import {EnergySourcesLayer, EnergySourcesBackgroundLayer} from './slides/energySources';
@@ -54,6 +55,7 @@ export function createOverlay(map) {
     overlay.setProps({
       layers: [
         TemperatureLayer,
+        RoadsLayer,
         TexasThinBoundaryLayer,
         TrafficFlowLayer.clone({animationCurrentTime}),
         PopulationLayer,
