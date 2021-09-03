@@ -9,14 +9,14 @@ import {update as updateTween} from '@tweenjs/tween.js';
 
 import {headingBetweenPoints} from './utils';
 
-import {TexasThinBoundaryLayer, TexasBoundaryLayer, TexasCountiesLayer} from './slides/common';
-import {RoadsLayer} from './slides/roads';
-import {PopulationLayer} from './slides/population';
-import {PowerLinesLayer} from './slides/powerLines';
-import {EnergySourcesLayer, EnergySourcesBackgroundLayer} from './slides/energySources';
-import {TrafficFlowLayer} from './slides/trafficFlow';
-import {TruckTripsLayer} from './slides/truckTrips';
-import {TemperatureLayer} from './slides/temperature';
+import {TexasThinBoundaryLayer, TexasBoundaryLayer, TexasCountiesLayer} from './layers/common';
+import {RoadsLayer} from './layers/roads';
+import {PopulationLayer} from './layers/population';
+import {PowerLinesLayer} from './layers/powerLines';
+import {EnergySourcesLayer, EnergySourcesBackgroundLayer} from './layers/energySources';
+import {TrafficFlowLayer} from './layers/trafficFlow';
+import {TruckTripsLayer} from './layers/truckTrips';
+import {TemperatureLayer} from './layers/temperature';
 import {getSingleTripData} from './datasource';
 
 registerLoaders([CSVLoader, GLTFLoader]);
