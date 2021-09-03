@@ -40,10 +40,12 @@ const Share = ({anchorEl}, forwardedRef) => {
       open={open}
       anchorEl={anchorEl}
       anchorOrigin={{
-        horizontal: 'right'
+        horizontal: 'right',
+        vertical: 'bottom'
       }}
       transformOrigin={{
-        horizontal: 'right'
+        horizontal: 'right',
+        vertical: 'top'
       }}
       classes={{
         paper: classes.menu
