@@ -103,7 +103,7 @@ export async function getPopulationData() {
     format: 'json',
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjZTY5M2NmMCJ9.9HD7U1c-Wh81SPaSvWWSNShF7MIMH-9-S8YmWFo0_x0'
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJiZDVhODUwYyJ9.fuaEK8KCYPR4EE8qpQkKBSPXcnh94OMsc2rN3TVc2zE'
     }
   });
 
