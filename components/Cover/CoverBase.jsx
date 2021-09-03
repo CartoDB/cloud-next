@@ -9,12 +9,15 @@ const useStyles = makeStyles((theme) => ({
     transform: 'translateX(-100%)',
     width: '100%',
     color: theme.palette.common.white,
-    maxWidth: theme.spacing(71),
+    maxWidth: theme.spacing(59),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     top: 'auto',
-    bottom: 'auto'
+    bottom: 'auto',
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: theme.spacing(71)
+    }
   },
   rootHidden: {
     pointerEvents: 'none'
