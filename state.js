@@ -39,6 +39,7 @@ export const AppStateStore = ({children}) => {
       tilt: 0,
       heading: 0,
       zoom: 6,
+      disableDefaultUI: true,
       mapId: GOOGLE_MAP_ID
     });
 
