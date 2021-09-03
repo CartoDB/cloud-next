@@ -1,4 +1,4 @@
-import React, {forwardRef, useImperativeHandle, useState} from 'react';
+import React, {forwardRef, useImperativeHandle, useState, useEffect} from 'react';
 import {
   Button,
   makeStyles,
@@ -20,6 +20,8 @@ import geotabLogo from '../../assets/images/geotap-primary.svg';
 import climateEngineLogo from '../../assets/images/climate-engine-logo@2x-primary.png';
 import codeImage from '../../assets/images/code.svg';
 import AboutText from './AboutText';
+
+const ABOUT_HASH = 'about';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -79,6 +81,17 @@ const About = ({}, forwardedRef) => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
 
+  useEffect(() => {
+    const hashChangeListener = () => {
+      setOpen(window.location.hash === `#${ABOUT_HASH}`);
+    };
+    window.addEventListener('hashchange', hashChangeListener);
+    hashChangeListener();
+    return () => {
+      window.removeEventListener('hashchange', hashChangeListener);
+    };
+  }, [setOpen]);
+
   useImperativeHandle(forwardedRef, () => ({
     show: () => {
       setOpen(true);
@@ -92,7 +105,7 @@ const About = ({}, forwardedRef) => {
       aria-labelledby="about-title"
       aria-describedby="about-description"
       onClose={() => {
-        setOpen(false);
+        window.location.hash = '';
       }}
       classes={{
         paper: classes.paper
@@ -107,15 +120,14 @@ const About = ({}, forwardedRef) => {
           aria-label="Close"
           color="inherit"
           onClick={() => {
-            setOpen(false);
+            window.location.hash = '';
           }}
-          size="large"
         >
           <IconNavigationClose />
         </IconButton>
       </DialogTitle>
       <DialogContent classes={{root: classes.content}}>
-        <DialogContentText id="about-description" tabIndex={-1}>
+        <DialogContentText component="div" id="about-description" tabIndex={-1}>
           <AboutText
             title="The Potential for Electrification of Truck Fleets: a story map to highlight the new Google Maps vector capabilities"
             imageBlocks={[

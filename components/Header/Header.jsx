@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = ({primary, hidden, showDelay = 0, hideDelay = 0, className}) => {
-  const aboutRef = useRef();
   const shareRef = useRef();
   const rootRef = useRef();
   const classes = useStyles({showDelay, hideDelay});
@@ -68,9 +67,10 @@ const Header = ({primary, hidden, showDelay = 0, hideDelay = 0, className}) => {
     >
       <Button
         data-position="right"
+        component="a"
+        href="#about"
         classes={{root: classes.btn, colorInherit: classes.btnWhite}}
         color={primary ? 'primary' : 'inherit'}
-        onClick={aboutRef?.current ? aboutRef.current.show : () => {}}
         startIcon={<IconActionHelp />}
         size="small"
       >
@@ -89,7 +89,7 @@ const Header = ({primary, hidden, showDelay = 0, hideDelay = 0, className}) => {
         </Button>
       </ClickAwayListener>
 
-      <About ref={aboutRef} />
+      <About />
       <Share anchorEl={rootRef?.current} ref={shareRef} />
     </div>
   );
