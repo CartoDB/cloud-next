@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState, forwardRef} from 'react';
+import React, {useEffect, useState, forwardRef} from 'react';
 import {makeStyles, Card, CardMedia, CardContent, Typography} from '@material-ui/core';
 import {useAppState} from '../../state';
 
@@ -57,7 +57,8 @@ const useStyles = makeStyles((theme) => ({
   pretitle: {
     padding: theme.spacing(1, 0, 0.5),
     borderTop: `2px solid ${theme.palette.primary.main}`,
-    fontWeight: 600
+    fontWeight: 600,
+    display: 'inline-block'
   },
   title: {
     color: theme.palette.primary.dark,
@@ -69,11 +70,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SidebarSlide = ({pretitle, title, subtitle, text, image, slide}, cardRef) => {
-  // const cardRef = useRef();
+const SidebarSlide = ({title, subtitle, text, image, slide}, cardRef) => {
   const classes = useStyles();
   const [isOnScroll, setIsOnScroll] = useState(false);
-  const {currentSlide} = useAppState();
+  const {currentSlide, slidesNumber} = useAppState();
 
   useEffect(() => {
     if (cardRef?.current) {
@@ -111,7 +111,7 @@ const SidebarSlide = ({pretitle, title, subtitle, text, image, slide}, cardRef) 
           color="primary"
           component="span"
         >
-          {pretitle}
+          {`Fact ${slide} of ${slidesNumber - 1}`}
         </Typography>
         <Typography className={classes.title} variant="h5" color="primary" component="h2">
           {title}

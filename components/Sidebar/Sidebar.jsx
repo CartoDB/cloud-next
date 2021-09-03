@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Sidebar = () => {
   const classes = useStyles();
-  const {next, prev, reset, currentSlide} = useAppState();
+  const {next, prev, reset, currentSlide, slidesNumber} = useAppState();
   const [headerPrimaryHeight, setHeaderPrimaryHeight] = useState(0);
   const currentCardRef = useRef();
 
@@ -179,7 +179,6 @@ const Sidebar = () => {
         <SidebarSlide
           slide={1}
           {...(currentSlide === 1 && {ref: currentCardRef})}
-          pretitle="Fact 1 of 8"
           title="The second-largest state by both area and population"
           subtitle="With a population of over 29M and 15.9% increase since 2010"
           text="Although second on population, due to its size is one of the least dense overall but with high concentration if a few areas like Dallas, Houston and San Antonio."
@@ -188,7 +187,6 @@ const Sidebar = () => {
         <SidebarSlide
           slide={2}
           {...(currentSlide === 2 && {ref: currentCardRef})}
-          pretitle="Fact 2 of 8"
           title="The largest energy consumer and contributor"
           subtitle="Texas ranks second in the nation in both population and the size of its economy, and it consumes a large share of the nation's energy."
           text="In 2018, Texas accounted for about one-seventh of U.S. energy consumption, more than any other state. However, Texas was sixth in the nation in per capita energy consumption."
@@ -197,7 +195,6 @@ const Sidebar = () => {
         <SidebarSlide
           slide={3}
           {...(currentSlide === 3 && {ref: currentCardRef})}
-          pretitle="Fact 3 of 8"
           title="The biggest producer of renewal energy"
           subtitle="Renewable energy fueled more than one-fifth of all utility-scale net generation in Texas in 2020, and the state accounted for one-fifth of the nation's utility-scale electricity generation from nonhydroelectric renewable sources."
           text="Wind accounts for nearly all of the electricity generated from renewable resources in Texas."
@@ -206,7 +203,6 @@ const Sidebar = () => {
         <SidebarSlide
           slide={4}
           {...(currentSlide === 4 && {ref: currentCardRef})}
-          pretitle="Fact 4 of 8"
           title="Transportation is the second largest consumer of energy in Texas"
           subtitle="accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, and the high number of vehicle miles traveled annually."
           text="And fright within..."
@@ -215,7 +211,6 @@ const Sidebar = () => {
         <SidebarSlide
           slide={5}
           {...(currentSlide === 5 && {ref: currentCardRef})}
-          pretitle="Fact 5 of 8"
           title="2M trucks move everyday moving fright"
           subtitle="accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, and the high number of vehicle miles traveled annually."
           text="And fright within..."
@@ -224,7 +219,6 @@ const Sidebar = () => {
         <SidebarSlide
           slide={6}
           {...(currentSlide === 6 && {ref: currentCardRef})}
-          pretitle="Fact 6 of 8"
           title="Electrifying a truck removes 200T of Co2 per day"
           subtitle="accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, and the high number of vehicle miles traveled annually."
           text="And fright within..."
@@ -233,7 +227,6 @@ const Sidebar = () => {
         <SidebarSlide
           slide={7}
           {...(currentSlide === 7 && {ref: currentCardRef})}
-          pretitle="Fact 7 of 8"
           title="Analyzing the stops of current trucks we can design where to install charging stations"
           subtitle="accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state,"
           text=""
@@ -242,7 +235,6 @@ const Sidebar = () => {
         <SidebarSlide
           slide={8}
           {...(currentSlide === 8 && {ref: currentCardRef})}
-          pretitle="Fact 8 of 8"
           title="Teas will be one of the most affected states by Global warming"
           subtitle="accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state,"
           text="accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state,"
@@ -274,11 +266,15 @@ const Sidebar = () => {
           </IconButton>
         </Fade>
         <div className={[classes.dots, classes.footerItem].join(' ')} data-position="center">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-            <div key={`dot-${i}`} className={classes.dot} data-active={i === currentSlide} />
+          {[...new Array(slidesNumber - 1)].map((item, i) => (
+            <div
+              key={`dot-${i + 1}`}
+              className={classes.dot}
+              data-active={i + 1 === currentSlide}
+            />
           ))}
         </div>
-        <Fade in={currentSlide !== 8}>
+        <Fade in={currentSlide !== slidesNumber - 1}>
           <Button
             data-position="right"
             classes={{root: classes.footerItem}}

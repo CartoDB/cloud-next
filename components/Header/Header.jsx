@@ -1,7 +1,9 @@
-import React from 'react';
-import {Button, makeStyles} from '@material-ui/core';
+import React, {useRef} from 'react';
+import {Button, makeStyles, ClickAwayListener} from '@material-ui/core';
 import {ReactComponent as IconActionHelp} from '../../assets/icons/icon-action-help-outline.svg';
 import {ReactComponent as IconSocialShare} from '../../assets/icons/icon-social-share.svg';
+import About from '../About/About';
+import Share from '../Header/Share';
 
 export const HEADER_HEIGHT = 72;
 
@@ -49,11 +51,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = ({primary, hidden, showDelay = 0, hideDelay = 0, className}) => {
+  const aboutRef = useRef();
+  const shareRef = useRef();
+  const rootRef = useRef();
   const classes = useStyles({showDelay, hideDelay});
 
   return (
     <div
       data-hidden={!!hidden}
+      ref={rootRef}
       className={[
         classes.root,
         primary ? classes.rootPrimary : classes.rootWhite,
@@ -64,22 +70,27 @@ const Header = ({primary, hidden, showDelay = 0, hideDelay = 0, className}) => {
         data-position="right"
         classes={{root: classes.btn, colorInherit: classes.btnWhite}}
         color={primary ? 'primary' : 'inherit'}
-        onClick={() => {}}
+        onClick={aboutRef?.current ? aboutRef.current.show : () => {}}
         startIcon={<IconActionHelp />}
         size="small"
       >
         About
       </Button>
-      <Button
-        data-position="right"
-        classes={{root: classes.btn, colorInherit: classes.btnWhite}}
-        color={primary ? 'primary' : 'inherit'}
-        onClick={() => {}}
-        startIcon={<IconSocialShare />}
-        size="small"
-      >
-        Share
-      </Button>
+      <ClickAwayListener onClickAway={shareRef?.current ? shareRef.current.hide : () => {}}>
+        <Button
+          data-position="right"
+          classes={{root: classes.btn, colorInherit: classes.btnWhite}}
+          color={primary ? 'primary' : 'inherit'}
+          onClick={shareRef?.current ? shareRef.current.show : () => {}}
+          startIcon={<IconSocialShare />}
+          size="small"
+        >
+          Share
+        </Button>
+      </ClickAwayListener>
+
+      <About ref={aboutRef} />
+      <Share anchorEl={rootRef?.current} ref={shareRef} />
     </div>
   );
 };

@@ -1,10 +1,11 @@
 import React from 'react';
-import {Typography, makeStyles, Box} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core';
 import CoverBase from './CoverBase';
 import cartoLogo from '../../assets/images/carto-components-logo-negative-logo.svg';
 import googleMapsLogo from '../../assets/images/google-maps-logo.svg';
 import geotapLogo from '../../assets/images/geotap.svg';
 import climateEngineLogo from '../../assets/images/climate-engine-logo@2x.png';
+import CoverLogoBlock from './CoverLogoBlock';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,15 +15,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex'
   },
   text: {
-    opacity: 0.6,
-    marginBottom: theme.spacing(3)
-  },
-  logos: {
-    display: 'flex',
-    alignItems: 'center',
-    '& img + img': {
-      marginLeft: theme.spacing(7)
-    }
+    opacity: 0.6
   },
   climateEngineLogo: {
     maxWidth: theme.spacing(17)
@@ -35,26 +28,35 @@ const CoverFooter = () => {
   return (
     <CoverBase className={classes.root}>
       <div className={classes.content}>
-        <div>
-          <Typography component="h5" variant="caption" className={classes.text} color="inherit">
-            A story map by
-          </Typography>
-          <img src={cartoLogo} alt="CARTO" />
-        </div>
-        <Box pl={7}>
-          <Typography component="h5" variant="caption" className={classes.text} color="inherit">
-            In collaboration with
-          </Typography>
-          <div className={classes.logos}>
-            <img src={googleMapsLogo} alt="Google Maps" />
-            <img src={geotapLogo} alt="GEOTAB" />
-            <img
-              className={classes.climateEngineLogo}
-              src={climateEngineLogo}
-              alt="Climate Engine"
-            />
-          </div>
-        </Box>
+        <CoverLogoBlock
+          title="A story map by"
+          textClassName={classes.text}
+          images={[
+            {
+              src: cartoLogo,
+              alt: 'CARTO'
+            }
+          ]}
+        />
+        <CoverLogoBlock
+          title="In collaboration with"
+          textClassName={classes.text}
+          images={[
+            {
+              src: googleMapsLogo,
+              alt: 'Google Maps'
+            },
+            {
+              src: geotapLogo,
+              alt: 'GEOTAB'
+            },
+            {
+              src: climateEngineLogo,
+              alt: 'Climate Engine',
+              className: classes.climateEngineLogo
+            }
+          ]}
+        />
       </div>
     </CoverBase>
   );

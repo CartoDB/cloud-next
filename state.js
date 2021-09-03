@@ -97,7 +97,8 @@ export const AppStateStore = ({children}) => {
               .join(' ')
           );
         },
-        currentSlide
+        currentSlide,
+        slidesNumber: slides.length
       }}
     >
       {children}
