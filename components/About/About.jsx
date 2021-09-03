@@ -9,13 +9,17 @@ import {
   IconButton,
   Typography,
   Link,
-  Paper
+  Paper,
+  Divider
 } from '@material-ui/core';
 import {ReactComponent as IconNavigationClose} from '../../assets/icons/icon-navigation-close.svg';
 import {ReactComponent as IconGithub} from '../../assets/icons/icon-github.svg';
-import CoverLogoBlock from '../Cover/CoverLogoBlock';
 import cartoLogo from '../../assets/images/carto-components-logo.svg';
-import googleMapsLogo from '../../assets/images/google-maps-logo.svg';
+import googleMapsLogo from '../../assets/images/google-maps-logo-primary.svg';
+import geotabLogo from '../../assets/images/geotap-primary.svg';
+import climateEngineLogo from '../../assets/images/climate-engine-logo@2x-primary.png';
+import codeImage from '../../assets/images/code.svg';
+import AboutText from './AboutText';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,16 +39,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   content: {
-    padding: theme.spacing(2, 3)
-  },
-  contentTitle: {
-    color: theme.palette.primary.dark,
-    marginBottom: theme.spacing(1.5)
-  },
-  logos: {
-    display: 'flex',
-    color: theme.palette.text.secondary,
-    margin: theme.spacing(4.5, 0, 6)
+    padding: theme.spacing(2, 3, 0, 3)
   },
   logosText: {
     marginBottom: theme.spacing(2),
@@ -53,10 +48,12 @@ const useStyles = makeStyles((theme) => ({
   card: {
     padding: theme.spacing(3, 3, 4.5),
     backgroundColor: theme.palette.grey[50],
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center'
   },
   cardText: {
-    flex: 1
+    flex: 1,
+    paddingRight: theme.spacing(3)
   },
   cardTextTitle: {
     textTransform: 'uppercase',
@@ -69,6 +66,12 @@ const useStyles = makeStyles((theme) => ({
     '& > a + a': {
       marginLeft: theme.spacing(1)
     }
+  },
+  climateEngineLogo: {
+    maxWidth: theme.spacing(17)
+  },
+  divider: {
+    margin: theme.spacing(4.5, 0, 2)
   }
 }));
 
@@ -110,40 +113,39 @@ const About = ({}, forwardedRef) => {
       </DialogTitle>
       <DialogContent classes={{root: classes.content}}>
         <DialogContentText id="about-description" tabIndex={-1}>
-          <Typography component="h2" variant="subtitle1" className={classes.contentTitle}>
-            The Potential for Electrification of Truck Fleets: a story map to highlight the new
-            Google Maps vector capabilities
-          </Typography>
-          <Typography component="p" variant="body2" color="textPrimary">
+          <AboutText
+            title="The Potential for Electrification of Truck Fleets: a story map to highlight the new Google Maps vector capabilities"
+            imageBlocks={[
+              {
+                title: 'A story map by',
+                textClassName: classes.logosText,
+                images: [
+                  {
+                    src: cartoLogo,
+                    alt: 'CARTO'
+                  }
+                ]
+              },
+              {
+                title: 'In collaboration with',
+                textClassName: classes.logosText,
+                images: [
+                  {
+                    src: googleMapsLogo,
+                    alt: 'Google Maps'
+                  }
+                ]
+              }
+            ]}
+          >
             We have been working over the last few months to add rich visualization capabilities to
             Google Maps leveraging their new upcoming vector support. Now we have the{' '}
             <Link underline="always" href="https://carto.com" target="_blank">
               technology
             </Link>{' '}
             ready and we are looking at different angles to showcase the capabilities.
-          </Typography>
-          <div className={classes.logos}>
-            <CoverLogoBlock
-              title="A story map by"
-              textClassName={classes.logosText}
-              images={[
-                {
-                  src: cartoLogo,
-                  alt: 'CARTO'
-                }
-              ]}
-            />
-            <CoverLogoBlock
-              title="In collaboration with"
-              textClassName={classes.logosText}
-              images={[
-                {
-                  src: googleMapsLogo,
-                  alt: 'Google Maps'
-                }
-              ]}
-            />
-          </div>
+          </AboutText>
+
           <Paper classes={{root: classes.card}} elevation={0}>
             <div className={classes.cardText}>
               <Typography variant="overline" component="h4" className={classes.cardTextTitle}>
@@ -176,7 +178,34 @@ const About = ({}, forwardedRef) => {
                 </Button>
               </div>
             </div>
+            <img src={codeImage} />
           </Paper>
+
+          <Divider className={classes.divider} />
+
+          <AboutText
+            title="Data"
+            imageBlocks={[
+              {
+                title: 'Provider',
+                textClassName: classes.logosText,
+                images: [
+                  {
+                    src: geotabLogo,
+                    alt: 'GEOTAB'
+                  },
+                  {
+                    src: climateEngineLogo,
+                    alt: 'Climate Engine',
+                    className: classes.climateEngineLogo
+                  }
+                ]
+              }
+            ]}
+          >
+            Fusce pulvinar felis ut purus pulvinar vehicula. In vehicula, lectus in gravida euismod,
+            lacus purus posuere dui, id faucibus leo purus et lacus. Donec at auctor mauris.
+          </AboutText>
         </DialogContentText>
       </DialogContent>
     </Dialog>
