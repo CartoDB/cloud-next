@@ -26,7 +26,7 @@ const CoverHero = () => {
   return (
     <CoverBase className={classes.root}>
       <Typography className={classes.pretitle} color="inherit" variant="h5">
-        <strong>CARTO</strong> + Goolge Maps
+        <strong>CARTO</strong> + Google Maps
       </Typography>
       <Box mt={1.5} mb={4}>
         <Typography color="inherit" variant="h3">

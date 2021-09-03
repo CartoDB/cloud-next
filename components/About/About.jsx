@@ -91,6 +91,9 @@ const About = ({}, forwardedRef) => {
       scroll="paper"
       aria-labelledby="about-title"
       aria-describedby="about-description"
+      onClose={() => {
+        setOpen(false);
+      }}
       classes={{
         paper: classes.paper
       }}

@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
     flexGrow: 1,
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create(['margin', 'background-image'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
@@ -24,8 +24,24 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 0
   },
   rootBlocked: {
-    pointerEvents: 'none',
-    cursor: 'default'
+    pointerEvents: 'none'
+  },
+  mapBlock: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: '100%',
+    height: '100%',
+    backgroundImage:
+      'linear-gradient(to bottom, rgba(22, 39, 69, 0.32), rgba(22, 39, 69, 0.64) 63%, rgba(22, 39, 69, 0.92))',
+    transition: theme.transitions.create('opacity', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+  mapBlockHidden: {
+    opacity: 0,
+    pointerEvents: 'none'
   }
 }));
 
@@ -34,12 +50,17 @@ const Map = () => {
   const {currentSlide} = useAppState();
 
   return (
-    <div
-      className={[classes.root, currentSlide > 0 ? classes.rootShift : classes.rootBlocked].join(
-        ' '
-      )}
-      id="map"
-    ></div>
+    <>
+      <div
+        className={[classes.root, currentSlide > 0 ? classes.rootShift : classes.rootBlocked].join(
+          ' '
+        )}
+        id="map"
+      ></div>
+      <div
+        className={[classes.mapBlock, currentSlide > 0 ? classes.mapBlockHidden : ''].join(' ')}
+      />
+    </>
   );
 };
 

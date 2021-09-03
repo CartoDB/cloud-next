@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
   content: {
     display: 'flex'
   },
+  logo: {
+    width: theme.spacing(5),
+    height: theme.spacing(5)
+  },
   text: {
     textShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
   }
@@ -25,7 +29,7 @@ const CoverHeader = () => {
   return (
     <CoverBase slidesToShow={[1, 2, 3, 4, 5, 6, 7]} className={classes.root}>
       <div className={classes.content}>
-        <img src={cartoSymbol} alt="CARTO" />
+        <img className={classes.logo} src={cartoSymbol} alt="CARTO" />
         <Box pl={1.5}>
           <Typography variant="overline" className={classes.text} color="inherit">
             STORY MAP
