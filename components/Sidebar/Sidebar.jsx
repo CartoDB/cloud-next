@@ -14,6 +14,7 @@ import slide4Image from '../../assets/images/slide4.jpg';
 import slide5Image from '../../assets/images/slide5.jpg';
 import slide6Image from '../../assets/images/slide6.jpg';
 import slide7Image from '../../assets/images/slide7.jpg';
+import slide8Image from '../../assets/images/slide8.jpg';
 
 export const SIDEBAR_WIDTH = {
   xs: '400px',
@@ -238,7 +239,7 @@ const Sidebar = () => {
           title="Teas will be one of the most affected states by Global warming"
           subtitle="accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state,"
           text="accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state, accounts for one-fourth of state end-use consumption, in part because of the large number of registered motor vehicles in Texas, the great distances across the state,"
-          image={slide7Image}
+          image={slide8Image}
         />
       </div>
 
