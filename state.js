@@ -1,4 +1,5 @@
 import React, {useState, createContext, useContext, useEffect} from 'react';
+import slides from './slides';
 import {createOverlay} from './overlay';
 import {loadScript} from './utils';
 
@@ -7,17 +8,6 @@ import flyTo from './flyTo';
 const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
 const GOOGLE_MAP_ID = '84591267f7b3a201';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
-const slides = [
-  /* 0 */ ['roads', 'texas-boundary'],
-  /* 1 */ ['population-heatmap', 'texas-boundary' /*'texas-counties'*/],
-  /* 2 */ ['power-lines', 'texas-boundary'],
-  /* 3 */ ['energy-sources', 'energy-sources-background', 'texas-boundary'],
-  /* 4 */ ['traffic-flow'],
-  /* 5 */ ['truck-trips', 'texas-boundary'],
-  /* 6 */ ['scenegraph-layer'],
-  /* 7 */ [],
-  /* 8 */ ['temperature', 'texas-boundary']
-];
 
 const initAppState = {
   currentSlide: null
@@ -53,7 +43,9 @@ export const AppStateStore = ({children}) => {
   useEffect(
     () => {
       if (currentSlide !== null && overlay?.visibleLayers) {
-        overlay.visibleLayers = slides[currentSlide];
+        const {layers, view} = slides[currentSlide];
+        overlay.visibleLayers = layers;
+        flyTo(map, view);
       }
     },
     [currentSlide]
@@ -111,6 +103,6 @@ window.print = () => {
   const heading = map.getHeading();
   const tilt = map.getTilt();
   const zoom = map.getZoom();
-  const config = {center: {lat, lng}, heading, tilt, zoom};
+  const config = {lat, lng, heading, tilt, zoom};
   console.log(JSON.stringify(config));
 };
