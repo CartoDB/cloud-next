@@ -8,15 +8,15 @@ const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
 const GOOGLE_MAP_ID = '84591267f7b3a201';
 const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
 const slides = [
-  ['roads', 'texas-boundary'],
-  ['population-heatmap', 'texas-boundary' /*'texas-counties'*/],
-  ['power-lines', 'texas-boundary'],
-  ['energy-sources', 'energy-sources-background', 'texas-boundary'],
-  ['traffic-flow'],
-  ['truck-trips', 'texas-boundary'],
-  [],
-  [],
-  ['temperature', 'texas-boundary']
+  /* 0 */ ['roads', 'texas-boundary'],
+  /* 1 */ ['population-heatmap', 'texas-boundary' /*'texas-counties'*/],
+  /* 2 */ ['power-lines', 'texas-boundary'],
+  /* 3 */ ['energy-sources', 'energy-sources-background', 'texas-boundary'],
+  /* 4 */ ['traffic-flow'],
+  /* 5 */ ['truck-trips', 'texas-boundary'],
+  /* 6 */ ['scenegraph-layer'],
+  /* 7 */ [],
+  /* 8 */ ['temperature', 'texas-boundary']
 ];
 
 const initAppState = {

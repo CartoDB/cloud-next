@@ -17,6 +17,7 @@ import {EnergySourcesLayer, EnergySourcesBackgroundLayer} from './slides/energyS
 import {TrafficFlowLayer} from './slides/trafficFlow';
 import {TruckTripsLayer} from './slides/truckTrips';
 import {TemperatureLayer} from './slides/temperature';
+import {getSingleTripData} from './datasource';
 
 registerLoaders([CSVLoader, GLTFLoader]);
 
@@ -24,17 +25,19 @@ const LOOP_LENGTH = 8 * 3600;
 
 export function createOverlay(map) {
   let currentTime = 0;
+  let truckTime = 0;
   let animationCurrentTime = 0;
 
+  const truckData = getSingleTripData();
   const scenegraphProps = {
     id: 'scenegraph-layer',
-    data: [],
+    data: truckData,
     pickable: true,
     opacity: 1,
     sizeScale: 10,
     scenegraph: 'low_poly_truck/scene.gltf',
-    getPosition: d => getVehiclePosition(d, currentTime),
-    getOrientation: d => [0, 180 - getVehicleHeading(d, currentTime), 90],
+    getPosition: d => getVehiclePosition(d, truckTime),
+    getOrientation: d => [0, 180 - getVehicleHeading(d, truckTime), 90],
     _lighting: 'pbr'
   };
 
@@ -42,18 +45,20 @@ export function createOverlay(map) {
   overlay.truckToFollow = null;
   overlay.visibleLayers = [];
   const animate = () => {
-    currentTime = (currentTime + 100) % LOOP_LENGTH;
+    currentTime = (currentTime + 10) % LOOP_LENGTH;
+    truckTime = (truckTime + 1) % 2800;
     animationCurrentTime = animationCurrentTime + 1;
     const scenegraphLayer = new ScenegraphLayer({
       updateTriggers: {
-        getPosition: [currentTime],
-        getOrientation: [currentTime]
+        getPosition: [truckTime],
+        getOrientation: [truckTime]
       },
       ...scenegraphProps
     });
 
     overlay.setProps({
       layers: [
+        scenegraphLayer,
         TemperatureLayer,
         RoadsLayer,
         TexasThinBoundaryLayer,
@@ -73,10 +78,10 @@ export function createOverlay(map) {
       })
     });
     updateTween();
-    if (overlay.truckToFollow !== null) {
-      const trip = data[overlay.truckToFollow];
-      const [lng, lat] = getVehiclePosition(trip, currentTime);
-      map.moveCamera({center: {lng, lat}, zoom: 18, heading: currentTime, tilt: 45});
+    if (overlay.visibleLayers.indexOf('scenegraph-layer') !== -1) {
+      const trip = truckData[0];
+      const [lng, lat] = getVehiclePosition(trip, truckTime);
+      map.moveCamera({center: {lng, lat}, zoom: 18, heading: 0.2 * truckTime, tilt: 45});
     }
 
     window.requestAnimationFrame(animate);

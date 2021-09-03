@@ -90,7 +90,9 @@ export async function getTripData() {
   // TODO grouping is really slow. Should do on server
   let rides = groupIntoRides(data.slice(0, 20000));
   rides = rides.filter(r => r.timestamps.length > 30);
-  return rides.map(parseRide);
+  const parsed = rides.map(parseRide);
+  debugger;
+  return parsed;
 }
 
 export async function getPopulationData() {
@@ -117,4 +119,25 @@ export async function getWKTData(source) {
   });
 
   return data.map(parseWKT);
+}
+
+export function getSingleTripData() {
+  return [
+    {
+      path: [
+        [-95.36403179168701, 29.75643270737706],
+        [-95.36060929298401, 29.754346312706605],
+        [-95.36121010780334, 29.753601161227223],
+        [-95.36377429962158, 29.75516597293549],
+        [-95.3649652004242, 29.753657047780315],
+        [-95.36758303642273, 29.755231172893176],
+        [-95.36462187767029, 29.75898475608521],
+        [-95.3602659702301, 29.756367508201055],
+        [-95.3608775138855, 29.755613057507748],
+        [-95.3634524345398, 29.757159209611704],
+        [-95.36399960517883, 29.75647927819111]
+      ],
+      timestamps: [0, 400, 500, 800, 1000, 1300, 1800, 2300, 2400, 2700, 2800]
+    }
+  ];
 }
