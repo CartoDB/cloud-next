@@ -6,7 +6,7 @@ export async function loadScript(url) {
   script.src = url;
   const head = document.querySelector('head');
   head.appendChild(script);
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     script.onload = resolve;
   });
 }
