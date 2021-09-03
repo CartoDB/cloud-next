@@ -26,7 +26,7 @@ const CoverHero = () => {
   return (
     <CoverBase className={classes.root}>
       <Typography className={classes.pretitle} color="inherit" variant="h5">
-        <strong>CARTO</strong> + Google Maps
+        Google Maps WebGL + CARTO
       </Typography>
       <Box mt={1.5} mb={4}>
         <Typography color="inherit" variant="h3">
@@ -35,9 +35,10 @@ const CoverHero = () => {
       </Box>
       <Box mb={4}>
         <Typography color="inherit" variant="body1">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum posuere magna vel
-          ornare egestas. Maecenas lorem odio, dictum sit amet orci sed, aliquam facilisis lectus.
-          In sit amet tincidunt erat.
+          Google Maps and CARTO have worked together to bring rich data visualization to web maps.
+          To showcase those new capabilities we would like to present you with a map story about 
+          the potential for electrification of truck fleets. If you want to learn about how this has been made 
+          check out the About section.
         </Typography>
       </Box>
       <Button
