@@ -45,15 +45,6 @@ const CoverFooter = () => {
             {
               src: googleMapsLogo,
               alt: 'Google Maps'
-            },
-            {
-              src: geotapLogo,
-              alt: 'GEOTAB'
-            },
-            {
-              src: climateEngineLogo,
-              alt: 'Climate Engine',
-              className: classes.climateEngineLogo
             }
           ]}
         />

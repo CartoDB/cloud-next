@@ -1,11 +1,11 @@
 export default [
   /* 0 */ {
     layers: ['roads', 'texas-boundary'],
-    view: {lat: 36.7, lng: -99.2, heading: 0, tilt: 30, zoom: 5}
+    view: {lat: 36.7, lng: -105.2, heading: 0, tilt: 40, zoom: 5.3}
   },
   /* 1 */ {
     layers: ['population-heatmap', 'texas-boundary' /*'texas-counties'*/],
-    view: {lat: 31.58, lng: -99.52, heading: 340, tilt: 30, zoom: 6.1}
+    view: {lat: 31.58, lng: -99.52, heading: 340, tilt: 30, zoom: 6.3}
   },
   /* 2 */ {
     layers: ['power-lines', 'texas-boundary'],

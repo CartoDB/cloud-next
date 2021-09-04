@@ -111,7 +111,7 @@ const SidebarSlide = ({title, subtitle, text, image, slide}, cardRef) => {
           color="primary"
           component="span"
         >
-          {`Fact ${slide} of ${slidesNumber - 1}`}
+          {`Map ${slide} of ${slidesNumber - 1}`}
         </Typography>
         <Typography className={classes.title} variant="h5" color="primary" component="h2">
           {title}

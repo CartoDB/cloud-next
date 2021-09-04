@@ -181,16 +181,35 @@ const Sidebar = () => {
           slide={1}
           {...(currentSlide === 1 && {ref: currentCardRef})}
           title="The second-largest state by both area and population"
-          subtitle="With a population of over 29M and 15.9% increase since 2010"
-          text="Although second on population, due to its size is one of the least dense overall but with high concentration if a few areas like Dallas, Houston and San Antonio."
+          subtitle="With a population of over 29M people and a 15.9% increase since 2010."
+          text="Texas's population density as of 2010 is 96.3 people per square mile. While Texas 
+          and France are similarly sized geographically, the European country has a population density of 
+          301.8 people per square mile. 
+          <br/>
+
+
+          Of its dense population, two-thirds of all Texans 
+          live in major metropolitan areas such as Houston. The Dallas–Fort Worth metropolitan 
+          area is the largest in Texas. While Houston is the largest city in Texas and the 
+          fourth-largest city in the United States by population, the Dallas–Fort Worth metropolitan 
+          area is larger than the city and metropolitan area of Houston."
           image={slide1Image}
         />
         <SidebarSlide
           slide={2}
           {...(currentSlide === 2 && {ref: currentCardRef})}
           title="The largest energy consumer and contributor"
-          subtitle="Texas ranks second in the nation in both population and the size of its economy, and it consumes a large share of the nation's energy."
-          text="In 2018, Texas accounted for about one-seventh of U.S. energy consumption, more than any other state. However, Texas was sixth in the nation in per capita energy consumption."
+          subtitle="Texas ranks second in the nation in both population and the size of its economy, 
+          and it consumes a large share of the nation's energy."
+          text="In 2018, Texas accounted for about one-seventh of U.S. energy consumption, 
+          more than any other state. However, 
+          Texas was sixth in the nation in per capita energy consumption.
+          
+          Texas is also the nation's third-largest net energy supplier despite its high energy use
+          
+          
+
+          "
           image={slide2Image}
         />
         <SidebarSlide

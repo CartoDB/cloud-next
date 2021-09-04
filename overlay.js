@@ -20,7 +20,7 @@ import {TemperatureLayer} from './layers/temperature';
 import {getSingleTripData} from './datasource';
 
 registerLoaders([CSVLoader, GLTFLoader]);
-
+const v=1;
 const LOOP_LENGTH = 8 * 3600;
 
 export function createOverlay(map) {
