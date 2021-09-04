@@ -5,7 +5,7 @@ import {ReactComponent as IconTwitter} from '../../assets/icons/icon-twitter.svg
 import {ReactComponent as IconLinkedin} from '../../assets/icons/icon-linkedin.svg';
 
 const SHARING_URL = 'https://carto.com';
-const SHARING_TEXT = 'Check out this CARTO BigQuery Google Maps example';
+const SHARING_TEXT = 'Check out the new visualisation capabilities on Google Maps WebGL on this story about electrification in Texas. #googlemaps #carto #bigquery';
 
 const useStyles = makeStyles((theme) => ({
   menu: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Share = ({anchorEl}, forwardedRef) => {
   const [open, setOpen] = useState(false);
-  const classes = useStyles();
+  const classes = useStyles(); 
 
   useImperativeHandle(forwardedRef, () => ({
     show: () => {
