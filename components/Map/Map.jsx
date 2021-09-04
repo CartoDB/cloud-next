@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     backgroundImage:
-      'linear-gradient(to bottom, rgba(22, 39, 69, 0.32), rgba(22, 39, 69, 0.64) 63%, rgba(22, 39, 69, 0.92))',
+      'linear-gradient(to bottom, rgba(22, 39, 69, 0.84), rgba(22, 39, 69, 0.8) 65%, rgba(22, 39, 69, 0.2))',
     transition: theme.transitions.create('opacity', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
