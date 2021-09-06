@@ -7,7 +7,7 @@ import { scaleThreshold } from 'd3-scale';
 const colorScaleFunction = scaleThreshold()
   .domain([1, 50, 500, 1000, 12000, 14000])
   .range([
-    [253, 230, 219,140],
+    [253, 230, 219,132],
     [248, 163, 171,140],
     [241, 77, 143,110],
     [182, 0, 119,70],

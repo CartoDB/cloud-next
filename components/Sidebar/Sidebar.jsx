@@ -182,36 +182,31 @@ const Sidebar = () => {
         <SidebarSlide
           slide={1}
           {...(currentSlide === 1 && {ref: currentCardRef})}
-          title="The second-largest state by both area and population"
-          subtitle="With a population of over 29M people and a 15.9% increase since 2010."
+          title="The second-largest state in the US by both area and population"
+          subtitle="With a population of over 29M people, which has increased 15.9% since 2010."
           image={slide1Image}
           imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@juvx?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Vlad Busuioc</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         >
           <p>
-            Two-thirds of all Texans live in major metropolitan areas such as Houston. The
-            Dallas–Fort Worth metropolitan area is the largest in Texas.
-          </p>
-          <p>
-            While Houston is the largest city in Texas and the fourth-largest city in the United
-            States by population, the Dallas–Fort Worth metropolitan area is larger than the city
-            and metropolitan area of Houston.
+          Two-thirds of all Texans live in major metropolitan areas such as Houston. The Dallas–Fort Worth metropolitan area is the largest in Texas, while Houston is the largest city,  and the fourth-largest city in the United States.  
+          By population, the Dallas–Fort Worth metropolitan area is larger than the city and metropolitan area of Houston.
           </p>
         </SidebarSlide>
         <SidebarSlide
           slide={2}
           {...(currentSlide === 2 && {ref: currentCardRef})}
           title="The largest consumer and contributor of energy"
-          subtitle="Texas ranks second in the nation in both population and the size of its economy, and it consumes a large share of the nation's energy."
-          text="In 2018, Texas accounted for about one-seventh of U.S. energy consumption, more than any other state. However, Texas was sixth in the nation in per capita energy consumption. Texas is also the nation's third-largest net energy supplier despite its high energy use..."
+          subtitle="Texas ranks second in the nation in both population and the size of its economy, it also consumes a large share of the nation's energy."
+          text="In 2018, Texas accounted for about one-seventh of U.S. energy consumption, more than any other state.Texas ranks  sixth nationally  in per capita energy consumption. The state is also the nation's third-largest net energy supplier, despite its high energy usage."
           image={slide2Image}
           imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@matthewhenry?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Matthew Henry</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
         <SidebarSlide
           slide={3}
           {...(currentSlide === 3 && {ref: currentCardRef})}
-          title="The biggest producer of renewable energy"
-          subtitle="Renewable energy fueled more than one-fifth of all utility-scale net generation in Texas in 2020, and the state accounted for one-fifth of the nation's utility-scale electricity generation from nonhydroelectric renewable sources."
-          text="Wind accounts for nearly all of the electricity generated from renewable resources in Texas."
+          title="The largest  producer of renewable energy"
+          subtitle="Renewable energy fueled more than one-fifth of all utility-scale net generation in Texas in 2020, and the state accounted for one-fifth of the nation's utility-scale electricity generation from non-hydroelectric renewable sources."
+          text="In Texas, wind accounts for nearly all of the electricity generated from renewable resources."
           image={slide3Image}
           imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@viazavier?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Laura Ockel</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
@@ -219,8 +214,8 @@ const Sidebar = () => {
           slide={4}
           {...(currentSlide === 4 && {ref: currentCardRef})}
           title="Transportation is the second largest consumer of energy in Texas"
-          subtitle="A truck can take between 15and 20 hours to drive across Texas at its widest point."
-          text="And fright within..."
+          subtitle="Trucks in Texas represent 12% of all vehicle miles travelled in the state each year. Road transportation continues to be the largest contributor to total CO2 emissions in Texas— estimated at more than 225 million tons each year."
+          text=""
           image={slide4Image}
           imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@charlfolscher?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Charl Folscher</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
@@ -228,35 +223,35 @@ const Sidebar = () => {
           slide={5}
           {...(currentSlide === 5 && {ref: currentCardRef})}
           title="73% of goods manufactured in Texas are transported by truck"
-          subtitle="Trucking is big business in Texas."
-          text="And fright within..."
+          subtitle="Trucking is big business in Texas. With more than 60,000 trucking companies in the state employing 185,000 drivers, the impacts of any vehicle electrification measures are significant, not only on the environment, but also the local economy."
+          text=""
           image={slide5Image}
           imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@chuttersnap?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">CHUTTERSNAP</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
         <SidebarSlide
           slide={6}
           {...(currentSlide === 6 && {ref: currentCardRef})}
-          title="Commercial Truck Electrification is Within Reach"
-          subtitle="Fully electric trucks are reaching wider-scale consideration as truck, engine, and other component makers are developing the systems that will support such vehicles."
-          text="These trucks will have many benefits (more renewable energy, simpler design, etc.), but come with challenges (need for new infrastructure, development investments, etc.)."
+          title="Commercial truck electrification is well within reach"
+          subtitle="Fully electric trucks are reaching wider-scale consideration as truck, engine, and other component manufacturers are developing the systems required to support this new breed of commercial vehicles."
+          text="These electrified trucks will bring many benefits (cleaner, renewable  energy consumption and simpler designs), but come with some additional challenges, such as the need for an updated  infrastructure and R&D investments."
           image={slide6Image}
           imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@gerandeklerk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Geran de Klerk</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
         <SidebarSlide
           slide={7}
           {...(currentSlide === 7 && {ref: currentCardRef})}
-          title="Focusing on long-haul trucks will require a lot of charging infrastructure."
-          subtitle="Utilizing aggregated data from existing truck fleets, and considering the existing routes, it is possible to determine potential places to install infrastructure."
-          text="In this map 4,780 currently popular stops are analyzed. Using spatial analytics, different models can be created depending on the fleets that make the transition first."
+          title="Focusing on long-haul trucks will require a charging infrastructure at scale."
+          subtitle="Utilizing aggregated data from existing truck fleets, and considering the most common  routes, it is possible to determine optimal locations to install the required charging infrastructure."
+          text="In this map, 4,780 of the most popular stops are analyzed. Using spatial analytics, different models can be created based on the phased roll out of electric truck fleets."
           image={slide7Image}
           imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@sophiejonas?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Sophie Jonas</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
         <SidebarSlide
           slide={8}
           {...(currentSlide === 8 && {ref: currentCardRef})}
-          title="Temperatures are likely going to heat up faster in Texas than the global average"
-          subtitle="The latest IPCC report, from a group of more than 230 scientists from 60m countries, is predicting temperature rising faster than previously estimated."
-          text="Using data and analysis to create different scenario possibilities will be key to making decisions. And we better hurry up doing so."
+          title="Temperatures are likely to rise faster in Texas than the global average"
+          subtitle="Data from the latest IPCC report, from a group of more than 230 scientists from 60 countries, predicts rising temperatures faster than previously estimated."
+          text="Using data and spatial analysis to create and evaluate different scenarios will be key to prioritize environmental impact decisions. And we’d better hurry up in doing so!"
           image={slide8Image}
           imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@alecimages?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Chenyu Guan</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
