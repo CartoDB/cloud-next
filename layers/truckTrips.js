@@ -1,4 +1,4 @@
-import GL from '@luma.gl/constants';
+import Blending from './blending';
 import {TripsLayer} from '@deck.gl/geo-layers';
 import DeferredLoadLayer from './deferredLoadLayer';
 import {getTripData} from '../datasource';
@@ -15,7 +15,8 @@ const _TruckTripsLayer = DeferredLoadLayer(() => {
     trailLength: 3600,
     shadowEnabled: false,
     parameters: {
-      depthTest: false
+      depthTest: false,
+      ...Blending.ADDITIVE
     }
   });
 });

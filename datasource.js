@@ -9,50 +9,10 @@ setDefaultCredentials({
     'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjZTY5M2NmMCJ9.9HD7U1c-Wh81SPaSvWWSNShF7MIMH-9-S8YmWFo0_x0'
 });
 
-const TIME0 = new Date('2021-01-01T07:00:00.000Z');
-function groupIntoRides(data) {
-  const rides = [];
-  let lastId = null;
-  for (const d of data) {
-    const id = d['vehicle_id'];
-    if (lastId !== id) {
-      rides.push({
-        vehicle_id: 0,
-        positions: [d.geom],
-        timestamps: [d.timestamp]
-      });
-      lastId = id;
-    }
-
-    // Points are not ordered by time, so need to insert in
-    // correct order
-    const ride = rides[rides.length - 1];
-    for (let i = 0; i < ride.timestamps.length; i++) {
-      if (i === ride.timestamps.length) {
-        // Append to end if we failed to insert
-        ride.positions.splice(i, 0, d.geom);
-        ride.timestamps.splice(i, 0, d.timestamp);
-      } else if (new Date(d.timestamp) < new Date(ride.timestamps[i])) {
-        // Insert before current item if earlier in time
-        ride.positions.splice(i, 0, d.geom);
-        ride.timestamps.splice(i, 0, d.timestamp);
-        break;
-      }
-    }
-  }
-
-  return rides;
-}
-
+const TIME0 = new Date('2021-01-01T06:30:00.000Z');
 function parseRide(ride) {
   return {
-    vendor: parseInt(ride.vehicle_id),
-    path: ride.positions.map(p =>
-      p
-        .slice(6, -1)
-        .split(' ')
-        .map(parseFloat)
-    ),
+    path: ride.geog.map(p => p.split(' ').map(parseFloat)),
     timestamps: ride.timestamps.map(t => {
       return (new Date(t) - TIME0) / 1000;
     })
@@ -78,20 +38,17 @@ function parseWKT(f) {
 export async function getTripData() {
   const data = await getData({
     type: MAP_TYPES.TABLE,
-    source: 'cartobq.nexus_demo.trip_data',
+    source: 'cartobq.nexus_demo.trip_data_2',
     connection: 'bigquery',
     format: 'json',
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzNzk5MTIyNyJ9.HMotdRO3VY7xgmt-h5f9wELA_WnvtkBRejzDREChwVs'
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI2NGFmNzkxNyJ9.I5mjVusHsR1x0Pq2-VLKykr7EIdCA3J0eDM1AkDwKTo'
     }
   });
 
-  // TODO grouping is really slow. Should do on server
-  let rides = groupIntoRides(data.slice(0, 20000));
-  rides = rides.filter(r => r.timestamps.length > 30);
+  const rides = data.filter(r => r.timestamps.length > 400).slice(0, 100);
   const parsed = rides.map(parseRide);
-  debugger;
   return parsed;
 }
 

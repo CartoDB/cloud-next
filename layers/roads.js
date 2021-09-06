@@ -14,7 +14,6 @@ const _RoadsLayer = DeferredLoadLayer(() => {
     stroked: true,
     lineWidthMinPixels: 1,
     parameters: {
-      depthTest: false,
       ...Blending.ADDITIVE
     },
     credentials: {

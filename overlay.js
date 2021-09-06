@@ -20,8 +20,8 @@ import {TemperatureLayer} from './layers/temperature';
 import {getSingleTripData} from './datasource';
 
 registerLoaders([CSVLoader, GLTFLoader]);
-const v=1;
-const LOOP_LENGTH = 8 * 3600;
+const v = 1;
+const LOOP_LENGTH = 11 * 3600;
 
 export function createOverlay(map) {
   let currentTime = 0;
@@ -45,7 +45,7 @@ export function createOverlay(map) {
   overlay.truckToFollow = null;
   overlay.visibleLayers = [];
   const animate = () => {
-    currentTime = (currentTime + 10) % LOOP_LENGTH;
+    currentTime = (currentTime + 50) % LOOP_LENGTH;
     truckTime = (truckTime + 1) % 2800;
     animationCurrentTime = animationCurrentTime + 1;
     const scenegraphLayer = new ScenegraphLayer({
