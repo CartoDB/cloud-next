@@ -28,12 +28,12 @@ const useStyles = makeStyles((theme) => ({
   },
   mapBlock: {
     position: 'absolute',
-    left: 0 ,
+    left: 0,
     top: 0,
     width: '100%',
     height: '100%',
     backgroundImage:
-      'linear-gradient(to bottom, rgba(22, 39, 69, 0.84), rgba(22, 39, 69, 0.8) 65%, rgba(22, 39, 69, 0.2))',
+      'linear-gradient(to bottom, rgba(15, 17, 20, 0.84), rgba(15, 17, 20, 0.8) 65%, rgba(15, 17, 20, 0.2))',
     transition: theme.transitions.create('opacity', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen

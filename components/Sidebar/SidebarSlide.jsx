@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
       top: 0,
       left: 0,
       backgroundImage:
-        'linear-gradient(to top, rgba(22, 39, 69, 0.02), rgba(22, 39, 69, 0.64) 63%, rgba(22, 39, 69, 0.92))',
+        'linear-gradient(to top, rgba(15, 17, 20, 0.02), rgba(15, 17, 20, 0.64) 63%, rgba(15, 17, 20, 0.92))',
       position: 'absolute'
     }
   },

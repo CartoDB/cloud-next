@@ -6,10 +6,14 @@ import cartoSymbol from '../../assets/images/carto-components-logo-negative-symb
 const useStyles = makeStyles((theme) => ({
   root: {
     pointerEvents: 'none',
-    left: theme.spacing(3),
-    top: theme.spacing(2),
-    width: 'auto',
-    transform: 'none'
+    padding: theme.spacing(2, 3),
+    width: '100%',
+    transform: 'none',
+    left: 0,
+    top: 0,
+    maxWidth: '100%',
+    backgroundImage:
+      'linear-gradient(to top, rgba(15, 17, 20, 0.02), rgba(15, 17, 20, 0.64) 63%, rgba(15, 17, 20, 0.92))'
   },
   content: {
     display: 'flex'

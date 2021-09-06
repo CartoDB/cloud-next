@@ -18,7 +18,9 @@ import slide8Image from '../../assets/images/slide8.jpg';
 
 export const SIDEBAR_WIDTH = {
   xs: '400px',
-  lg: '460px'
+  xsNr: 400,
+  lg: '460px',
+  lgNr: 460
 };
 
 const useStyles = makeStyles((theme) => ({
