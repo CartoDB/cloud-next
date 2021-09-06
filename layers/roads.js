@@ -9,16 +9,17 @@ const _RoadsLayer = DeferredLoadLayer(() => {
     connection: 'bigquery',
     type: MAP_TYPES.TILESET,
     data: 'cartobq.nexus_demo.na_roads_tileset',
-    getLineColor: colorToRGBArray('#62d2e0'),
+    getLineColor: [224, 222, 97, 65],
     filled: false,
     stroked: true,
     lineWidthMinPixels: 1,
-    parameters: {
-      ...Blending.ADDITIVE
-    },
     credentials: {
       accessToken:
         'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJiNWE4YWVhYSJ9.Q9vJznUdhSZmSEOaGqgYvGy_py-4-svBwOfWElHCXFA'
+    },
+    parameters: {
+      depthTest: false,
+      ...Blending.ADDITIVE
     }
   });
 });
