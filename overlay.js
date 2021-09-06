@@ -14,13 +14,13 @@ import {EnergySourcesLayer, EnergySourcesBackgroundLayer} from './layers/energyS
 import {TrafficFlowLayer} from './layers/trafficFlow';
 import {TruckTripsLayer} from './layers/truckTrips';
 import {TemperatureLayer} from './layers/temperature';
-import {SingleTruckLayer} from './layers/singleTruck';
+import {SingleTruckLayer, setMap} from './layers/singleTruck';
 
 registerLoaders([CSVLoader, GLTFLoader]);
-const v = 1;
 const LOOP_LENGTH = 11 * 3600;
 
 export function createOverlay(map) {
+  setMap(map);
   let currentTime = 0;
   let animationCurrentTime = 0;
 
@@ -58,11 +58,6 @@ export function createOverlay(map) {
       })
     });
     updateTween();
-    if (overlay.visibleLayers.indexOf('single-truck') !== -1) {
-      //const trip = truckData[0];
-      //const [lng, lat] = getVehiclePosition(trip, truckTime);
-      //map.moveCamera({center: {lng, lat}, zoom: 18, heading: 0.2 * truckTime, tilt: 45});
-    }
 
     window.requestAnimationFrame(animate);
   };

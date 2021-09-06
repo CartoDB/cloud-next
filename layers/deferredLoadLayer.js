@@ -7,7 +7,7 @@ export default function DeferredLoadLayer(createLayer, onClone) {
   return class DeferredLoadLayer extends CompositeLayer {
     clone(props) {
       if (onClone) {
-        props = onClone(props);
+        props = onClone({props, layer: subLayer});
       }
       if (subLayer) {
         subLayer = subLayer.clone(props);

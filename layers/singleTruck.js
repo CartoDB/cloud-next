@@ -4,6 +4,12 @@ import {getSingleTripData} from '../datasource';
 import {headingBetweenPoints} from '../utils';
 
 let truckTime = 0;
+let data = null;
+let map = null;
+export const setMap = m => {
+  map = m;
+};
+
 const _SingleTruckLayer = DeferredLoadLayer(
   () => {
     const animate = () => {
@@ -11,9 +17,10 @@ const _SingleTruckLayer = DeferredLoadLayer(
       window.requestAnimationFrame(animate);
     };
     window.requestAnimationFrame(animate);
+    data = getSingleTripData();
 
     return new ScenegraphLayer({
-      data: getSingleTripData(),
+      data,
       pickable: true,
       opacity: 1,
       sizeScale: 10,
@@ -23,7 +30,12 @@ const _SingleTruckLayer = DeferredLoadLayer(
       _lighting: 'pbr'
     });
   },
-  props => {
+  ({props, layer}) => {
+    if (layer?.props?.visible) {
+      const trip = data[0];
+      const [lng, lat] = getVehiclePosition(trip, truckTime);
+      map.moveCamera({center: {lng, lat}, zoom: 18, heading: 0.2 * truckTime, tilt: 45});
+    }
     return {
       ...props,
       updateTriggers: {
