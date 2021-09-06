@@ -3,7 +3,7 @@ import DeferredLoadLayer from './deferredLoadLayer';
 import {getSingleTripData} from '../datasource';
 import {headingBetweenPoints} from '../utils';
 
-let truckTime = 0;
+let time = 0;
 let data = null;
 let map = null;
 export const setMap = m => {
@@ -13,7 +13,7 @@ export const setMap = m => {
 const _SingleTruckLayer = DeferredLoadLayer(
   () => {
     const animate = () => {
-      truckTime = (truckTime + 1) % 2800;
+      time = (time + 1) % 2800;
       window.requestAnimationFrame(animate);
     };
     window.requestAnimationFrame(animate);
@@ -25,22 +25,22 @@ const _SingleTruckLayer = DeferredLoadLayer(
       opacity: 1,
       sizeScale: 10,
       scenegraph: 'low_poly_truck/scene.gltf',
-      getPosition: d => getVehiclePosition(d, truckTime),
-      getOrientation: d => [0, 180 - getVehicleHeading(d, truckTime), 90],
+      getPosition: d => getVehiclePosition(d, time),
+      getOrientation: d => [0, 180 - getVehicleHeading(d, time), 90],
       _lighting: 'pbr'
     });
   },
   ({props, layer}) => {
     if (layer?.props?.visible) {
       const trip = data[0];
-      const [lng, lat] = getVehiclePosition(trip, truckTime);
-      map.moveCamera({center: {lng, lat}, zoom: 18, heading: 0.2 * truckTime, tilt: 45});
+      const [lng, lat] = getVehiclePosition(trip, time);
+      map.moveCamera({center: {lng, lat}, zoom: 18, heading: 0.2 * time, tilt: 45});
     }
     return {
       ...props,
       updateTriggers: {
-        getPosition: [truckTime],
-        getOrientation: [truckTime]
+        getPosition: [time],
+        getOrientation: [time]
       }
     };
   }

@@ -46,7 +46,7 @@ export function createOverlay(map) {
           pointRadiusScale: 0.4 + 0.4 * Math.sin(0.04 * animationCurrentTime)
         }),
         TruckTripsLayer.clone({currentTime}),
-        SingleTruckLayer.clone(),
+        SingleTruckLayer,
         TruckParkingLayer
       ].map(l => {
         const visible = overlay.visibleLayers.indexOf(l.id) !== -1;
