@@ -24,7 +24,7 @@ export default [
     view: {lat: 30.8, lng: -98.4, heading: 316, tilt: 25, zoom: 7}
   },
   /* 6 */ {
-    layers: ['scenegraph-layer'],
+    layers: ['single-truck'],
     view: {}
   },
   /* 7 */ {

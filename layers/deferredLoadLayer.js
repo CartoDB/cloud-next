@@ -2,10 +2,13 @@ import {CompositeLayer} from '@deck.gl/core';
 
 // Utility to create a layer that only is initialized
 // (and thus data loaded) once visible
-export default function DeferredLoadLayer(createLayer) {
+export default function DeferredLoadLayer(createLayer, onClone) {
   let subLayer = null;
   return class DeferredLoadLayer extends CompositeLayer {
     clone(props) {
+      if (onClone) {
+        props = onClone(props);
+      }
       if (subLayer) {
         subLayer = subLayer.clone(props);
       }
