@@ -15,6 +15,7 @@ import {TrafficFlowLayer} from './layers/trafficFlow';
 import {TruckTripsLayer} from './layers/truckTrips';
 import {TemperatureLayer} from './layers/temperature';
 import {SingleTruckLayer, setMap} from './layers/singleTruck';
+import {TruckParkingLayer} from './layers/truckParking';
 
 registerLoaders([CSVLoader, GLTFLoader]);
 const LOOP_LENGTH = 11 * 3600;
@@ -45,7 +46,8 @@ export function createOverlay(map) {
           pointRadiusScale: 0.4 + 0.4 * Math.sin(0.04 * animationCurrentTime)
         }),
         TruckTripsLayer.clone({currentTime}),
-        SingleTruckLayer.clone()
+        SingleTruckLayer.clone(),
+        TruckParkingLayer
       ].map(l => {
         const visible = overlay.visibleLayers.indexOf(l.id) !== -1;
         return l.clone({visible});

@@ -28,7 +28,7 @@ export default [
     view: {}
   },
   /* 7 */ {
-    layers: [],
+    layers: ['truck-parking', 'texas-boundary'],
     view: {lat: 31.58, lng: -99.52, heading: 340, tilt: 30, zoom: 6.1}
   },
   /* 8 */ {

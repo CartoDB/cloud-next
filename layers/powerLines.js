@@ -1,5 +1,5 @@
-import Blending from './blending';
 import {CartoLayer, MAP_TYPES} from '@deck.gl/carto';
+import Blending from './blending';
 import DeferredLoadLayer from './deferredLoadLayer';
 
 const _PowerLinesLayer = DeferredLoadLayer(() => {
