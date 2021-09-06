@@ -1,5 +1,5 @@
-import Blending from './blending';
 import {TripsLayer} from '@deck.gl/geo-layers';
+import Blending from './blending';
 import DeferredLoadLayer from './deferredLoadLayer';
 import {getTripData} from '../datasource';
 
