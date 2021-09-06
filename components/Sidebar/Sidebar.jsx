@@ -182,9 +182,18 @@ const Sidebar = () => {
           {...(currentSlide === 1 && {ref: currentCardRef})}
           title="The second-largest state by both area and population"
           subtitle="With a population of over 29M people and a 15.9% increase since 2010."
-          text="Two-thirds of all Texans  live in major metropolitan areas such as Houston. The Dallas–Fort Worth metropolitan  area is the largest in Texas. While Houston is the largest city in Texas and the  fourth-largest city in the United States by population, the Dallas–Fort Worth metropolitan area is larger than the city and metropolitan area of Houston."
           image={slide1Image}
-        />
+        >
+          <p>
+            Two-thirds of all Texans live in major metropolitan areas such as Houston. The
+            Dallas–Fort Worth metropolitan area is the largest in Texas.
+          </p>
+          <p>
+            While Houston is the largest city in Texas and the fourth-largest city in the United
+            States by population, the Dallas–Fort Worth metropolitan area is larger than the city
+            and metropolitan area of Houston.
+          </p>
+        </SidebarSlide>
         <SidebarSlide
           slide={2}
           {...(currentSlide === 2 && {ref: currentCardRef})}

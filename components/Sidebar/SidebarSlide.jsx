@@ -67,10 +67,15 @@ const useStyles = makeStyles((theme) => ({
   subtitle: {
     color: theme.palette.primary.dark,
     marginBottom: theme.spacing(4.5)
+  },
+  text: {
+    '& p': {
+      margin: 0
+    }
   }
 }));
 
-const SidebarSlide = ({title, subtitle, text, image, slide}, cardRef) => {
+const SidebarSlide = ({title, subtitle, text, image, slide, children}, cardRef) => {
   const classes = useStyles();
   const [isOnScroll, setIsOnScroll] = useState(false);
   const {currentSlide, slidesNumber} = useAppState();
@@ -119,9 +124,16 @@ const SidebarSlide = ({title, subtitle, text, image, slide}, cardRef) => {
         <Typography className={classes.subtitle} variant="body1" color="primary" component="h3">
           {subtitle}
         </Typography>
-        <Typography variant="body2" color="textPrimary" component="p">
-          {text}
-        </Typography>
+        {!!text && (
+          <Typography variant="body2" color="textPrimary" component="p">
+            {text}
+          </Typography>
+        )}
+        {!!children && (
+          <Typography className={classes.text} variant="body2" color="textPrimary" component="div">
+            {children}
+          </Typography>
+        )}
       </CardContent>
     </Card>
   );
