@@ -14,7 +14,7 @@ import {EnergySourcesLayer, EnergySourcesBackgroundLayer} from './layers/energyS
 import {TrafficFlowLayer} from './layers/trafficFlow';
 import {TruckTripsLayer} from './layers/truckTrips';
 import {TemperatureLayer} from './layers/temperature';
-import {SingleTruckLayer, setMap} from './layers/singleTruck';
+import {SingleTruckLayer, SingleTruckTrailLayer, setMap} from './layers/singleTruck';
 import {TruckParkingLayer} from './layers/truckParking';
 
 registerLoaders([CSVLoader, GLTFLoader]);
@@ -47,6 +47,7 @@ export function createOverlay(map) {
         }),
         TruckTripsLayer.clone({currentTime}),
         SingleTruckLayer,
+        SingleTruckTrailLayer,
         TruckParkingLayer
       ].map(l => {
         const visible = overlay.visibleLayers.indexOf(l.id) !== -1;

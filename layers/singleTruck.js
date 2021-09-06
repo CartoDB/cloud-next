@@ -1,10 +1,12 @@
 import {ScenegraphLayer} from '@deck.gl/mesh-layers';
+import {TripsLayer} from '@deck.gl/geo-layers';
+import Blending from './blending';
 import DeferredLoadLayer from './deferredLoadLayer';
 import {getSingleTripData} from '../datasource';
 import {headingBetweenPoints} from '../utils';
 
 let time = 0;
-let data = null;
+let data = getSingleTripData();
 let map = null;
 export const setMap = m => {
   map = m;
@@ -17,7 +19,6 @@ const _SingleTruckLayer = DeferredLoadLayer(
       window.requestAnimationFrame(animate);
     };
     window.requestAnimationFrame(animate);
-    data = getSingleTripData();
 
     return new ScenegraphLayer({
       data,
@@ -48,6 +49,35 @@ const _SingleTruckLayer = DeferredLoadLayer(
 
 export const SingleTruckLayer = new _SingleTruckLayer({
   id: 'single-truck'
+});
+
+const _SingleTruckTrailLayer = DeferredLoadLayer(
+  () => {
+    return new TripsLayer({
+      data,
+      getPath: d => d.path,
+      getTimestamps: d => d.timestamps,
+      getColor: [255, 255, 222],
+      opacity: 0.5,
+      widthMinPixels: 5,
+      rounded: true,
+      trailLength: 3600,
+      shadowEnabled: false,
+      parameters: {
+        ...Blending.ADDITIVE
+      }
+    });
+  },
+  ({props}) => {
+    return {
+      currentTime: time,
+      ...props
+    };
+  }
+);
+
+export const SingleTruckTrailLayer = new _SingleTruckTrailLayer({
+  id: 'single-truck-trail'
 });
 
 function getVehiclePosition(trip, time) {
