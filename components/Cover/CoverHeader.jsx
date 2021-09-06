@@ -31,7 +31,7 @@ const CoverHeader = () => {
   const classes = useStyles();
 
   return (
-    <CoverBase slidesToShow={[1, 2, 3, 4, 5, 6, 7]} className={classes.root}>
+    <CoverBase slidesToShow={[1, 2, 3, 4, 5, 6, 7, 8]} className={classes.root}>
       <div className={classes.content}>
         <img className={classes.logo} src={cartoSymbol} alt="CARTO" />
         <Box pl={1.5}>

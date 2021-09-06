@@ -6,6 +6,7 @@ import CoverHero from '../Cover/CoverHero';
 import CoverFooter from '../Cover/CoverFooter';
 import CoverHeader from '../Cover/CoverHeader';
 import CoverLogo from '../Cover/CoverLogo';
+import CoverLegend from '../Cover/CoverLegend';
 import Header from '../Header/Header';
 import {useAppState} from '../../state';
 
@@ -32,6 +33,7 @@ const Main = () => {
       <CoverHero />
       <CoverFooter />
       <CoverLogo />
+      <CoverLegend />
       <Sidebar />
       <Header hidden={currentSlide > 0} hideDelay={500} showDelay={0} />
     </div>

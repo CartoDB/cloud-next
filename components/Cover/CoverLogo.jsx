@@ -21,7 +21,7 @@ const CoverLogo = () => {
   const classes = useStyles();
 
   return (
-    <CoverBase slidesToShow={[1, 2, 3, 4, 5, 6, 7]} className={classes.root}>
+    <CoverBase slidesToShow={[1, 2, 3, 4, 5, 6, 7, 8]} className={classes.root}>
       <img alt="CARTO" src={cartoLogo} />
     </CoverBase>
   );

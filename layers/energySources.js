@@ -3,7 +3,7 @@ import DeferredLoadLayer from './deferredLoadLayer';
 import {colorToRGBArray} from '../utils';
 
 const COLOR_ALPHA = 127;
-const COLOR_SCALE = {
+export const COLOR_SCALE = {
   Biomass: colorToRGBArray('#77fb68'),
   ['Hydroelectric dams']: colorToRGBArray('#6ef4fc'),
   ['Wind farms']: colorToRGBArray('#fd1be0'),
@@ -32,7 +32,7 @@ const props = {
 const _EnergySourcesLayer = DeferredLoadLayer(() => {
   return new CartoLayer({
     id: 'energy-sources',
-    getFillColor: d => {
+    getFillColor: (d) => {
       const color = COLOR_SCALE[d.properties.type] || COLOR_SCALE.Other;
       return color;
     },
@@ -48,7 +48,7 @@ const _EnergySourcesBackgroundLayer = DeferredLoadLayer(() => {
   return new CartoLayer({
     id: 'energy-sources-background',
     opacity: 0.2,
-    getFillColor: d => {
+    getFillColor: (d) => {
       const color = COLOR_SCALE[d.properties.type] || COLOR_SCALE.Other;
       return [...color, 1];
     },
