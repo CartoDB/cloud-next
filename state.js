@@ -35,7 +35,7 @@ export const AppStateStore = ({children}) => {
       });
 
       overlay = createOverlay(map);
-      setCurrentSlide(6);
+      setCurrentSlide(0);
     },
     [setCurrentSlide]
   );
