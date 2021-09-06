@@ -5,9 +5,9 @@ import DeferredLoadLayer from './deferredLoadLayer';
 const _TemperatureLayer = DeferredLoadLayer(() => {
   return new TileLayer({
     data:
-      'https://earthengine.googleapis.com/v1alpha/projects/earthengine-legacy/maps/c7545db6d0a4b91464ec78371eba1b9c-8204799f00ca8f116fbe41ec2f64f12a/tiles/{z}/{x}/{y}',
+      'https://storage.googleapis.com/ee_gmaps_demo/{z}_{x}_{y}.png',
     minZoom: 0,
-    maxZoom: 19,
+    maxZoom: 8,
     tileSize: 256,
 
     renderSubLayers: props => {
