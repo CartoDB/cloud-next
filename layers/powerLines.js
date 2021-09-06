@@ -1,3 +1,4 @@
+import Blending from './blending';
 import {CartoLayer, MAP_TYPES} from '@deck.gl/carto';
 import DeferredLoadLayer from './deferredLoadLayer';
 
@@ -14,6 +15,10 @@ const _PowerLinesLayer = DeferredLoadLayer(() => {
     credentials: {
       accessToken:
         'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI2ZTk1OTA4YSJ9.jq6Z_q_48PhrebLjGCfbBq8mYQePDc4MOw6wANyzJ-E'
+    },
+    parameters: {
+      depthTest: false,
+      ...Blending.ADDITIVE
     }
   });
 });
