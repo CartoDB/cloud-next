@@ -29,6 +29,7 @@ export const AppStateStore = ({children}) => {
         heading: 0,
         tilt: 50,
         zoom: 5,
+        keyboardShortcuts:false,
         clickableIcons: false,
         disableDefaultUI: true,
         mapId: GOOGLE_MAP_ID
