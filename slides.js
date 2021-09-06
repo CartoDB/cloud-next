@@ -24,11 +24,11 @@ export default [
     view: {lat: 30.8, lng: -98.4, heading: 316, tilt: 25, zoom: 7}
   },
   /* 6 */ {
-    layers: ['scenegraph-layer'],
+    layers: ['single-truck', 'single-truck-trail'],
     view: {}
   },
   /* 7 */ {
-    layers: [],
+    layers: ['truck-parking', 'texas-boundary'],
     view: {lat: 31.58, lng: -99.52, heading: 340, tilt: 30, zoom: 6.1}
   },
   /* 8 */ {
