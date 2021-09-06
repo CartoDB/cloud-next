@@ -1,6 +1,7 @@
 import React, {useEffect, useState, forwardRef} from 'react';
 import {makeStyles, Card, CardMedia, CardContent, Typography} from '@material-ui/core';
 import {useAppState} from '../../state';
+import {alpha} from '@material-ui/core/styles/colorManipulator';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,10 +73,33 @@ const useStyles = makeStyles((theme) => ({
     '& p': {
       margin: 0
     }
+  },
+  imageAttribution: {
+    position: 'absolute',
+    bottom: theme.spacing(1.5),
+    left: theme.spacing(3),
+    borderRadius: theme.spacing(1.5),
+    padding: theme.spacing(0.5, 1),
+    backgroundColor: alpha(theme.palette.common.black, 0.6),
+    '&, & p, & a': {
+      color: theme.palette.common.white,
+      margin: 0,
+      textTransform: 'none',
+      letterSpacing: 0
+    },
+    '& a': {
+      textDecoration: 'none',
+      '&:hover': {
+        textDecoration: 'underline'
+      }
+    }
   }
 }));
 
-const SidebarSlide = ({title, subtitle, text, image, slide, children}, cardRef) => {
+const SidebarSlide = (
+  {title, subtitle, text, image, imageAttribution, slide, children},
+  cardRef
+) => {
   const classes = useStyles();
   const [isOnScroll, setIsOnScroll] = useState(false);
   const {currentSlide, slidesNumber} = useAppState();
@@ -108,7 +132,13 @@ const SidebarSlide = ({title, subtitle, text, image, slide, children}, cardRef) 
         (slide === 1 && currentSlide === 0) || slide === currentSlide ? classes.rootShown : ''
       ].join(' ')}
     >
-      <CardMedia className={classes.media} image={image} title={title} />
+      <CardMedia className={classes.media} image={image} title={title}>
+        {!!imageAttribution && (
+          <Typography className={classes.imageAttribution} component="div" variant="overline">
+            <p dangerouslySetInnerHTML={{__html: imageAttribution}} />
+          </Typography>
+        )}
+      </CardMedia>
       <CardContent data-content="true" classes={{root: classes.content}}>
         <Typography
           className={classes.pretitle}

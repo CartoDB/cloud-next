@@ -185,6 +185,7 @@ const Sidebar = () => {
           title="The second-largest state by both area and population"
           subtitle="With a population of over 29M people and a 15.9% increase since 2010."
           image={slide1Image}
+          imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@juvx?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Vlad Busuioc</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         >
           <p>
             Two-thirds of all Texans live in major metropolitan areas such as Houston. The
@@ -203,6 +204,7 @@ const Sidebar = () => {
           subtitle="Texas ranks second in the nation in both population and the size of its economy, and it consumes a large share of the nation's energy."
           text="In 2018, Texas accounted for about one-seventh of U.S. energy consumption, more than any other state. However, Texas was sixth in the nation in per capita energy consumption. Texas is also the nation's third-largest net energy supplier despite its high energy use..."
           image={slide2Image}
+          imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@matthewhenry?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Matthew Henry</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
         <SidebarSlide
           slide={3}
@@ -211,6 +213,7 @@ const Sidebar = () => {
           subtitle="Renewable energy fueled more than one-fifth of all utility-scale net generation in Texas in 2020, and the state accounted for one-fifth of the nation's utility-scale electricity generation from nonhydroelectric renewable sources."
           text="Wind accounts for nearly all of the electricity generated from renewable resources in Texas."
           image={slide3Image}
+          imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@viazavier?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Laura Ockel</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
         <SidebarSlide
           slide={4}
@@ -219,6 +222,7 @@ const Sidebar = () => {
           subtitle="A truck can take between 15and 20 hours to drive across Texas at its widest point."
           text="And fright within..."
           image={slide4Image}
+          imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@charlfolscher?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Charl Folscher</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
         <SidebarSlide
           slide={5}
@@ -227,6 +231,7 @@ const Sidebar = () => {
           subtitle="Trucking is big business in Texas."
           text="And fright within..."
           image={slide5Image}
+          imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@chuttersnap?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">CHUTTERSNAP</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
         <SidebarSlide
           slide={6}
@@ -235,6 +240,7 @@ const Sidebar = () => {
           subtitle="Fully electric trucks are reaching wider-scale consideration as truck, engine, and other component makers are developing the systems that will support such vehicles."
           text="These trucks will have many benefits (more renewable energy, simpler design, etc.), but come with challenges (need for new infrastructure, development investments, etc.)."
           image={slide6Image}
+          imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@gerandeklerk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Geran de Klerk</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
         <SidebarSlide
           slide={7}
@@ -243,6 +249,7 @@ const Sidebar = () => {
           subtitle="Utilizing aggregated data from existing truck fleets, and considering the existing routes, it is possible to determine potential places to install infrastructure."
           text="In this map 4,780 currently popular stops are analyzed. Using spatial analytics, different models can be created depending on the fleets that make the transition first."
           image={slide7Image}
+          imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@sophiejonas?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Sophie Jonas</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
         <SidebarSlide
           slide={8}
@@ -251,6 +258,7 @@ const Sidebar = () => {
           subtitle="The latest IPCC report, from a group of more than 230 scientists from 60m countries, is predicting temperature rising faster than previously estimated."
           text="Using data and analysis to create different scenario possibilities will be key to making decisions. And we better hurry up doing so."
           image={slide8Image}
+          imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@alecimages?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Chenyu Guan</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
       </div>
 
