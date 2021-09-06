@@ -16,7 +16,7 @@ export default function DeferredLoadLayer(createLayer, onClone) {
     }
 
     renderLayers() {
-      const {visible, pointRadiusScale} = this.props;
+      const {visible} = this.props;
 
       // Only create sublayer lazily if visible
       if (!visible) {

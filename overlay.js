@@ -25,7 +25,6 @@ export function createOverlay(map) {
   let animationCurrentTime = 0;
 
   const overlay = new DeckOverlay({});
-  overlay.truckToFollow = null;
   overlay.visibleLayers = [];
   const animate = () => {
     currentTime = (currentTime + 50) % LOOP_LENGTH;
@@ -46,12 +45,7 @@ export function createOverlay(map) {
           pointRadiusScale: 0.4 + 0.4 * Math.sin(0.04 * animationCurrentTime)
         }),
         TruckTripsLayer.clone({currentTime}),
-        SingleTruckLayer.clone({
-          updateTriggers: {
-            getPosition: [SingleTruckLayer.truckTime],
-            getOrientation: [SingleTruckLayer.truckTime]
-          }
-        })
+        SingleTruckLayer.clone()
       ].map(l => {
         const visible = overlay.visibleLayers.indexOf(l.id) !== -1;
         return l.clone({visible});

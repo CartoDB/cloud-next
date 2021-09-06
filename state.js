@@ -16,7 +16,6 @@ const initAppState = {
 export const AppStateContext = createContext(initAppState);
 
 let map, overlay;
-let truckToFollow = 9;
 
 export const AppStateStore = ({children}) => {
   const [currentSlide, setCurrentSlide] = useState(initAppState.currentSlide);
@@ -36,7 +35,7 @@ export const AppStateStore = ({children}) => {
       });
 
       overlay = createOverlay(map);
-      setCurrentSlide(0);
+      setCurrentSlide(6);
     },
     [setCurrentSlide]
   );
@@ -52,16 +51,10 @@ export const AppStateStore = ({children}) => {
     [currentSlide]
   );
 
-  function updateTruckToFollow() {
-    overlay.truckToFollow = truckToFollow;
-  }
-
   return (
     <AppStateContext.Provider
       value={{
         focusOnLocation: (lat, lng, tilt, heading, zoom) => {
-          overlay.truckToFollow = null;
-
           lat = lat || 40.72;
           lng = lng || -74;
           tilt = tilt || 0;
