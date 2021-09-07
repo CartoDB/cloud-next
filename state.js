@@ -30,7 +30,7 @@ export const AppStateStore = ({children}) => {
         heading: 0,
         tilt: 50,
         zoom: 5,
-        keyboardShortcuts:false,
+        keyboardShortcuts: false,
         clickableIcons: false,
         disableDefaultUI: true,
         mapId: GOOGLE_MAP_ID
@@ -47,7 +47,9 @@ export const AppStateStore = ({children}) => {
       if (currentSlide !== null && overlay?.visibleLayers) {
         const {layers, view} = slides[currentSlide];
         overlay.visibleLayers = layers;
-        flyTo(map, view);
+        if (view && view.lng !== undefined) {
+          flyTo(map, view);
+        }
       }
     },
     [currentSlide]
