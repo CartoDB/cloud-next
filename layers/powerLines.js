@@ -14,7 +14,7 @@ const _PowerLinesLayer = DeferredLoadLayer(() => {
     lineWidthMinPixels: 1,
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI2ZTk1OTA4YSJ9.jq6Z_q_48PhrebLjGCfbBq8mYQePDc4MOw6wANyzJ-E'
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIxMWYzY2ZmYiJ9.y7ofb0sjK3M_rfE4qm2MT73jH0J9zekMnkCj88EmSqU'
     },
     parameters: {
       depthTest: false,
