@@ -46,7 +46,9 @@ export const AppStateStore = ({children}) => {
       if (currentSlide !== null && overlay?.visibleLayers) {
         const {layers, view} = slides[currentSlide];
         overlay.visibleLayers = layers;
-        flyTo(map, view);
+        if (view && view.lng !== undefined) {
+          flyTo(map, view);
+        }
       }
     },
     [currentSlide]
