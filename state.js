@@ -46,12 +46,14 @@ export const AppStateStore = ({children}) => {
   useEffect(
     () => {
       if (currentSlide !== null && overlay?.visibleLayers) {
-        const {layers, view} = slides[currentSlide];
+        const {layers, view, orbit: shouldOrbit} = slides[currentSlide];
         overlay.visibleLayers = layers;
         if (view && view.lng !== undefined) {
-          flyTo(map, view)
-            .chain(orbit(map, view))
-            .start();
+          let tween = flyTo(map, view);
+          if (shouldOrbit) {
+            tween.chain(orbit(map, view));
+          }
+          tween.start();
         }
       }
     },
