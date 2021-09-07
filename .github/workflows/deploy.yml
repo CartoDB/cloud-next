@@ -19,7 +19,8 @@ jobs:
       - name: Deploy assets to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          firebaseServiceAccount: ${{ secrets[env.FIREBASE_SERVICE_ACCOUNT_CARTO_GNEXT_21] }}
+#          firebaseServiceAccount: ${{ secrets[env.FIREBASE_SERVICE_ACCOUNT_CARTO_GNEXT_21] }}
+          firebaseServiceAccount: ${{ secrets[env.FIREBASE_SERVICE_ACCOUNT] }}
           target: default
           channelId: live
 
