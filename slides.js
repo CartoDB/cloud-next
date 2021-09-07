@@ -5,7 +5,8 @@ export default [
   },
   /* 1 */ {
     layers: ['population-heatmap', 'texas-boundary' /*'texas-counties'*/],
-    view: {lat: 31.58, lng: -99.52, heading: 340, tilt: 30, zoom: 6.3}
+    view: {lat: 31.58, lng: -99.52, heading: 340, tilt: 30, zoom: 6.3},
+    orbit: true
   },
   /* 2 */ {
     layers: ['power-lines', 'texas-boundary'],
@@ -13,7 +14,8 @@ export default [
   },
   /* 3 */ {
     layers: ['energy-sources', 'energy-sources-background', 'texas-boundary'],
-    view: {lat: 31.16, lng: -99.92, heading: 31, tilt: 30, zoom: 6.5}
+    view: {lat: 31.16, lng: -99.92, heading: 31, tilt: 30, zoom: 6.5},
+    orbit: true
   },
   /* 4 */ {
     layers: ['traffic-flow'],
