@@ -298,6 +298,28 @@ const About = ({}, forwardedRef) => {
               </li>
             </ul>
           </AboutText>
+
+          <Divider className={classes.divider} />
+
+          <AboutText title="Credits" imageBlocks={[]}>
+            <ul>
+              <li>
+                <Link
+                  href="https://sketchfab.com/3d-models/low-poly-truck-98826ebd44e2492298ac925461509216"
+                  target="_blank"
+                >
+                  Low Poly Truck
+                </Link>
+                {' model by '}
+                <Link href="https://sketchfab.com/Arifido._" target="_blank">
+                  Arifido
+                </Link>{' '}
+                <Link href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+                  CC-BY-4.0
+                </Link>
+              </li>
+            </ul>
+          </AboutText>
         </DialogContentText>
       </DialogContent>
     </Dialog>

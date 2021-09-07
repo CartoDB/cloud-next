@@ -82,6 +82,7 @@ typings/
 .nuxt
 dist/*
 !dist/index.html
+!dist/low_poly_truck/*
 
 # Gatsby files
 .cache/
