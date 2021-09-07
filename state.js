@@ -17,7 +17,7 @@ const initAppState = {
 
 export const AppStateContext = createContext(initAppState);
 
-let map, overlay;
+let map, overlay, tween;
 
 export const AppStateStore = ({children}) => {
   const [currentSlide, setCurrentSlide] = useState(initAppState.currentSlide);
@@ -37,6 +37,13 @@ export const AppStateStore = ({children}) => {
         mapId: GOOGLE_MAP_ID
       });
 
+      map.addListener('mousedown', evt => {
+        if (tween) {
+          tween.stop();
+          tween = null;
+        }
+      });
+
       overlay = createOverlay(map);
       setCurrentSlide(0);
     },
@@ -49,7 +56,10 @@ export const AppStateStore = ({children}) => {
         const {layers, view, orbit: shouldOrbit} = slides[currentSlide];
         overlay.visibleLayers = layers;
         if (view && view.lng !== undefined) {
-          let tween = flyTo(map, view);
+          if (tween) {
+            tween.stop();
+          }
+          tween = flyTo(map, view);
           if (shouldOrbit) {
             tween.chain(orbit(map, view));
           }
