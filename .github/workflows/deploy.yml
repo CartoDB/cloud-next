@@ -16,9 +16,16 @@ jobs:
           node-version: '16'
       - run: yarn install
       - run: yarn build
-      - name: GitHub Action for Firebase
-        uses: w9jds/firebase-action@v1.5.0
+      - name: Deploy assets to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          args: deploy --only hosting
-        env:
-          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARTO_GNEXT_21 }}
+          firebaseServiceAccount: ${{ secrets[env.FIREBASE_SERVICE_ACCOUNT_CARTO_GNEXT_21] }}
+          target: default
+          channelId: live
+
+#      - name: GitHub Action for Firebase
+#        uses: w9jds/firebase-action@v1.5.0
+#        with:
+#          args: deploy --only hosting
+#        env:
+#          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARTO_GNEXT_21 }}
