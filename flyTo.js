@@ -5,37 +5,43 @@ export default function flyTo(map, position) {
   const opts = {speed: 1.2, curve: 1.414};
   const container = map.getDiv().firstChild;
   const center = map.getCenter();
+  let heading = map.getHeading();
+  if (position.heading !== undefined) {
+    if (position.heading - heading > 180) {
+      heading += 360;
+    } else if (position.heading - heading < -180) {
+      heading -= 360;
+    }
+  }
+  const tilt = map.getTilt();
 
   const start = {
     width: container.offsetWidth,
     height: container.offsetHeight,
     longitude: center.lng(),
     latitude: center.lat(),
-    bearing: map.getHeading(),
-    pitch: map.getTilt(),
     zoom: map.getZoom()
   };
 
   const end = {
     longitude: position.lng,
     latitude: position.lat,
-    bearing: position.heading,
-    pitch: position.tilt,
     zoom: position.zoom
   };
 
-  const duration = getFlyToDuration(start, end, opts);
+  let duration = getFlyToDuration(start, end, opts);
+  duration = Math.max(1000, Math.min(2000, duration));
 
-  const tween = new Tween({f: 0})
+  const tween = new Tween({heading, tilt, f: 0})
+    .easing(Easing.Quadratic.InOut)
     .duration(duration)
-    .to({f: 1})
-    .onUpdate(({f}) => {
+    .to({heading: position.heading, tilt: position.tilt, f: 1})
+    .onUpdate(({f, heading, tilt}) => {
       const viewport = flyToViewport(start, end, f, opts);
-      console.log(viewport);
       map.moveCamera({
         center: {lat: viewport.latitude, lng: viewport.longitude},
-        //heading: viewport.bearing,
-        //tilt: viewport.pitch,
+        heading,
+        tilt,
         zoom: viewport.zoom
       });
     })
