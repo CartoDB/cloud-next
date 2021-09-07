@@ -4,6 +4,7 @@ on:
   push:
     branches: 
     - master
+    - creating_gh_actions_deploy
 
 jobs:
   build:
