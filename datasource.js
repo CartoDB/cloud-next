@@ -47,7 +47,7 @@ export async function getTripData() {
     }
   });
 
-  const rides = data.filter(r => r.timestamps.length > 400).slice(0, 100);
+  const rides = data.filter(r => r.timestamps.length > 450).slice(0, 300);
   const parsed = rides.map(parseRide);
   return parsed;
 }
