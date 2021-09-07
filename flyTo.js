@@ -1,15 +1,15 @@
 import {Easing, Tween} from '@tweenjs/tween.js';
 import {flyToViewport, getFlyToDuration} from '@math.gl/web-mercator';
 
-export default function flyTo(map, position) {
+export default function flyTo(map, view) {
   const opts = {speed: 1.2, curve: 1.414};
   const container = map.getDiv().firstChild;
   const center = map.getCenter();
   let heading = map.getHeading();
-  if (position.heading !== undefined) {
-    if (position.heading - heading > 180) {
+  if (view.heading !== undefined) {
+    if (view.heading - heading > 180) {
       heading += 360;
-    } else if (position.heading - heading < -180) {
+    } else if (view.heading - heading < -180) {
       heading -= 360;
     }
   }
@@ -24,18 +24,18 @@ export default function flyTo(map, position) {
   };
 
   const end = {
-    longitude: position.lng,
-    latitude: position.lat,
-    zoom: position.zoom
+    longitude: view.lng,
+    latitude: view.lat,
+    zoom: view.zoom
   };
 
   let duration = getFlyToDuration(start, end, opts);
   duration = Math.max(1000, Math.min(2000, duration));
 
-  const tween = new Tween({heading, tilt, f: 0})
+  return new Tween({heading, tilt, f: 0})
     .easing(Easing.Quadratic.InOut)
     .duration(duration)
-    .to({heading: position.heading, tilt: position.tilt, f: 1})
+    .to({heading: view.heading, tilt: view.tilt, f: 1})
     .onUpdate(({f, heading, tilt}) => {
       const viewport = flyToViewport(start, end, f, opts);
       map.moveCamera({
@@ -44,6 +44,5 @@ export default function flyTo(map, position) {
         tilt,
         zoom: viewport.zoom
       });
-    })
-    .start();
+    });
 }
