@@ -38,17 +38,16 @@ function parseWKT(f) {
 export async function getTripData() {
   const data = await getData({
     type: MAP_TYPES.TABLE,
-    source: 'cartobq.nexus_demo.trip_data_2',
+    source: 'cartobq.nexus_demo.trip_data_3',
     connection: 'bigquery',
     format: 'json',
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI2NGFmNzkxNyJ9.I5mjVusHsR1x0Pq2-VLKykr7EIdCA3J0eDM1AkDwKTo'
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI2ZDZlMWY3MyJ9.Uv0ZBMGjL102QaIHJoOrKpbHiu77c6xhH9eO-XDCnfU'
     }
   });
 
-  const rides = data.filter(r => r.timestamps.length > 450).slice(0, 300);
-  const parsed = rides.map(parseRide);
+  const parsed = data.map(parseRide);
   return parsed;
 }
 
