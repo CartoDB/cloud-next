@@ -4,6 +4,8 @@ import DeferredLoadLayer from './deferredLoadLayer';
 import {colorToRGBArray} from '../utils';
 
 let time = 0;
+const NORMAL_COLOR = colorToRGBArray('#ffffff');
+const HIGHLIGHT_COLOR = colorToRGBArray('#ae0e7f');
 
 const _TruckParkingLayer = DeferredLoadLayer(
   () => {
@@ -12,6 +14,11 @@ const _TruckParkingLayer = DeferredLoadLayer(
       window.requestAnimationFrame(animate);
     };
     window.requestAnimationFrame(animate);
+
+    function shouldHighlight(coord) {
+      return Math.sin(0.1 * time + 0.5 * coord[0]) > 0.95;
+    }
+
     return new CartoLayer({
       connection: 'bigquery',
       type: MAP_TYPES.TABLE,
@@ -22,9 +29,16 @@ const _TruckParkingLayer = DeferredLoadLayer(
       pointRadiusUnits: 'pixels',
       getPointRadius: d => {
         const coord = d.geometry.coordinates;
-        return 2 + 1 * Math.sin(time + 11324.71 * coord[0] + 26371.44 * coord[1]);
+        let radius = 2;
+        if (shouldHighlight(coord)) {
+          radius += Math.sin(time + 11324.71 * coord[0] + 26371.44 * coord[1]);
+        }
+        return radius;
       },
-      getFillColor: colorToRGBArray('#ae0e7f'),
+      getFillColor: d => {
+        const coord = d.geometry.coordinates;
+        return shouldHighlight(coord) ? HIGHLIGHT_COLOR : NORMAL_COLOR;
+      },
       parameters: {
         depthTest: false,
         ...Blending.ADDITIVE
@@ -39,7 +53,8 @@ const _TruckParkingLayer = DeferredLoadLayer(
     return {
       ...props,
       updateTriggers: {
-        getPointRadius: [time]
+        getPointRadius: [time],
+        getFillColor: [time]
       }
     };
   }
