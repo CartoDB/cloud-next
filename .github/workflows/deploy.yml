@@ -14,7 +14,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - run: yarn validate
       - run: yarn build
       - name: GitHub Action for Firebase
         uses: w9jds/firebase-action@v1.5.0
