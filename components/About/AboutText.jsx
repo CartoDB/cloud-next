@@ -11,6 +11,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     color: theme.palette.text.secondary,
     margin: theme.spacing(4.5, 0, 6)
+  },
+  text: {
+    '& p': {
+      margin: 0
+    }
   }
 }));
 
@@ -22,7 +27,7 @@ const AboutText = ({title, children, imageBlocks}) => {
       <Typography component="h2" variant="subtitle1" className={classes.title}>
         {title}
       </Typography>
-      <Typography component="p" variant="body2" color="textPrimary">
+      <Typography className={classes.text} component="div" variant="body2" color="textPrimary">
         {children}
       </Typography>
       <div className={classes.logos}>

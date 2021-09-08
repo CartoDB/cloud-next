@@ -164,28 +164,31 @@ const About = ({}, forwardedRef) => {
               }
             ]}
           >
-            With the new{' '}
-            <Link
-              underline="always"
-              href="https://developers.google.com/maps/documentation/javascript/webgl"
-              target="_blank"
-            >
-              Google Maps WebGL
-            </Link>{' '}
-            release, CARTO is been working on integrating a rich set of visualization capabilities.
-            The data behind it is stored on{' '}
-            <Link underline="always" href="https://cloud.google.com/bigquery/" target="_blank">
-              BigQuery
-            </Link>{' '}
-            and visualized using{' '}
-            <Link underline="always" href="https://carto.com" target="_blank">
-              CARTO
-            </Link>{' '}
-            and{' '}
-            <Link underline="always" href="https://deck.gl/" target="_blank">
-              Deck.GL
-            </Link>{' '}
-            libraries. Some maps are made of very large datasets and others come directly from SQL.
+            <p>
+              With the new{' '}
+              <Link
+                underline="always"
+                href="https://developers.google.com/maps/documentation/javascript/webgl"
+                target="_blank"
+              >
+                Google Maps WebGL
+              </Link>{' '}
+              release, CARTO is been working on integrating a rich set of visualization
+              capabilities. The data behind it is stored on{' '}
+              <Link underline="always" href="https://cloud.google.com/bigquery/" target="_blank">
+                BigQuery
+              </Link>{' '}
+              and visualized using{' '}
+              <Link underline="always" href="https://carto.com" target="_blank">
+                CARTO
+              </Link>{' '}
+              and{' '}
+              <Link underline="always" href="https://deck.gl/" target="_blank">
+                Deck.GL
+              </Link>{' '}
+              libraries. Some maps are made of very large datasets and others come directly from
+              SQL.
+            </p>
           </AboutText>
 
           <Paper classes={{root: classes.card}} elevation={0}>
@@ -246,8 +249,10 @@ const About = ({}, forwardedRef) => {
               }
             ]}
           >
-            All the data used for this visualization is available as public data in BigQuery (
-            <strong>cartobq.nexus_demo</strong>). The original sources for the data are:
+            <p>
+              All the data used for this visualization is available as public data in BigQuery (
+              <strong>cartobq.nexus_demo</strong>). The original sources for the data are:
+            </p>
             <ul>
               <li>
                 <Link href="https://ignition.geotab.com/" target="_blank">

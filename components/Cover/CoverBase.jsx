@@ -6,15 +6,19 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
     left: '50%',
-    transform: 'translateX(-100%)',
+    transform: 'translateX(-66.6%)',
     width: '100%',
     color: theme.palette.common.white,
-    maxWidth: theme.spacing(59),
+    maxWidth: theme.spacing(71),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     top: 'auto',
     bottom: 'auto',
+    [theme.breakpoints.up('md')]: {
+      maxWidth: theme.spacing(59),
+      transform: 'translateX(-100%)'
+    },
     [theme.breakpoints.up('lg')]: {
       maxWidth: theme.spacing(71)
     }

@@ -3,13 +3,14 @@ import {makeStyles} from '@material-ui/core';
 import CoverBase from './CoverBase';
 import cartoLogo from '../../assets/images/carto-components-logo-negative-logo.svg';
 import googleMapsLogo from '../../assets/images/google-maps-logo.svg';
-import geotapLogo from '../../assets/images/geotap.svg';
-import climateEngineLogo from '../../assets/images/climate-engine-logo@2x.png';
 import CoverLogoBlock from './CoverLogoBlock';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    bottom: theme.spacing(9)
+    bottom: theme.spacing(5),
+    '@media (min-height: 760px)': {
+      bottom: theme.spacing(9)
+    }
   },
   content: {
     display: 'flex'

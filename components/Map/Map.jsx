@@ -2,6 +2,7 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core';
 import {useAppState} from '../../state';
 import {SIDEBAR_WIDTH} from '../Sidebar/Sidebar';
+import CoverLogo from '../Cover/CoverLogo';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,6 +58,7 @@ const Map = () => {
         )}
         id="map"
       ></div>
+      <CoverLogo />
       <div
         className={[classes.mapBlock, currentSlide > 0 ? classes.mapBlockHidden : ''].join(' ')}
       />
