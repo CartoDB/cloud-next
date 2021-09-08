@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "carto-gnext-21"
+  },
+  "targets": {
+    "carto-gnext-21": {
+      "hosting": {
+        "default": [
+          "carto-gnext-21"
+        ]
+      }
+    }
   }
 }
