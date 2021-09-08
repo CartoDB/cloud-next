@@ -32,6 +32,9 @@ export function createOverlay(map) {
     animationCurrentTime = animationCurrentTime + 1;
 
     overlay.setProps({
+      // Short term workaround for map loading bug.
+      // TODO remove with new deck version
+      _customRender: () => {},
       layers: [
         TemperatureLayer,
         RoadsLayer,
