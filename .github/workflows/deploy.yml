@@ -4,7 +4,6 @@ on:
   push:
     branches: 
     - master
-    - fixing_gh_actions
 
 env:
   GCP_PROJECT: carto-gnext-21
