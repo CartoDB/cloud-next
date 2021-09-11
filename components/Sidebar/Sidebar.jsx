@@ -249,9 +249,9 @@ const Sidebar = () => {
         <SidebarSlide
           slide={8}
           {...(currentSlide === 8 && {ref: currentCardRef})}
-          title="Temperatures are likely to rise faster in Texas than the global average"
-          subtitle="Data from the latest IPCC report, from a group of more than 230 scientists from 60 countries, predicts rising temperatures faster than previously estimated."
-          text="Using data and spatial analysis to create and evaluate different scenarios will be key to prioritize environmental impact decisions. And we’d better hurry up in doing so!"
+          title="Rising temperatures in Texas could have devastating impacts across sectors"
+          subtitle="Depleted water resources, increasing wildfires, and expanding deserts are expected to cause significant damage to agriculture, human health, and infrastructure."
+          text="Using data and spatial analysis to evaluate the impacts of change on key sectors will be key to prioritizing investments in climate resilience. The time to act is now."
           image={slide8Image}
           imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@alecimages?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Chenyu Guan</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
