@@ -251,7 +251,7 @@ const Sidebar = () => {
           {...(currentSlide === 8 && {ref: currentCardRef})}
           title="Rising temperatures in Texas could have devastating impacts across sectors"
           subtitle="Depleted water resources, increasing wildfires, and expanding deserts are expected to cause significant damage to agriculture, human health, and infrastructure."
-          text="Using data and spatial analysis to evaluate the impacts of change on key sectors will be key to prioritizing investments in climate resilience. The time to act is now."
+          text="Using data and spatial analysis to evaluate the impacts of change on critical sectors will be key to prioritizing investments in climate resilience. The time to act is now."
           image={slide8Image}
           imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@alecimages?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Chenyu Guan</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         />
