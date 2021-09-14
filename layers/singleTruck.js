@@ -19,6 +19,7 @@ const _SingleTruckLayer = DeferredLoadLayer(
       window.requestAnimationFrame(animate);
     };
     window.requestAnimationFrame(animate);
+    let lastHeading = 0;
 
     return new ScenegraphLayer({
       data,
@@ -27,7 +28,12 @@ const _SingleTruckLayer = DeferredLoadLayer(
       sizeScale: 10,
       scenegraph: 'low_poly_truck/scene.gltf',
       getPosition: d => getVehiclePosition(d, time),
-      getOrientation: d => [0, 180 - getVehicleHeading(d, time), 90],
+      getOrientation: d => {
+        let heading = 540 - getVehicleHeading(d, time);
+        heading = 0.5 * heading + 0.5 * lastHeading;
+        lastHeading = heading;
+        return [0, heading, 90];
+      },
       _lighting: 'pbr'
     });
   },
@@ -35,7 +41,7 @@ const _SingleTruckLayer = DeferredLoadLayer(
     if (layer?.props?.visible) {
       const trip = data[0];
       const [lng, lat] = getVehiclePosition(trip, time);
-      map.moveCamera({center: {lng, lat}, zoom: 18, heading: 0.2 * time, tilt: 45});
+      map.moveCamera({center: {lng, lat}, zoom: 18, heading: (360 / 2800) * time, tilt: 45});
     }
     return {
       ...props,
@@ -89,7 +95,7 @@ function getVehiclePosition(trip, time) {
   for (let i = 0; i < trip.timestamps.length; i++) {
     const t1 = trip.timestamps[i];
     const t2 = trip.timestamps[i + 1];
-    if (time > t1 && time < t2) {
+    if (time > t1 && time <= t2) {
       const f = (time - t1) / (t2 - t1);
       const p1 = trip.path[i];
       const p2 = trip.path[i + 1];
@@ -111,7 +117,7 @@ function getVehicleHeading(trip, time) {
   for (let i = 0; i < trip.timestamps.length; i++) {
     const t1 = trip.timestamps[i];
     const t2 = trip.timestamps[i + 1];
-    if (time > t1 && time < t2) {
+    if (time > t1 && time <= t2) {
       const p1 = trip.path[i];
       const p2 = trip.path[i + 1];
       return headingBetweenPoints(p1, p2);
