@@ -5,6 +5,7 @@ import cartoSymbol from '../../assets/images/carto-components-logo-negative-symb
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    display: 'none',
     pointerEvents: 'none',
     padding: theme.spacing(2, 3),
     width: '100%',
@@ -13,7 +14,10 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     maxWidth: '100%',
     backgroundImage:
-      'linear-gradient(to top, rgba(15, 17, 20, 0.02), rgba(15, 17, 20, 0.64) 63%, rgba(15, 17, 20, 0.92))'
+      'linear-gradient(to top, rgba(15, 17, 20, 0.02), rgba(15, 17, 20, 0.64) 63%, rgba(15, 17, 20, 0.92))',
+    [theme.breakpoints.up('md')]: {
+      display: 'block'
+    }
   },
   content: {
     display: 'flex'

@@ -4,26 +4,60 @@ import {Typography, makeStyles} from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& + $root': {
-      marginLeft: theme.spacing(7)
+      marginLeft: theme.spacing(4)
+    },
+    [theme.breakpoints.up('md')]: {
+      '& + $root': {
+        marginLeft: theme.spacing(7)
+      }
     }
   },
   text: {
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(2),
+    [theme.breakpoints.up('md')]: {
+      marginBottom: theme.spacing(3)
+    }
   },
   logos: {
     display: 'flex',
     alignItems: 'center',
+    '& img': {
+      maxHeight: theme.spacing(4),
+      width: 'auto'
+    },
     '& img + img': {
-      marginLeft: theme.spacing(7)
+      marginLeft: theme.spacing(3)
+    },
+    [theme.breakpoints.up('md')]: {
+      '& img': {
+        maxHeight: theme.spacing(5)
+      },
+      '& img + img': {
+        marginLeft: theme.spacing(7)
+      }
+    }
+  },
+  rootMobileHorizontal: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      alignItems: 'center',
+      '& $text': {
+        marginBottom: 0,
+        marginRight: theme.spacing(2)
+      },
+      '&$root + $root': {
+        marginLeft: theme.spacing(0),
+        marginTop: theme.spacing(2)
+      }
     }
   }
 }));
 
-const CoverLogoBlock = ({title, images, textClassName}) => {
+const CoverLogoBlock = ({title, images, textClassName, mobileHorizontal}) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={[classes.root, mobileHorizontal ? classes.rootMobileHorizontal : ''].join(' ')}>
       <Typography
         component="h5"
         variant="caption"

@@ -1,7 +1,16 @@
 import React, {useEffect, useState, forwardRef} from 'react';
-import {makeStyles, Card, CardMedia, CardContent, Typography} from '@material-ui/core';
+import {
+  makeStyles,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  useMediaQuery
+} from '@material-ui/core';
 import {useAppState} from '../../state';
 import {alpha} from '@material-ui/core/styles/colorManipulator';
+
+const isFirefox = navigator?.userAgent?.toLowerCase()?.indexOf('firefox') > -1;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    overflowY: 'overlay',
+    overflowY: isFirefox ? 'auto' : 'overlay',
     borderBottom: '1px solid transparent',
     transition: theme.transitions.create(['border-color', 'transform'], {
       easing: theme.transitions.easing.easeInOut,
@@ -50,10 +59,13 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   content: {
-    padding: theme.spacing(4, 6),
+    padding: theme.spacing(2.5, 3),
     flex: 1,
     zIndex: 1,
-    backgroundColor: theme.palette.grey[50]
+    backgroundColor: theme.palette.grey[50],
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(4, 6)
+    }
   },
   pretitle: {
     padding: theme.spacing(1, 0, 0.5),
@@ -63,11 +75,17 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     color: theme.palette.primary.dark,
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(1.5),
+    [theme.breakpoints.up('md')]: {
+      marginBottom: theme.spacing(2)
+    }
   },
   subtitle: {
     color: theme.palette.primary.dark,
-    marginBottom: theme.spacing(4.5)
+    marginBottom: theme.spacing(3),
+    [theme.breakpoints.up('md')]: {
+      marginBottom: theme.spacing(4.5)
+    }
   },
   text: {
     '& p': {
@@ -93,16 +111,24 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'underline'
       }
     }
+  },
+  rootShrinked: {
+    overflowY: 'hidden',
+    borderBottomColor: 'transparent',
+    '& $media': {
+      display: 'none'
+    }
   }
 }));
 
 const SidebarSlide = (
-  {title, subtitle, text, image, imageAttribution, slide, children},
+  {title, subtitle, text, image, imageAttribution, slide, children, shrinked},
   cardRef
 ) => {
   const classes = useStyles();
   const [isOnScroll, setIsOnScroll] = useState(false);
   const {currentSlide, slidesNumber} = useAppState();
+  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
   useEffect(() => {
     if (cardRef?.current) {
@@ -129,7 +155,8 @@ const SidebarSlide = (
         classes.root,
         isOnScroll ? classes.rootOnScroll : '',
         slide > currentSlide ? classes.rootAfter : classes.rootBefore,
-        (slide === 1 && currentSlide === 0) || slide === currentSlide ? classes.rootShown : ''
+        (slide === 1 && currentSlide === 0) || slide === currentSlide ? classes.rootShown : '',
+        shrinked ? classes.rootShrinked : ''
       ].join(' ')}
     >
       <CardMedia className={classes.media} image={image} title={title}>
@@ -148,10 +175,21 @@ const SidebarSlide = (
         >
           {`Map ${slide} of ${slidesNumber - 1}`}
         </Typography>
-        <Typography className={classes.title} variant="h5" color="primary" component="h2">
+        <Typography
+          className={classes.title}
+          variant={isDesktop ? 'h5' : 'subtitle1'}
+          color="primary"
+          component="h2"
+          noWrap={!isDesktop}
+        >
           {title}
         </Typography>
-        <Typography className={classes.subtitle} variant="body1" color="primary" component="h3">
+        <Typography
+          className={classes.subtitle}
+          variant={isDesktop ? 'body1' : 'body2'}
+          color="primary"
+          component="h3"
+        >
           {subtitle}
         </Typography>
         {!!text && (

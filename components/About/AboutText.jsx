@@ -8,9 +8,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1.5)
   },
   logos: {
-    display: 'flex',
     color: theme.palette.text.secondary,
-    margin: theme.spacing(4.5, 0, 6)
+    margin: theme.spacing(4.5, 0, 6),
+    display: 'flex',
+    flexDirection: 'column',
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row'
+    }
   },
   text: {
     '& p': {

@@ -10,7 +10,8 @@ import {
   Typography,
   Link,
   Paper,
-  Divider
+  Divider,
+  Hidden
 } from '@material-ui/core';
 import {ReactComponent as IconNavigationClose} from '../../assets/icons/icon-navigation-close.svg';
 import {ReactComponent as IconGithub} from '../../assets/icons/icon-github.svg';
@@ -26,7 +27,16 @@ const ABOUT_HASH = 'about';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    maxHeight: `calc(100% - ${theme.spacing(18)}px)`
+    margin: 0,
+    maxHeight: '100%',
+    height: '100%',
+    borderRadius: 0,
+    [theme.breakpoints.up('md')]: {
+      maxHeight: `calc(100% - ${theme.spacing(18)}px)`,
+      height: 'auto',
+      margin: theme.spacing(4),
+      borderRadius: theme.shape.borderRadius
+    }
   },
   title: {
     padding: theme.spacing(3),
@@ -56,7 +66,9 @@ const useStyles = makeStyles((theme) => ({
   },
   cardText: {
     flex: 1,
-    paddingRight: theme.spacing(3)
+    [theme.breakpoints.up('md')]: {
+      paddingRight: theme.spacing(3)
+    }
   },
   cardTextTitle: {
     textTransform: 'uppercase',
@@ -64,10 +76,16 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1)
   },
   cardTextButtons: {
-    display: 'flex',
     marginTop: theme.spacing(3),
     '& > a + a': {
-      marginLeft: theme.spacing(1)
+      marginTop: theme.spacing(1.5)
+    },
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+      '& > a + a': {
+        marginLeft: theme.spacing(1),
+        marginTop: 0
+      }
     }
   },
   climateEngineLogo: {
@@ -135,6 +153,7 @@ const About = ({}, forwardedRef) => {
               {
                 title: 'With data stored in',
                 textClassName: classes.logosText,
+                mobileHorizontal: true,
                 images: [
                   {
                     src: bigqueryImage,
@@ -145,6 +164,7 @@ const About = ({}, forwardedRef) => {
               {
                 title: 'Connected by',
                 textClassName: classes.logosText,
+                mobileHorizontal: true,
                 images: [
                   {
                     src: cartoLogo,
@@ -155,6 +175,7 @@ const About = ({}, forwardedRef) => {
               {
                 title: 'Displayed on top of',
                 textClassName: classes.logosText,
+                mobileHorizontal: true,
                 images: [
                   {
                     src: googleMapsLogo,
@@ -224,7 +245,9 @@ const About = ({}, forwardedRef) => {
                 </Button>
               </div>
             </div>
-            <img src={codeImage} />
+            <Hidden smDown>
+              <img src={codeImage} />
+            </Hidden>
           </Paper>
 
           <Divider className={classes.divider} />
