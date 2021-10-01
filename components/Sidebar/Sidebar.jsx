@@ -1,9 +1,19 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Button, IconButton, Drawer, makeStyles, Fade} from '@material-ui/core';
+import {
+  Button,
+  IconButton,
+  Drawer,
+  makeStyles,
+  Fade,
+  useMediaQuery,
+  Hidden
+} from '@material-ui/core';
 import {useAppState} from '../../state';
 import {ReactComponent as ArrowLeft} from '../../assets/icons/arrow-left.svg';
 import {ReactComponent as ArrowRightWhite} from '../../assets/icons/arrow-right-white.svg';
 import {ReactComponent as IconActionHome} from '../../assets/icons/icon-action-home.svg';
+import {ReactComponent as IconExpand} from '../../assets/icons/icon-navigation-expand-less.svg';
+import {ReactComponent as IconExpandDown} from '../../assets/icons/icon-navigation-expand-more.svg';
 import SidebarSlide from './SidebarSlide';
 import SidebarClose from './SidebarClose';
 import Header, {HEADER_HEIGHT} from '../Header/Header';
@@ -27,8 +37,12 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     flexShrink: 0,
     zIndex: 1,
-    '&, & $drawerPaper': {
-      width: SIDEBAR_WIDTH.xs
+    height: 0,
+    [theme.breakpoints.up('md')]: {
+      height: 'auto',
+      '&, & $drawerPaper': {
+        width: SIDEBAR_WIDTH.xs
+      }
     },
     [theme.breakpoints.up('lg')]: {
       '&, & $drawerPaper': {
@@ -39,36 +53,73 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
     backgroundColor: theme.palette.grey[50],
-    border: 'none'
+    border: 'none',
+    [theme.breakpoints.down('sm')]: {
+      '&:not($drawerPaperExpanded)': {
+        borderTopLeftRadius: theme.spacing(1),
+        borderTopRightRadius: theme.spacing(1)
+      }
+    },
+    [theme.breakpoints.up('md')]: {
+      height: '100%'
+    }
+  },
+  drawerPaperExpanded: {
+    [theme.breakpoints.down('sm')]: {
+      top: 0
+    }
+  },
+  header: {
+    position: 'fixed',
+    [theme.breakpoints.up('md')]: {
+      position: 'absolute'
+    }
   },
   footer: {
     display: 'block',
     position: 'relative',
     width: '100%',
-    minHeight: theme.spacing(10.5)
+    minHeight: theme.spacing(8.5),
+    [theme.breakpoints.up('md')]: {
+      minHeight: theme.spacing(10.5)
+    }
   },
   footerItem: {
-    margin: theme.spacing(3, 0),
+    margin: theme.spacing(2, 0),
     position: 'absolute',
     bottom: 0,
     '&[data-position="left"]': {
-      left: theme.spacing(3)
+      left: theme.spacing(2)
     },
     '&[data-position="top-left"]': {
-      left: theme.spacing(3),
+      left: theme.spacing(2),
       bottom: 'auto',
       top: 0,
       zIndex: 1
     },
     '&[data-position="right"]': {
-      right: theme.spacing(3)
+      right: theme.spacing(2)
     },
     '&[data-position="center"]': {
       left: '50%',
       transform: 'translateX(-50%)',
-      margin: theme.spacing(3, 0)
+      margin: theme.spacing(2, 0)
+    },
+    [theme.breakpoints.up('md')]: {
+      margin: theme.spacing(3, 0),
+      '&[data-position="left"]': {
+        left: theme.spacing(3)
+      },
+      '&[data-position="top-left"]': {
+        left: theme.spacing(3)
+      },
+      '&[data-position="right"]': {
+        right: theme.spacing(3)
+      },
+      '&[data-position="center"]': {
+        margin: theme.spacing(3, 0)
+      }
     }
   },
   dots: {
@@ -94,7 +145,8 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     position: 'relative',
     overflow: 'hidden',
-    width: '100%'
+    width: '100%',
+    minHeight: theme.spacing(10)
   },
   headerPrimary: {
     position: 'absolute',
@@ -113,13 +165,38 @@ const useStyles = makeStyles((theme) => ({
   },
   headerPrimaryClose: {
     position: 'absolute',
-    margin: theme.spacing(3),
+    margin: theme.spacing(2.25, 2),
     bottom: 0,
-    left: 0
+    left: 0,
+    '& svg path': {
+      fill: theme.palette.primary.main
+    },
+    [theme.breakpoints.up('md')]: {
+      margin: theme.spacing(3)
+    }
   },
   headerPrimaryItem: {
     top: 'auto',
-    bottom: 0
+    bottom: theme.spacing(0.5),
+    [theme.breakpoints.up('md')]: {
+      bottom: 0
+    }
+  },
+  iconButtonContained: {
+    '&, &:focus, &:active': {
+      backgroundColor: theme.palette.primary.main
+    }
+  },
+  footerClose: {
+    position: 'fixed',
+    [theme.breakpoints.up('md')]: {
+      position: 'absolute'
+    }
+  },
+  swipeUpRoot: {
+    position: 'absolute',
+    top: theme.spacing(2.5),
+    right: theme.spacing(2.5)
   }
 }));
 
@@ -127,7 +204,10 @@ const Sidebar = () => {
   const classes = useStyles();
   const {next, prev, reset, currentSlide, slidesNumber} = useAppState();
   const [headerPrimaryHeight, setHeaderPrimaryHeight] = useState(0);
+  const [mobileExpanded, setMobileExpanded] = useState(false);
   const currentCardRef = useRef();
+  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
+  const slideShrinked = !mobileExpanded && !isDesktop;
 
   useEffect(() => {
     if (currentCardRef?.current) {
@@ -152,17 +232,29 @@ const Sidebar = () => {
     }
   }, [currentCardRef.current, setHeaderPrimaryHeight]);
 
+  useEffect(() => {
+    if (!currentSlide || isDesktop) {
+      setMobileExpanded(false);
+    }
+  }, [currentSlide, setMobileExpanded, isDesktop]);
+
   return (
     <Drawer
       className={classes.drawer}
-      variant="persistent"
-      anchor="right"
+      variant="temporary"
+      anchor={isDesktop ? 'right' : 'bottom'}
       open={currentSlide > 0}
       classes={{
-        paper: classes.drawerPaper
+        paper: [classes.drawerPaper, mobileExpanded ? classes.drawerPaperExpanded : ''].join(' ')
       }}
+      hideBackdrop={true}
     >
-      <Header showDelay={500} hideDelay={0} hidden={currentSlide === 0} />
+      <Header
+        showDelay={500}
+        hideDelay={0}
+        hidden={currentSlide === 0}
+        className={classes.header}
+      />
       <div
         className={[
           classes.headerPrimary,
@@ -170,17 +262,39 @@ const Sidebar = () => {
         ].join(' ')}
         style={{height: headerPrimaryHeight}}
       >
-        <SidebarClose className={classes.headerPrimaryClose} primary={true} />
+        {mobileExpanded ? (
+          <IconButton
+            className={classes.headerPrimaryClose}
+            onClick={() => {
+              setMobileExpanded(false);
+            }}
+          >
+            <IconExpandDown />
+          </IconButton>
+        ) : (
+          <SidebarClose className={classes.headerPrimaryClose} primary={true} />
+        )}
         <Header primary={true} className={classes.headerPrimaryItem} />
       </div>
 
-      <div className={classes.footerItem} data-position="top-left">
-        <SidebarClose />
+      <div className={[classes.footerItem, classes.footerClose].join(' ')} data-position="top-left">
+        {mobileExpanded ? (
+          <IconButton
+            onClick={() => {
+              setMobileExpanded(false);
+            }}
+          >
+            <IconExpandDown />
+          </IconButton>
+        ) : (
+          <SidebarClose />
+        )}
       </div>
 
       <div className={classes.slides}>
         <SidebarSlide
           slide={1}
+          shrinked={slideShrinked}
           {...(currentSlide === 1 && {ref: currentCardRef})}
           title="The second-largest state in the US by both area and population"
           subtitle="With a population of over 29M people, which has increased 15.9% since 2010."
@@ -188,12 +302,16 @@ const Sidebar = () => {
           imageAttribution={`Photo by <a target="_blank" href="https://unsplash.com/@juvx?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Vlad Busuioc</a> on <a target="_blank" href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`}
         >
           <p>
-          Two-thirds of all Texans live in major metropolitan areas such as Houston. The Dallas–Fort Worth metropolitan area is the largest in Texas, while Houston is the largest city,  and the fourth-largest city in the United States.  
-          By population, the Dallas–Fort Worth metropolitan area is larger than the city and metropolitan area of Houston.
+            Two-thirds of all Texans live in major metropolitan areas such as Houston. The
+            Dallas–Fort Worth metropolitan area is the largest in Texas, while Houston is the
+            largest city, and the fourth-largest city in the United States. By population, the
+            Dallas–Fort Worth metropolitan area is larger than the city and metropolitan area of
+            Houston.
           </p>
         </SidebarSlide>
         <SidebarSlide
           slide={2}
+          shrinked={slideShrinked}
           {...(currentSlide === 2 && {ref: currentCardRef})}
           title="The largest consumer and contributor of energy"
           subtitle="Texas ranks second in the nation in both population and the size of its economy, it also consumes a large share of the nation's energy."
@@ -203,6 +321,7 @@ const Sidebar = () => {
         />
         <SidebarSlide
           slide={3}
+          shrinked={slideShrinked}
           {...(currentSlide === 3 && {ref: currentCardRef})}
           title="The largest  producer of renewable energy"
           subtitle="Renewable energy fueled more than one-fifth of all utility-scale net generation in Texas in 2020, and the state accounted for one-fifth of the nation's utility-scale electricity generation from non-hydroelectric renewable sources."
@@ -212,6 +331,7 @@ const Sidebar = () => {
         />
         <SidebarSlide
           slide={4}
+          shrinked={slideShrinked}
           {...(currentSlide === 4 && {ref: currentCardRef})}
           title="Transportation is the second largest consumer of energy in Texas"
           subtitle="Trucks in Texas represent 12% of all vehicle miles travelled in the state each year. Road transportation continues to be the largest contributor to total CO2 emissions in Texas— estimated at more than 225 million tons each year."
@@ -221,6 +341,7 @@ const Sidebar = () => {
         />
         <SidebarSlide
           slide={5}
+          shrinked={slideShrinked}
           {...(currentSlide === 5 && {ref: currentCardRef})}
           title="73% of goods manufactured in Texas are transported by truck"
           subtitle="Trucking is big business in Texas. With more than 60,000 trucking companies in the state employing 185,000 drivers, the impacts of any vehicle electrification measures are significant, not only on the environment, but also the local economy."
@@ -230,6 +351,7 @@ const Sidebar = () => {
         />
         <SidebarSlide
           slide={6}
+          shrinked={slideShrinked}
           {...(currentSlide === 6 && {ref: currentCardRef})}
           title="Commercial truck electrification is well within reach"
           subtitle="Fully electric trucks are reaching wider-scale consideration as truck, engine, and other component manufacturers are developing the systems required to support this new breed of commercial vehicles."
@@ -239,6 +361,7 @@ const Sidebar = () => {
         />
         <SidebarSlide
           slide={7}
+          shrinked={slideShrinked}
           {...(currentSlide === 7 && {ref: currentCardRef})}
           title="Focusing on long-haul trucks will require a charging infrastructure at scale."
           subtitle="Utilizing aggregated data from existing truck fleets, and considering the most common  routes, it is possible to determine optimal locations to install the required charging infrastructure."
@@ -248,6 +371,7 @@ const Sidebar = () => {
         />
         <SidebarSlide
           slide={8}
+          shrinked={slideShrinked}
           {...(currentSlide === 8 && {ref: currentCardRef})}
           title="Rising temperatures in Texas could have devastating impacts across sectors"
           subtitle="Depleted water resources, increasing wildfires, and expanding deserts are expected to cause significant damage to agriculture, human health, and infrastructure."
@@ -259,15 +383,29 @@ const Sidebar = () => {
 
       <div className={classes.footer}>
         <Fade in={currentSlide === 1}>
-          <Button
-            data-position="left"
-            classes={{root: classes.footerItem}}
-            startIcon={<IconActionHome />}
-            color="primary"
-            onClick={reset}
-          >
-            Home
-          </Button>
+          <div>
+            <Hidden smDown>
+              <Button
+                data-position="left"
+                classes={{root: classes.footerItem}}
+                startIcon={<IconActionHome />}
+                color="primary"
+                onClick={reset}
+              >
+                Home
+              </Button>
+            </Hidden>
+            <Hidden mdUp>
+              <IconButton
+                data-position="left"
+                classes={{root: classes.footerItem}}
+                color="primary"
+                onClick={reset}
+              >
+                <IconActionHome />
+              </IconButton>
+            </Hidden>
+          </div>
         </Fade>
         <Fade in={currentSlide > 1}>
           <IconButton
@@ -290,17 +428,42 @@ const Sidebar = () => {
           ))}
         </div>
         <Fade in={currentSlide !== slidesNumber - 1}>
-          <Button
-            data-position="right"
-            classes={{root: classes.footerItem}}
-            variant="contained"
-            color="primary"
-            onClick={next}
-            endIcon={<ArrowRightWhite />}
-          >
-            Next
-          </Button>
+          <div>
+            <Hidden smDown>
+              <Button
+                data-position="right"
+                classes={{root: classes.footerItem}}
+                variant="contained"
+                color="primary"
+                onClick={next}
+                endIcon={<ArrowRightWhite />}
+              >
+                Next
+              </Button>
+            </Hidden>
+            <Hidden mdUp>
+              <IconButton
+                data-position="right"
+                classes={{root: [classes.footerItem, classes.iconButtonContained].join(' ')}}
+                color="primary"
+                onClick={next}
+              >
+                <ArrowRightWhite />
+              </IconButton>
+            </Hidden>
+          </div>
         </Fade>
+      </div>
+
+      <div className={classes.swipeUpRoot}>
+        <IconButton
+          onClick={() => {
+            setMobileExpanded(true);
+          }}
+          size="small"
+        >
+          <IconExpand />
+        </IconButton>
       </div>
     </Drawer>
   );

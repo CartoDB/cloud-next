@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {Button, makeStyles, ClickAwayListener} from '@material-ui/core';
+import {Button, IconButton, makeStyles, ClickAwayListener, Hidden} from '@material-ui/core';
 import {ReactComponent as IconActionHelp} from '../../assets/icons/icon-action-help-outline.svg';
 import {ReactComponent as IconSocialShare} from '../../assets/icons/icon-social-share.svg';
 import About from '../About/About';
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 0,
     right: 0,
-    margin: theme.spacing(3),
+    margin: theme.spacing(2),
     display: 'flex',
     justifyContent: 'flex-end',
     zIndex: 2,
@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
           duration: 0,
           delay: hideDelay
         })
+    },
+    [theme.breakpoints.up('md')]: {
+      margin: theme.spacing(3)
     }
   },
   rootPrimary: {
@@ -47,6 +50,17 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     marginLeft: theme.spacing(1)
+  },
+  btnIcon: {
+    marginLeft: theme.spacing(2),
+    '& svg': {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+      '& path': {
+        transformOrigin: '0 0',
+        transform: 'scale(1.2)'
+      }
+    }
   }
 }));
 
@@ -65,30 +79,52 @@ const Header = ({primary, hidden, showDelay = 0, hideDelay = 0, className}) => {
         className ? className : ''
       ].join(' ')}
     >
-      <Button
-        data-position="right"
-        component="a"
-        href="#about"
-        classes={{root: classes.btn, colorInherit: classes.btnWhite}}
-        color={primary ? 'primary' : 'inherit'}
-        startIcon={<IconActionHelp />}
-        size="small"
-      >
-        About
-      </Button>
-      <ClickAwayListener onClickAway={shareRef?.current ? shareRef.current.hide : () => {}}>
+      <Hidden mdUp>
+        <IconButton
+          data-position="right"
+          component="a"
+          href="#about"
+          classes={{root: classes.btnIcon}}
+          color={primary ? 'primary' : 'inherit'}
+        >
+          <IconActionHelp />
+        </IconButton>
+        <ClickAwayListener onClickAway={shareRef?.current ? shareRef.current.hide : () => {}}>
+          <IconButton
+            data-position="right"
+            classes={{root: classes.btnIcon}}
+            color={primary ? 'primary' : 'inherit'}
+            onClick={shareRef?.current ? shareRef.current.show : () => {}}
+          >
+            <IconSocialShare />
+          </IconButton>
+        </ClickAwayListener>
+      </Hidden>
+      <Hidden smDown>
         <Button
           data-position="right"
-          classes={{root: classes.btn, colorInherit: classes.btnWhite}}
+          component="a"
+          href="#about"
+          classes={{root: classes.btn}}
           color={primary ? 'primary' : 'inherit'}
-          onClick={shareRef?.current ? shareRef.current.show : () => {}}
-          startIcon={<IconSocialShare />}
+          startIcon={<IconActionHelp />}
           size="small"
         >
-          Share
+          About
         </Button>
-      </ClickAwayListener>
-
+        <ClickAwayListener onClickAway={shareRef?.current ? shareRef.current.hide : () => {}}>
+          <Button
+            data-position="right"
+            classes={{root: classes.btn}}
+            color={primary ? 'primary' : 'inherit'}
+            onClick={shareRef?.current ? shareRef.current.show : () => {}}
+            startIcon={<IconSocialShare />}
+            size="small"
+          >
+            Share
+          </Button>
+        </ClickAwayListener>
+      </Hidden>
       <About />
       <Share anchorEl={rootRef?.current} ref={shareRef} />
     </div>

@@ -11,18 +11,23 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create(['margin', 'background-image'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
-    }),
-    marginRight: `-${SIDEBAR_WIDTH.xs}`,
-    [theme.breakpoints.up('lg')]: {
-      marginRight: `-${SIDEBAR_WIDTH.lg}`
-    }
+    })
   },
   rootShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     }),
-    marginRight: 0
+    marginBottom: theme.spacing(15),
+    height: 'auto',
+    [theme.breakpoints.up('md')]: {
+      marginBottom: 0,
+      height: '100%',
+      marginRight: `${SIDEBAR_WIDTH.xs}`,
+      [theme.breakpoints.up('lg')]: {
+        marginRight: `${SIDEBAR_WIDTH.lg}`
+      }
+    }
   },
   rootBlocked: {
     pointerEvents: 'none'

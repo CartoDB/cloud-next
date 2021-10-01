@@ -10,6 +10,11 @@ import Header from '../Header/Header';
 import {useAppState} from '../../state';
 
 const useStyles = makeStyles((theme) => ({
+  '@global': {
+    body: {
+      overflow: 'hidden'
+    }
+  },
   root: {
     display: 'flex',
     height: '100%',
@@ -18,8 +23,9 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     width: '100%',
     height: '100%',
-    minHeight: theme.spacing(78),
-    minWidth: theme.spacing(100),
+    [theme.breakpoints.up('sm')]: {
+      minHeight: theme.spacing(78)
+    },
     [theme.breakpoints.up('md')]: {
       minHeight: theme.spacing(83)
     }

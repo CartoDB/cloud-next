@@ -4,20 +4,22 @@ import {useAppState} from '../../state';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    left: theme.spacing(3),
+    right: theme.spacing(3),
+    width: 'auto',
     position: 'absolute',
-    left: '50%',
-    transform: 'translateX(-66.6%)',
-    width: '100%',
     color: theme.palette.common.white,
-    maxWidth: theme.spacing(71),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     top: 'auto',
     bottom: 'auto',
     [theme.breakpoints.up('md')]: {
+      left: '50%',
+      right: 'auto',
       maxWidth: theme.spacing(59),
-      transform: 'translateX(-100%)'
+      transform: 'translateX(-100%)',
+      width: '100%'
     },
     [theme.breakpoints.up('lg')]: {
       maxWidth: theme.spacing(71)
