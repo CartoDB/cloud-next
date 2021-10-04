@@ -15,7 +15,7 @@ const _RoadsLayer = DeferredLoadLayer(() => {
     lineWidthMinPixels: 1,
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI2ODk0MDA2MyJ9.ZxLlM53Xe-WxsUSlOAQW95tvmRkjDGMdhIBpiMD9v7w'
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI4ZTcwMzZmNiJ9.t4I6xKL-3mpgbtRzTjMEV8LWEEGIZR7-sTA_YkI0Y5g'
     },
     parameters: {
       depthTest: false,
