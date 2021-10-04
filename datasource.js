@@ -66,12 +66,13 @@ export async function getPopulationData() {
   return data;
 }
 
-export async function getWKTData(source) {
+export async function getWKTData(source, credentials) {
   const data = await getData({
     type: MAP_TYPES.TABLE,
     source,
     connection: 'bigquery',
-    format: 'json'
+    format: 'json',
+    ...credentials
   });
 
   return data.map(parseWKT);

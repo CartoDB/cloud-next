@@ -1,22 +1,22 @@
 import Blending from './blending';
-import {CartoLayer, MAP_TYPES} from '@deck.gl/carto';
+import {GeoJsonLayer} from '@deck.gl/layers';
 import DeferredLoadLayer from './deferredLoadLayer';
+import {getWKTData} from '../datasource';
 import {colorToRGBArray} from '../utils';
 
 const _RoadsLayer = DeferredLoadLayer(() => {
-  return new CartoLayer({
+  return new GeoJsonLayer({
     id: 'roads',
-    connection: 'bigquery',
-    type: MAP_TYPES.TABLE,
-    data: 'cartobq.nexus_demo.na_roads_simplified',
+    data: getWKTData('cartobq.nexus_demo.na_roads_simplified', {
+      credentials: {
+        accessToken:
+          'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI4ZTcwMzZmNiJ9.t4I6xKL-3mpgbtRzTjMEV8LWEEGIZR7-sTA_YkI0Y5g'
+      }
+    }),
     getLineColor: [224, 222, 97, 65],
     filled: false,
     stroked: true,
     lineWidthMinPixels: 1,
-    credentials: {
-      accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI4ZTcwMzZmNiJ9.t4I6xKL-3mpgbtRzTjMEV8LWEEGIZR7-sTA_YkI0Y5g'
-    },
     parameters: {
       depthTest: false,
       ...Blending.ADDITIVE
