@@ -7,15 +7,15 @@ const _RoadsLayer = DeferredLoadLayer(() => {
   return new CartoLayer({
     id: 'roads',
     connection: 'bigquery',
-    type: MAP_TYPES.TILESET,
-    data: 'cartobq.nexus_demo.na_roads_tileset',
+    type: MAP_TYPES.TABLE,
+    data: 'cartobq.nexus_demo.na_roads_simplified',
     getLineColor: [224, 222, 97, 65],
     filled: false,
     stroked: true,
     lineWidthMinPixels: 1,
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJiNWE4YWVhYSJ9.Q9vJznUdhSZmSEOaGqgYvGy_py-4-svBwOfWElHCXFA'
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI2ODk0MDA2MyJ9.ZxLlM53Xe-WxsUSlOAQW95tvmRkjDGMdhIBpiMD9v7w'
     },
     parameters: {
       depthTest: false,
