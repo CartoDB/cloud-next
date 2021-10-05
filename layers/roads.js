@@ -1,11 +1,10 @@
 import Blending from './blending';
-import {GeoJsonLayer} from '@deck.gl/layers';
+import {CartoLayer, MAP_TYPES} from '@deck.gl/carto';
 import DeferredLoadLayer from './deferredLoadLayer';
-import {getWKTData} from '../datasource';
 import {colorToRGBArray} from '../utils';
 
 const _RoadsLayer = DeferredLoadLayer(() => {
-  return new GeoJsonLayer({
+  return new CartoLayer({
     id: 'roads',
     connection: 'bigquery',
     type: MAP_TYPES.TILESET,
