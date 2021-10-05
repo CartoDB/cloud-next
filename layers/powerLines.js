@@ -7,14 +7,14 @@ const _PowerLinesLayer = DeferredLoadLayer(() => {
     id: 'power-lines',
     connection: 'bigquery',
     type: MAP_TYPES.TILESET,
-    data: 'cartobq.nexus_demo.transmission_lines_tileset',
+    data: 'cartobq.nexus_demo.transmission_lines_tileset_simplified',
     getLineColor: [83, 135, 185, 180],
     filled: false,
     stroked: true,
     lineWidthMinPixels: 1,
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIxMWYzY2ZmYiJ9.y7ofb0sjK3M_rfE4qm2MT73jH0J9zekMnkCj88EmSqU'
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjOTVkODFlZCJ9.6T9_NBCsS5t-MJXDHLLkSSRmh6Pyqrutr9NbdrL5YN8'
     },
     parameters: {
       depthTest: false,
