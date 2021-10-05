@@ -7,12 +7,13 @@ import {colorToRGBArray} from '../utils';
 const _RoadsLayer = DeferredLoadLayer(() => {
   return new GeoJsonLayer({
     id: 'roads',
-    data: getWKTData('cartobq.nexus_demo.na_roads_simplified', {
-      credentials: {
-        accessToken:
-          'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI4ZTcwMzZmNiJ9.t4I6xKL-3mpgbtRzTjMEV8LWEEGIZR7-sTA_YkI0Y5g'
-      }
-    }),
+    connection: 'bigquery',
+    type: MAP_TYPES.TILESET,
+    data: 'cartobq.nexus_demo.na_roads_simplified_tileset',
+    credentials: {
+      accessToken:
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjOGE4M2ZiYyJ9.9MEoA3ohVDrx3RPe7VxoN5bPVoOWB--tMF4D88DwPRQ'
+    },
     getLineColor: [224, 222, 97, 65],
     filled: false,
     stroked: true,
