@@ -35,5 +35,5 @@ You can contact CARTO always at contact@carto.com, but we also hangout on the CA
 
 https://cartousercommunity.slack.com/join/shared_invite/zt-t7t7k5s4-3c4pZJLrLlkVow3AEDt~ZQ#/shared-invite/email
 
-
+  
 
