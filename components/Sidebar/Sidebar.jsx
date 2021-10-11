@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       height: 'auto',
       '&, & $drawerPaper': {
-        width: SIDEBAR_WIDTH.xs
+        width: SIDEBAR_WIDTH.xs,
+        inset: '0 0 0 auto !important'
       }
     },
     [theme.breakpoints.up('lg')]: {
