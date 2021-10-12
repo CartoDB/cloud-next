@@ -1,5 +1,5 @@
 import React from 'react';
-import {Typography, makeStyles} from '@material-ui/core';
+import {Link, Typography, makeStyles} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,8 +67,10 @@ const CoverLogoBlock = ({title, images, textClassName, mobileHorizontal}) => {
         {title}
       </Typography>
       <div className={classes.logos}>
-        {images.map(({src, alt, className}, i) => (
-          <img key={`image-${i}`} {...(!!className && {className})} src={src} alt={alt} />
+        {images.map(({src, href, alt, className}, i) => (
+          <Link key={`image-${i}`} href={href} target="_blank">
+            <img {...!!className && {className}} src={src} alt={alt} />
+          </Link>
         ))}
       </div>
     </div>

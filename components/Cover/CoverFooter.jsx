@@ -36,6 +36,7 @@ const CoverFooter = () => {
           images={[
             {
               src: cartoLogo,
+              href: 'https://carto.com/',
               alt: 'CARTO'
             }
           ]}
