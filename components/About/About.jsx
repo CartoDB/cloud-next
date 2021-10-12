@@ -224,7 +224,7 @@ const About = ({}, forwardedRef) => {
               </Typography>
               <div className={classes.cardTextButtons}>
                 <Button
-                  href="https://carto.com/blog/how-to-do-route-optimization-at-scale-with-carto-bigquery/"
+                  href="https://cloud.google.com/blog/products/maps-platform/richer-data-visualization-google-maps-platform-using-deckgl"
                   component="a"
                   target="_blank"
                   variant="contained"
