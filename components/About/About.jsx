@@ -16,7 +16,7 @@ import {
 import {ReactComponent as IconNavigationClose} from '../../assets/icons/icon-navigation-close.svg';
 import {ReactComponent as IconGithub} from '../../assets/icons/icon-github.svg';
 import cartoLogo from '../../assets/images/carto-components-logo.svg';
-import googleMapsLogo from '../../assets/images/google-maps-logo-primary.svg';
+import googleMapsLogo from '../../assets/images/google-maps-platform-logo.png';
 import geotabLogo from '../../assets/images/geotap-primary.svg';
 import climateEngineLogo from '../../assets/images/climate-engine-logo@2x-primary.png';
 import codeImage from '../../assets/images/code.svg';
