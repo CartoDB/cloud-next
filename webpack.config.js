@@ -47,6 +47,7 @@ const CONFIG = {
   ],
 
   devServer: {
+    //host: 'local_network_name_or_ip',
     contentBase: path.resolve(__dirname, './dist'),
     hot: true
   },
