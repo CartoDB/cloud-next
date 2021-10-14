@@ -184,7 +184,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   iconButtonContained: {
-    '&, &:focus, &:active': {
+    '&, &:hover, &:focus, &:active': {
       backgroundColor: theme.palette.primary.main
     }
   },
