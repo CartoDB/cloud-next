@@ -2,8 +2,8 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core';
 import CoverBase from './CoverBase';
 import cartoLogo from '../../assets/images/carto-components-logo-negative-logo.svg';
-import googleMapsLogo from '../../assets/images/google-maps-logo.svg';
-import googleLogos from '../../assets/images/google-logos.png';
+import googleCloudLogo from '../../assets/images/google-cloud.png';
+import googleMapsPlatformLogo from '../../assets/images/google-maps-platform.png';
 import CoverLogoBlock from './CoverLogoBlock';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +21,22 @@ const useStyles = makeStyles((theme) => ({
   },
   climateEngineLogo: {
     maxWidth: theme.spacing(17)
+  },
+  googleMapsBlock: {
+    [theme.breakpoints.down('sm')]: {
+      '& .logos': {
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        '& img': {
+          maxHeight: theme.spacing(3)
+        }
+      }
+    },
+    [theme.breakpoints.up('md')]: {
+      '& .logos a + a': {
+        marginLeft: theme.spacing(3)
+      }
+    }
   }
 }));
 
@@ -44,10 +60,15 @@ const CoverFooter = () => {
         <CoverLogoBlock
           title="In collaboration with"
           textClassName={classes.text}
+          className={classes.googleMapsBlock}
           images={[
             {
-              src: googleLogos,
-              alt: 'Google Maps'
+              src: googleMapsPlatformLogo,
+              alt: 'Google Maps Platform'
+            },
+            {
+              src: googleCloudLogo,
+              alt: 'Google Cloud'
             }
           ]}
         />

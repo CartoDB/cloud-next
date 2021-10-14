@@ -53,11 +53,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CoverLogoBlock = ({title, images, textClassName, mobileHorizontal}) => {
+const CoverLogoBlock = ({title, images, className, textClassName, mobileHorizontal}) => {
   const classes = useStyles();
 
   return (
-    <div className={[classes.root, mobileHorizontal ? classes.rootMobileHorizontal : ''].join(' ')}>
+    <div
+      className={[
+        classes.root,
+        className ? className : '',
+        mobileHorizontal ? classes.rootMobileHorizontal : ''
+      ].join(' ')}
+    >
       <Typography
         component="h5"
         variant="caption"
@@ -66,10 +72,10 @@ const CoverLogoBlock = ({title, images, textClassName, mobileHorizontal}) => {
       >
         {title}
       </Typography>
-      <div className={classes.logos}>
+      <div className={`logos ${classes.logos}`}>
         {images.map(({src, href, alt, className}, i) => (
           <Link key={`image-${i}`} href={href} target="_blank">
-            <img {...!!className && {className}} src={src} alt={alt} />
+            <img {...(!!className && {className})} src={src} alt={alt} />
           </Link>
         ))}
       </div>
