@@ -43,7 +43,7 @@ export async function getTripData() {
     format: 'json',
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI2ZDZlMWY3MyJ9.Uv0ZBMGjL102QaIHJoOrKpbHiu77c6xhH9eO-XDCnfU'
+        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJiMzhmNzIyMiJ9.7xmoUCOI9ZkeAVBHrIw1kn6qdyAMtroN_umhR0i5ycc'
     }
   });
 
