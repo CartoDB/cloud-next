@@ -9,7 +9,7 @@ import orbit from './orbit';
 //const GOOGLE_MAPS_API_KEY = process.env.GoogleMapsAPIKey; // eslint-disable-line
 const GOOGLE_MAPS_API_KEY = 'AIzaSyC-D3n4Imi9m9KrCaa6p75qO525OoQE2Sk';
 const GOOGLE_MAP_ID = '84591267f7b3a201';
-const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&v=beta&map_ids=${GOOGLE_MAP_ID}`;
+const GOOGLE_MAPS_API_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&map_ids=${GOOGLE_MAP_ID}`;
 
 const initAppState = {
   currentSlide: null
