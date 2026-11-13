@@ -6,7 +6,7 @@ setDefaultCredentials({
   apiVersion: API_VERSIONS.V3,
   apiBaseUrl: 'https://gcp-us-east1.api.carto.com',
   accessToken:
-    'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjZTY5M2NmMCJ9.9HD7U1c-Wh81SPaSvWWSNShF7MIMH-9-S8YmWFo0_x0'
+    'YOUR_CARTO_ACCESS_TOKEN'
 });
 
 const TIME0 = new Date('2021-01-01T06:30:00.000Z');
@@ -43,7 +43,7 @@ export async function getTripData() {
     format: 'json',
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJiMzhmNzIyMiJ9.7xmoUCOI9ZkeAVBHrIw1kn6qdyAMtroN_umhR0i5ycc'
+        'YOUR_CARTO_ACCESS_TOKEN'
     }
   });
 
@@ -59,7 +59,7 @@ export async function getPopulationData() {
     format: 'json',
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJiZDVhODUwYyJ9.fuaEK8KCYPR4EE8qpQkKBSPXcnh94OMsc2rN3TVc2zE'
+        'YOUR_CARTO_ACCESS_TOKEN'
     }
   });
 
