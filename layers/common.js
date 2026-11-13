@@ -12,7 +12,7 @@ const boundaryProps = {
   stroked: true,
   credentials: {
     accessToken:
-      'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiIzYWZhODUyOSJ9.bCrMmLKkMAgA21Y14js5up8CR4IJ45xhENzXo-CuHMs'
+      'YOUR_CARTO_ACCESS_TOKEN'
   }
 };
 
@@ -49,7 +49,7 @@ const _TexasCountiesLayer = DeferredLoadLayer(() => {
     getLineColor: [233, 244, 0, 80],
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjZTY5M2NmMCJ9.9HD7U1c-Wh81SPaSvWWSNShF7MIMH-9-S8YmWFo0_x0'
+        'YOUR_CARTO_ACCESS_TOKEN'
     }
   });
 });

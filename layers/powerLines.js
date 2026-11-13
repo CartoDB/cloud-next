@@ -14,7 +14,7 @@ const _PowerLinesLayer = DeferredLoadLayer(() => {
     lineWidthMinPixels: 1,
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjOTVkODFlZCJ9.6T9_NBCsS5t-MJXDHLLkSSRmh6Pyqrutr9NbdrL5YN8'
+        'YOUR_CARTO_ACCESS_TOKEN'
     },
     parameters: {
       depthTest: false,

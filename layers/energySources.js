@@ -25,7 +25,7 @@ const props = {
   },
   credentials: {
     accessToken:
-      'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiI2ZGIwYWMzMiJ9.7wkEpcWcazDD1F6Yf72OFcaLvrRJcKpSr1BFB03Suc8'
+      'YOUR_CARTO_ACCESS_TOKEN'
   }
 };
 

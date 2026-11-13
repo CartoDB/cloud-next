@@ -11,7 +11,7 @@ const _RoadsLayer = DeferredLoadLayer(() => {
     data: 'cartobq.nexus_demo.na_roads_simplified_tileset',
     credentials: {
       accessToken:
-        'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJjOGE4M2ZiYyJ9.9MEoA3ohVDrx3RPe7VxoN5bPVoOWB--tMF4D88DwPRQ'
+        'YOUR_CARTO_ACCESS_TOKEN'
     },
     getLineColor: [224, 222, 97, 65],
     filled: false,

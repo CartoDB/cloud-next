@@ -45,7 +45,7 @@ const _TruckParkingLayer = DeferredLoadLayer(
       },
       credentials: {
         accessToken:
-          'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfN3hoZnd5bWwiLCJqdGkiOiJiN2MwNWE3OCJ9.V29mxVZU2Y7SxX1r6vkZkZ57p3XGbWACIuEICimoIiM'
+          'YOUR_CARTO_ACCESS_TOKEN'
       }
     });
   },
